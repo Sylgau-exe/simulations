@@ -1,6 +1,6 @@
 # 🎓 BizSimHub
 
-Business simulation marketplace - fully deployed on Vercel.
+Business simulation marketplace - fully deployed on Vercel.   
 
 ## 🚀 Quick Deploy
 
