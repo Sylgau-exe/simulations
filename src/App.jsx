@@ -61,9 +61,9 @@ const api = {
   
   // Stripe
   createCheckoutSession: (planId, billingCycle) => 
-    api.request('/stripe/create-checkout-session', { method: 'POST', body: JSON.stringify({ planId, billingCycle }) }),
+    api.request('/stripe/sessions', { method: 'POST', body: JSON.stringify({ planId, billingCycle }) }),
   createPortalSession: () => 
-    api.request('/stripe/create-portal-session', { method: 'POST' }),
+    api.request('/stripe/sessions', { method: 'POST', body: JSON.stringify({ action: 'portal' }) }),
   getSubscription: () => 
     api.request('/stripe/subscription'),
   

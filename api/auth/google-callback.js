@@ -17,7 +17,6 @@ export default async function handler(req, res) {
     const clientId = process.env.GOOGLE_CLIENT_ID;
     const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
     
-    // Get the host from the request or use env var
     const host = req.headers.host;
     const protocol = host?.includes('localhost') ? 'http' : 'https';
     const redirectUri = process.env.GOOGLE_REDIRECT_URI || `${protocol}://${host}/api/auth/google-callback`;
