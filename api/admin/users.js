@@ -30,6 +30,12 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Invalid token' });
     }
 
+    // Check if user is admin
+    const adminCheck = await sql`SELECT is_admin FROM users WHERE id = ${payload.userId}`;
+    if (!adminCheck.rows[0]?.is_admin) {
+      return res.status(403).json({ error: 'Admin access required' });
+    }
+
     // Query params
     const { search, plan, status, page = 1, limit = 50 } = req.query;
     const offset = (parseInt(page) - 1) * parseInt(limit);
@@ -48,6 +54,7 @@ export default async function handler(req, res) {
         u.organization,
         u.role,
         u.auth_provider,
+        u.is_admin,
         COALESCE(stats.simulations, 0) as simulations,
         COALESCE(stats.completions, 0) as completions,
         COALESCE(stats.best_score, 0) as best_score,
@@ -91,7 +98,8 @@ export default async function handler(req, res) {
       organization: row.organization,
       role: row.role,
       authProvider: row.auth_provider,
-      hasStripe: !!row.stripe_customer_id
+      hasStripe: !!row.stripe_customer_id,
+      isAdmin: row.is_admin || false
     }));
 
     return res.status(200).json({ 

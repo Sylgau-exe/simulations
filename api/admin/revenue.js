@@ -30,6 +30,12 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Invalid token' });
     }
 
+    // Check if user is admin
+    const adminCheck = await sql`SELECT is_admin FROM users WHERE id = ${payload.userId}`;
+    if (!adminCheck.rows[0]?.is_admin) {
+      return res.status(403).json({ error: 'Admin access required' });
+    }
+
     // Get all revenue data in parallel
     const [
       subscriptionsResult,

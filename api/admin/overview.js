@@ -30,7 +30,7 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Invalid token' });
     }
 
-    // Check if user is admin (you can add is_admin column or check by email)
+    // Check if user is admin
     const userResult = await sql`SELECT * FROM users WHERE id = ${payload.userId}`;
     const user = userResult.rows[0];
     
@@ -38,8 +38,9 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'User not found' });
     }
 
-    // For now, allow any logged-in user to access admin (you can restrict later)
-    // if (!user.is_admin) return res.status(403).json({ error: 'Forbidden' });
+    if (!user.is_admin) {
+      return res.status(403).json({ error: 'Admin access required' });
+    }
 
     // Get overview statistics
     const [
