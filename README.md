@@ -1,4 +1,4 @@
-# 🎓 BizSimHub
+# 🎓 BizSimHub v1
 #
 Business simulation marketplace - fully deployed on Vercel.   
 
