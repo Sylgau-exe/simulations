@@ -55,6 +55,7 @@ export default async function handler(req, res) {
         u.role,
         u.auth_provider,
         u.is_admin,
+        u.is_tester,
         COALESCE(stats.simulations, 0) as simulations,
         COALESCE(stats.completions, 0) as completions,
         COALESCE(stats.best_score, 0) as best_score,
@@ -99,7 +100,8 @@ export default async function handler(req, res) {
       role: row.role,
       authProvider: row.auth_provider,
       hasStripe: !!row.stripe_customer_id,
-      isAdmin: row.is_admin || false
+      isAdmin: row.is_admin || false,
+      isTester: row.is_tester || false
     }));
 
     return res.status(200).json({ 
