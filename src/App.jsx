@@ -2,9 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 
 // ============================================
 // BILINGUAL TRANSLATIONS - FRANÇAIS / ENGLISH
+// Complete translation system for BizSimHub
 // ============================================
 
 const TRANSLATIONS = {
+  // ============================================
+  // NAVIGATION
+  // ============================================
   nav: {
     home: { en: 'Home', fr: 'Accueil' },
     simulations: { en: 'Simulations', fr: 'Simulations' },
@@ -15,7 +19,12 @@ const TRANSLATIONS = {
     dashboard: { en: 'Dashboard', fr: 'Tableau de bord' },
     getStarted: { en: 'Get Started', fr: 'Commencer' },
     startFree: { en: 'Start Free', fr: 'Essai gratuit' },
+    adminPanel: { en: 'Admin Panel', fr: 'Panneau admin' },
   },
+
+  // ============================================
+  // LANDING PAGE
+  // ============================================
   landing: {
     badge: { en: '🎓 Business Education Platform', fr: '🎓 Plateforme de formation en affaires' },
     heroTitle1: { en: 'Master Business Skills', fr: 'Maîtrisez les compétences d\'affaires' },
@@ -29,11 +38,12 @@ const TRANSLATIONS = {
     simulations: { en: 'Simulations', fr: 'Simulations' },
     scenarios: { en: 'Scenarios', fr: 'Scénarios' },
     learners: { en: 'Learners', fr: 'Apprenants' },
+    industries: { en: 'Industries', fr: 'Industries' },
     whyChoose: { en: 'Why Choose BizSimHub?', fr: 'Pourquoi choisir BizSimHub?' },
     feature1Title: { en: 'Learn by Doing', fr: 'Apprendre en faisant' },
-    feature1Desc: { en: 'No more boring lectures. Make real decisions and see immediate consequences in realistic scenarios.', fr: 'Fini les cours ennuyeux. Prenez de vraies décisions et voyez les conséquences immédiates.' },
+    feature1Desc: { en: 'No more boring lectures. Make real decisions and see immediate consequences in realistic scenarios.', fr: 'Fini les cours ennuyeux. Prenez de vraies décisions et voyez les conséquences immédiates dans des scénarios réalistes.' },
     feature2Title: { en: 'Risk-Free Practice', fr: 'Pratique sans risque' },
-    feature2Desc: { en: 'Make mistakes safely. Learn what works and what doesn\'t without real-world consequences.', fr: 'Faites des erreurs en sécurité. Apprenez ce qui fonctionne sans conséquences réelles.' },
+    feature2Desc: { en: 'Make mistakes safely. Learn what works and what doesn\'t without real-world consequences.', fr: 'Faites des erreurs en toute sécurité. Apprenez ce qui fonctionne sans conséquences réelles.' },
     feature3Title: { en: 'Track Progress', fr: 'Suivez vos progrès' },
     feature3Desc: { en: 'Detailed analytics show your improvement over time with personalized insights.', fr: 'Des analyses détaillées montrent votre amélioration avec des insights personnalisés.' },
     feature4Title: { en: 'Industry Scenarios', fr: 'Scénarios industriels' },
@@ -42,21 +52,61 @@ const TRANSLATIONS = {
     joinLearners: { en: 'Join thousands of professionals improving their skills.', fr: 'Rejoignez des milliers de professionnels qui améliorent leurs compétences.' },
     startLearning: { en: 'Start Learning Free', fr: 'Commencer gratuitement' },
     testimonialTitle: { en: 'What Professionals Say', fr: 'Ce que disent les professionnels' },
+    featured: { en: 'Featured', fr: 'En vedette' },
+    projectApex: { en: 'Project Apex', fr: 'Projet Apex' },
+    flagshipSimulation: { en: 'Our flagship project management simulation', fr: 'Notre simulation phare de gestion de projet' },
+    masterPM: { en: 'Master Project Management', fr: 'Maîtrisez la gestion de projet' },
+    playNow: { en: 'Play Now', fr: 'Jouer maintenant' },
+    tryFreeNow: { en: 'Try Free Now', fr: 'Essayer gratuitement' },
+    simulationLibrary: { en: 'Simulation Library', fr: 'Bibliothèque de simulations' },
+    comprehensiveSims: { en: 'Comprehensive business simulations for every skill', fr: 'Des simulations complètes pour chaque compétence' },
   },
+
+  // ============================================
+  // PRICING
+  // ============================================
   pricing: {
     title: { en: 'Simple Pricing', fr: 'Tarification simple' },
     subtitle: { en: 'Start free, upgrade when ready', fr: 'Commencez gratuitement, passez au supérieur quand vous êtes prêt' },
+    choosePlan: { en: 'Choose Your Plan', fr: 'Choisissez votre plan' },
+    chooseYourPlan: { en: 'Choose the plan that fits your learning goals', fr: 'Choisissez le plan qui correspond à vos objectifs' },
     mostPopular: { en: 'Most Popular', fr: 'Plus populaire' },
     currentPlan: { en: 'Current Plan', fr: 'Plan actuel' },
     upgradeNow: { en: 'Upgrade Now', fr: 'Passer au supérieur' },
     contactSales: { en: 'Contact Sales', fr: 'Contacter les ventes' },
+    getStartedFree: { en: 'Get Started Free', fr: 'Commencer gratuitement' },
+    startFreeTrial: { en: 'Start Free Trial', fr: 'Commencer l\'essai gratuit' },
+    monthly: { en: 'Monthly', fr: 'Mensuel' },
+    annual: { en: 'Annual', fr: 'Annuel' },
+    perMonth: { en: '/month', fr: '/mois' },
     free: { en: 'Free', fr: 'Gratuit' },
     professional: { en: 'Professional', fr: 'Professionnel' },
     enterprise: { en: 'Enterprise', fr: 'Entreprise' },
     freeDesc: { en: 'Perfect for trying out', fr: 'Parfait pour essayer' },
     proDesc: { en: 'For serious learners', fr: 'Pour les apprenants sérieux' },
     entDesc: { en: 'For teams and institutions', fr: 'Pour les équipes et institutions' },
+    // Features
+    feat1Sim: { en: '1 simulation (Project Apex)', fr: '1 simulation (Projet Apex)' },
+    featBasicScenarios: { en: 'Basic scenarios', fr: 'Scénarios de base' },
+    featScoreTracking: { en: 'Score tracking', fr: 'Suivi des scores' },
+    featCommunitySupport: { en: 'Community support', fr: 'Support communautaire' },
+    featAllSimulations: { en: 'All simulations', fr: 'Toutes les simulations' },
+    featAllScenarios: { en: 'All scenarios', fr: 'Tous les scénarios' },
+    featDetailedAnalytics: { en: 'Detailed analytics', fr: 'Analyses détaillées' },
+    featCertificates: { en: 'Certificates', fr: 'Certificats' },
+    featPrioritySupport: { en: 'Priority support', fr: 'Support prioritaire' },
+    featEverythingPro: { en: 'Everything in Professional', fr: 'Tout dans Professionnel' },
+    featUnlimitedTeam: { en: 'Unlimited team members', fr: 'Membres d\'équipe illimités' },
+    featAdminDashboard: { en: 'Admin dashboard', fr: 'Tableau de bord admin' },
+    featCustomBranding: { en: 'Custom branding', fr: 'Image de marque personnalisée' },
+    featLmsIntegration: { en: 'LMS integration', fr: 'Intégration LMS' },
+    featDedicatedManager: { en: 'Dedicated account manager', fr: 'Gestionnaire de compte dédié' },
+    featCustomDev: { en: 'Custom simulation development', fr: 'Développement de simulations sur mesure' },
   },
+
+  // ============================================
+  // DASHBOARD
+  // ============================================
   dashboard: {
     welcome: { en: 'Welcome', fr: 'Bienvenue' },
     readyToContinue: { en: 'Ready to continue your learning journey?', fr: 'Prêt à continuer votre parcours d\'apprentissage?' },
@@ -69,21 +119,516 @@ const TRANSLATIONS = {
     highScore: { en: 'High Score', fr: 'Meilleur score' },
     recentScores: { en: 'Recent Scores', fr: 'Scores récents' },
     featuredSimulation: { en: 'Featured Simulation', fr: 'Simulation en vedette' },
+    noScoresYet: { en: 'No scores yet', fr: 'Pas encore de scores' },
+    playFirst: { en: 'Play your first simulation!', fr: 'Jouez votre première simulation!' },
+    recent: { en: 'Recent', fr: 'Récent' },
+    unknown: { en: 'Unknown', fr: 'Inconnu' },
   },
+
+  // ============================================
+  // SIMULATIONS CATALOG
+  // ============================================
+  simulations: {
+    catalog: { en: 'Simulation Library', fr: 'Bibliothèque de simulations' },
+    catalogSubtitle: { en: 'Choose your learning adventure', fr: 'Choisissez votre aventure d\'apprentissage' },
+    available: { en: 'Available', fr: 'Disponible' },
+    availableNow: { en: 'Available Now', fr: 'Disponible maintenant' },
+    comingSoon: { en: 'Coming Soon', fr: 'Bientôt disponible' },
+    pro: { en: 'PRO', fr: 'PRO' },
+    startSimulation: { en: 'Start Simulation', fr: 'Commencer la simulation' },
+    scenarios: { en: 'scenarios', fr: 'scénarios' },
+    minutes: { en: 'min', fr: 'min' },
+    chooseScenario: { en: 'Choose Your Scenario', fr: 'Choisissez votre scénario' },
+    difficulty: { en: 'Difficulty', fr: 'Difficulté' },
+    duration: { en: 'Duration', fr: 'Durée' },
+    weeks: { en: 'weeks', fr: 'semaines' },
+  },
+
+  // ============================================
+  // SCENARIO DATA
+  // ============================================
+  scenarios: {
+    // Tech Startup
+    techStartup: {
+      title: { en: 'Tech Startup', fr: 'Startup Tech' },
+      subtitle: { en: 'Software Product Launch', fr: 'Lancement de produit logiciel' },
+      difficulty: { en: 'Standard', fr: 'Standard' },
+      description: { 
+        en: 'You are the Project Manager at Nexus Technologies. Deliver a new SaaS platform while managing team dynamics and technical challenges.',
+        fr: 'Vous êtes le chef de projet chez Nexus Technologies. Livrez une nouvelle plateforme SaaS tout en gérant la dynamique d\'équipe et les défis techniques.'
+      },
+      company: { en: 'Nexus Technologies', fr: 'Nexus Technologies' },
+      projectName: { en: 'SaaS Platform', fr: 'Plateforme SaaS' },
+    },
+    // Live Show
+    liveShow: {
+      title: { en: 'Live Entertainment', fr: 'Spectacle vivant' },
+      subtitle: { en: 'Touring Show Production', fr: 'Production de tournée' },
+      difficulty: { en: 'Advanced', fr: 'Avancé' },
+      description: { 
+        en: 'Executive Producer at Stellar Productions. Launch an ambitious touring show while managing creative talent and safety requirements.',
+        fr: 'Producteur exécutif chez Stellar Productions. Lancez un spectacle de tournée ambitieux tout en gérant les talents créatifs et les exigences de sécurité.'
+      },
+      company: { en: 'Stellar Productions', fr: 'Stellar Productions' },
+      projectName: { en: 'AURORA - A Journey of Light', fr: 'AURORA - Un voyage de lumière' },
+    },
+    // Construction
+    construction: {
+      title: { en: 'Construction', fr: 'Construction' },
+      subtitle: { en: 'Commercial Building Project', fr: 'Projet de bâtiment commercial' },
+      difficulty: { en: 'Standard', fr: 'Standard' },
+      description: { 
+        en: 'Project Manager at UrbanCore Construction. Build a 12-story mixed-use building while managing permits, weather, and safety.',
+        fr: 'Chef de projet chez UrbanCore Construction. Construisez un immeuble de 12 étages à usage mixte tout en gérant les permis, la météo et la sécurité.'
+      },
+      company: { en: 'UrbanCore Construction', fr: 'UrbanCore Construction' },
+      projectName: { en: 'Metropolitan Tower', fr: 'Tour Métropolitaine' },
+    },
+    // R&D Innovation
+    rdInnovation: {
+      title: { en: 'R&D Innovation', fr: 'Innovation R&D' },
+      subtitle: { en: 'New Technology Development', fr: 'Développement de nouvelles technologies' },
+      difficulty: { en: 'Expert', fr: 'Expert' },
+      description: { 
+        en: 'Lead a cutting-edge R&D project with high uncertainty. Prototyping is essential to surface problems early.',
+        fr: 'Dirigez un projet de R&D de pointe avec une grande incertitude. Le prototypage est essentiel pour détecter les problèmes tôt.'
+      },
+      company: { en: 'FutureTech Labs', fr: 'FutureTech Labs' },
+      projectName: { en: 'Quantum Sensor Array', fr: 'Réseau de capteurs quantiques' },
+    },
+  },
+
+  // ============================================
+  // PROJECT DELIVERABLES (Scope Levels)
+  // ============================================
+  deliverables: {
+    tech_startup: {
+      level1: { name: { en: 'Core Platform', fr: 'Plateforme de base' }, desc: { en: 'Basic user management, authentication, and data storage', fr: 'Gestion des utilisateurs, authentification et stockage de données' }},
+      level2: { name: { en: 'Standard Features', fr: 'Fonctionnalités standard' }, desc: { en: 'Dashboard, reporting, and API integrations', fr: 'Tableau de bord, rapports et intégrations API' }},
+      level3: { name: { en: 'Advanced Features', fr: 'Fonctionnalités avancées' }, desc: { en: 'Analytics, automation, and multi-tenant support', fr: 'Analytique, automatisation et support multi-locataires' }},
+      level4: { name: { en: 'Premium Features', fr: 'Fonctionnalités premium' }, desc: { en: 'AI-powered insights and enterprise security', fr: 'Insights alimentés par l\'IA et sécurité entreprise' }},
+    },
+    live_show: {
+      level1: { name: { en: 'Foundation Acts', fr: 'Actes de fondation' }, desc: { en: 'Opening sequence and core ensemble performances', fr: 'Séquence d\'ouverture et performances de l\'ensemble principal' }},
+      level2: { name: { en: 'Feature Acts', fr: 'Actes principaux' }, desc: { en: 'Aerial sequences and specialty performances', fr: 'Séquences aériennes et performances spécialisées' }},
+      level3: { name: { en: 'Technical Integration', fr: 'Intégration technique' }, desc: { en: 'Lighting, sound, and projection mapping', fr: 'Éclairage, son et mapping de projection' }},
+      level4: { name: { en: 'Grand Finale', fr: 'Grande finale' }, desc: { en: 'Climactic sequence with full cast integration', fr: 'Séquence climax avec intégration de toute la distribution' }},
+    },
+    construction: {
+      level1: { name: { en: 'Foundation & Parking', fr: 'Fondations et stationnement' }, desc: { en: 'Underground parking and structural foundation', fr: 'Stationnement souterrain et fondations structurelles' }},
+      level2: { name: { en: 'Core Structure', fr: 'Structure principale' }, desc: { en: 'Floors 1-6 with retail and office space', fr: 'Étages 1-6 avec espaces commerciaux et bureaux' }},
+      level3: { name: { en: 'Upper Floors', fr: 'Étages supérieurs' }, desc: { en: 'Floors 7-10 residential units', fr: 'Étages 7-10 unités résidentielles' }},
+    },
+    rd_innovation: {
+      level1: { name: { en: 'Proof of Concept', fr: 'Preuve de concept' }, desc: { en: 'Demonstrate basic quantum sensing capability', fr: 'Démontrer la capacité de base de détection quantique' }},
+      level2: { name: { en: 'Prototype Alpha', fr: 'Prototype Alpha' }, desc: { en: 'Functional prototype with core features', fr: 'Prototype fonctionnel avec fonctionnalités de base' }},
+      level3: { name: { en: 'Prototype Beta', fr: 'Prototype Bêta' }, desc: { en: 'Refined prototype with improved accuracy', fr: 'Prototype affiné avec précision améliorée' }},
+      level4: { name: { en: 'Production Ready', fr: 'Prêt pour la production' }, desc: { en: 'Manufacturable design with documentation', fr: 'Conception fabricable avec documentation' }},
+    },
+  },
+
+  // ============================================
+  // EVENTS (Causal Events)
+  // ============================================
+  events: {
+    // Tech Startup Events
+    scope_creep: {
+      title: { en: 'Scope Creep Alert', fr: 'Alerte de dérive du périmètre' },
+      description: { en: 'The product owner wants to add 2 new features. Your response affects both scope and team stress.', fr: 'Le propriétaire du produit veut ajouter 2 nouvelles fonctionnalités. Votre réponse affecte le périmètre et le stress de l\'équipe.' },
+      options: {
+        accept: { en: 'Accept all changes (+2 scope, +stress)', fr: 'Accepter tous les changements (+2 périmètre, +stress)' },
+        negotiate: { en: 'Negotiate to add 1 feature', fr: 'Négocier pour ajouter 1 fonctionnalité' },
+        decline: { en: 'Decline and stay focused (+morale)', fr: 'Refuser et rester concentré (+moral)' },
+      }
+    },
+    tech_debt: {
+      title: { en: 'Technical Debt Crisis', fr: 'Crise de dette technique' },
+      description: { en: 'QA discovered critical technical debt. Addressing it now prevents larger problems later.', fr: 'L\'assurance qualité a découvert une dette technique critique. La traiter maintenant évite des problèmes plus importants plus tard.' },
+      options: {
+        fix_now: { en: 'Full refactor (schedule hit, quality gain)', fr: 'Refactorisation complète (impact sur le calendrier, gain de qualité)' },
+        patch: { en: 'Quick patch', fr: 'Correctif rapide' },
+        defer: { en: 'Document for v2 (risk)', fr: 'Documenter pour v2 (risque)' },
+      }
+    },
+    dev_resignation: {
+      title: { en: 'Lead Developer Resigns', fr: 'Le développeur principal démissionne' },
+      description: { en: 'Your lead developer accepted a FAANG offer. This will cause knowledge loss.', fr: 'Votre développeur principal a accepté une offre FAANG. Cela causera une perte de connaissances.' },
+      options: {
+        counter: { en: 'Counter-offer (expensive, retain knowledge)', fr: 'Contre-offre (coûteux, conserver les connaissances)' },
+        transition: { en: 'Knowledge transfer period', fr: 'Période de transfert de connaissances' },
+        contractor: { en: 'Hire contractor (no knowledge loss)', fr: 'Embaucher un contractuel (pas de perte de connaissances)' },
+      }
+    },
+    team_conflict: {
+      title: { en: 'Architecture Disagreement', fr: 'Désaccord d\'architecture' },
+      description: { en: 'Senior devs debate microservices vs monolith. Unresolved conflict will hurt productivity.', fr: 'Les développeurs seniors débattent microservices vs monolithe. Un conflit non résolu nuira à la productivité.' },
+      options: {
+        mediate: { en: 'Architecture review workshop (+knowledge)', fr: 'Atelier de révision d\'architecture (+connaissances)' },
+        decide: { en: 'Executive decision (fast, some resentment)', fr: 'Décision exécutive (rapide, certains ressentiments)' },
+        hybrid: { en: 'Hybrid approach (compromise)', fr: 'Approche hybride (compromis)' },
+      }
+    },
+    // Live Show Events
+    star_injury: {
+      title: { en: 'Lead Performer Injury', fr: 'Blessure de l\'artiste principal' },
+      description: { en: 'Your star acrobat suffered a minor injury. How you handle this affects team trust.', fr: 'Votre acrobate vedette a subi une blessure mineure. Votre gestion affecte la confiance de l\'équipe.' },
+      options: {
+        rest: { en: 'Full recovery time (+morale, +trust)', fr: 'Temps de récupération complet (+moral, +confiance)' },
+        modified: { en: 'Modified choreography', fr: 'Chorégraphie modifiée' },
+        understudy: { en: 'Promote understudy (risky)', fr: 'Promouvoir la doublure (risqué)' },
+      }
+    },
+    creative_conflict: {
+      title: { en: 'Creative Vision Clash', fr: 'Conflit de vision créative' },
+      description: { en: 'Director and choreographer disagree on Act 3. Unresolved, this will fester.', fr: 'Le directeur et le chorégraphe sont en désaccord sur l\'Acte 3. Non résolu, cela va s\'envenimer.' },
+      options: {
+        director: { en: "Back director's vision", fr: 'Soutenir la vision du directeur' },
+        choreographer: { en: 'Support choreographer', fr: 'Soutenir le chorégraphe' },
+        workshop: { en: 'Creative workshop (+knowledge)', fr: 'Atelier créatif (+connaissances)' },
+      }
+    },
+    rigging_issue: {
+      title: { en: 'Rigging Safety Concern', fr: 'Problème de sécurité du gréement' },
+      description: { en: 'Aerial rigging may not meet safety standards. A prototype/tech rehearsal would have caught this earlier.', fr: 'Le gréement aérien pourrait ne pas respecter les normes de sécurité. Un prototype/répétition technique aurait détecté cela plus tôt.' },
+      options: {
+        redesign: { en: 'Full redesign (safest)', fr: 'Refonte complète (plus sûr)' },
+        reinforce: { en: 'Reinforce current design', fr: 'Renforcer la conception actuelle' },
+        simplify: { en: 'Simplify aerial sequences', fr: 'Simplifier les séquences aériennes' },
+      }
+    },
+    // Construction Events
+    weather_delay: {
+      title: { en: 'Severe Weather Alert', fr: 'Alerte météo sévère' },
+      description: { en: 'Major storm forecast for 10 days. Your choice affects both schedule and team safety.', fr: 'Tempête majeure prévue pendant 10 jours. Votre choix affecte le calendrier et la sécurité de l\'équipe.' },
+      options: {
+        pause: { en: 'Pause outdoor work (safe)', fr: 'Suspendre les travaux extérieurs (sûr)' },
+        interior: { en: 'Interior work only', fr: 'Travaux intérieurs uniquement' },
+        push: { en: 'Continue with caution (risky)', fr: 'Continuer avec prudence (risqué)' },
+      }
+    },
+    permit_issue: {
+      title: { en: 'Permit Inspection Failed', fr: 'Échec de l\'inspection du permis' },
+      description: { en: 'Inspector flagged electrical issues. A prototype/mockup inspection would have caught this earlier.', fr: 'L\'inspecteur a signalé des problèmes électriques. Une inspection de prototype/maquette aurait détecté cela plus tôt.' },
+      options: {
+        rework: { en: 'Full rework (+quality)', fr: 'Reprise complète (+qualité)' },
+        appeal: { en: 'Appeal decision', fr: 'Faire appel de la décision' },
+        expedite: { en: 'Hire specialist (expensive)', fr: 'Embaucher un spécialiste (coûteux)' },
+      }
+    },
+    safety_incident: {
+      title: { en: 'Safety Near-Miss', fr: 'Quasi-accident de sécurité' },
+      description: { en: 'Scaffold bracket failed. OSHA will investigate. This affects team morale and stress significantly.', fr: 'Un support d\'échafaudage a cédé. L\'OSHA enquêtera. Cela affecte significativement le moral et le stress de l\'équipe.' },
+      options: {
+        full_audit: { en: 'Full safety audit (+trust)', fr: 'Audit de sécurité complet (+confiance)' },
+        targeted: { en: 'Targeted inspection', fr: 'Inspection ciblée' },
+        minimal: { en: 'Document and continue (risky)', fr: 'Documenter et continuer (risqué)' },
+      }
+    },
+    materials_shortage: {
+      title: { en: 'Materials Shortage', fr: 'Pénurie de matériaux' },
+      description: { en: 'Supply chain issue: steel delivery delayed 3 weeks. Prototyping/early ordering would have mitigated this.', fr: 'Problème de chaîne d\'approvisionnement: livraison d\'acier retardée de 3 semaines. Le prototypage/commande anticipée aurait atténué cela.' },
+      options: {
+        wait: { en: 'Wait for delivery', fr: 'Attendre la livraison' },
+        alternative: { en: 'Source alternative supplier', fr: 'Trouver un fournisseur alternatif' },
+        redesign: { en: 'Redesign with available materials', fr: 'Reconcevoir avec les matériaux disponibles' },
+      }
+    },
+    // R&D Events
+    tech_failure: {
+      title: { en: 'Core Technology Failure', fr: 'Défaillance de la technologie de base' },
+      description: { en: 'The main sensor approach isn\'t working as expected. Prototypes would have revealed this earlier.', fr: 'L\'approche principale du capteur ne fonctionne pas comme prévu. Les prototypes auraient révélé cela plus tôt.' },
+      options: {
+        pivot: { en: 'Pivot to backup approach', fr: 'Pivoter vers l\'approche de secours' },
+        iterate: { en: 'Iterate on current design', fr: 'Itérer sur la conception actuelle' },
+        parallel: { en: 'Run parallel approaches', fr: 'Exécuter des approches parallèles' },
+      }
+    },
+    breakthrough: {
+      title: { en: 'Unexpected Breakthrough', fr: 'Percée inattendue' },
+      description: { en: 'A team member discovered a shortcut. How you capitalize on it matters.', fr: 'Un membre de l\'équipe a découvert un raccourci. La façon dont vous en tirez parti compte.' },
+      options: {
+        focus: { en: 'Focus resources on breakthrough', fr: 'Concentrer les ressources sur la percée' },
+        validate: { en: 'Build prototype to validate', fr: 'Construire un prototype pour valider' },
+        patent: { en: 'Document for patent first', fr: 'Documenter d\'abord pour le brevet' },
+      }
+    },
+    competitor_announcement: {
+      title: { en: 'Competitor Announcement', fr: 'Annonce d\'un concurrent' },
+      description: { en: 'A competitor announced a similar product launching in 8 weeks. Time pressure increases.', fr: 'Un concurrent a annoncé un produit similaire dans 8 semaines. La pression du temps augmente.' },
+      options: {
+        accelerate: { en: 'Accelerate timeline (-3 weeks)', fr: 'Accélérer le calendrier (-3 semaines)' },
+        differentiate: { en: 'Pivot to differentiation (+scope)', fr: 'Pivoter vers la différenciation (+périmètre)' },
+        stay_course: { en: 'Stay the course (quality focus)', fr: 'Maintenir le cap (focus qualité)' },
+      }
+    },
+  },
+
+  // ============================================
+  // MEETINGS
+  // ============================================
+  meetings: {
+    title: { en: 'Meetings This Week', fr: 'Réunions cette semaine' },
+    done: { en: 'Done', fr: 'Fait' },
+    coaching: {
+      name: { en: 'One-on-One Coaching', fr: 'Coaching individuel' },
+      description: { en: 'Build team knowledge and skills. Best early in project.', fr: 'Développer les connaissances et compétences de l\'équipe. Idéal en début de projet.' },
+    },
+    standup: {
+      name: { en: 'Daily Standups', fr: 'Mêlées quotidiennes' },
+      description: { en: 'Prevent coordination mistakes. Essential for larger teams.', fr: 'Prévenir les erreurs de coordination. Essentiel pour les grandes équipes.' },
+    },
+    status: {
+      name: { en: 'Status Review', fr: 'Revue de statut' },
+      description: { en: 'Team alignment and stakeholder communication.', fr: 'Alignement d\'équipe et communication avec les parties prenantes.' },
+    },
+  },
+
+  // ============================================
+  // GAME UI
+  // ============================================
+  game: {
+    week: { en: 'Week', fr: 'Semaine' },
+    of: { en: 'of', fr: 'de' },
+    budget: { en: 'Budget', fr: 'Budget' },
+    weeksLeft: { en: 'Weeks Left', fr: 'Semaines restantes' },
+    scope: { en: 'Scope', fr: 'Périmètre' },
+    quality: { en: 'Quality', fr: 'Qualité' },
+    teamSize: { en: 'Team Size', fr: 'Taille de l\'équipe' },
+    morale: { en: 'Morale', fr: 'Moral' },
+    stress: { en: 'Stress', fr: 'Stress' },
+    knowledge: { en: 'Knowledge', fr: 'Connaissances' },
+    productivity: { en: 'Productivity', fr: 'Productivité' },
+    prototypes: { en: 'Prototypes', fr: 'Prototypes' },
+    members: { en: 'members', fr: 'membres' },
+    projectDeliverables: { en: 'Project Deliverables', fr: 'Livrables du projet' },
+    specificObjectives: { en: 'Specific Objectives', fr: 'Objectifs spécifiques' },
+    knowledgeBuilding: { en: 'Knowledge Building', fr: 'Développement des connaissances' },
+    scheduleConsistency: { en: 'Schedule Consistency', fr: 'Cohérence du calendrier' },
+    prototypingValue: { en: 'Prototyping Value', fr: 'Valeur du prototypage' },
+    tasks: { en: 'tasks', fr: 'tâches' },
+    // Team Management
+    teamManagement: { en: 'Team Management', fr: 'Gestion de l\'équipe' },
+    fire: { en: 'Fire', fr: 'Licencier' },
+    hire: { en: 'Hire', fr: 'Embaucher' },
+    // Quick Actions
+    quickActions: { en: 'Quick Actions', fr: 'Actions rapides' },
+    qualityReview: { en: 'Quality Review', fr: 'Revue de qualité' },
+    crunchMode: { en: 'Crunch Mode', fr: 'Mode intensif' },
+    crunchDesc: { en: '-morale, +stress', fr: '-moral, +stress' },
+    buildPrototype: { en: 'Build Prototype', fr: 'Construire un prototype' },
+    extendDeadline: { en: 'Extend Deadline +1 week', fr: 'Prolonger le délai +1 semaine' },
+    penalty: { en: 'penalty', fr: 'pénalité' },
+    advanceToWeek: { en: 'Advance to Week', fr: 'Passer à la semaine' },
+    scheduleWarning: { en: 'Schedule changed {count} times. Team morale affected by uncertainty.', fr: 'Calendrier modifié {count} fois. Le moral de l\'équipe est affecté par l\'incertitude.' },
+  },
+
+  // ============================================
+  // PAYWALL
+  // ============================================
+  paywall: {
+    title: { en: 'You\'re Doing Great!', fr: 'Vous vous en sortez très bien!' },
+    weekCompleted: { en: 'You\'ve completed Week {week} of the simulation.', fr: 'Vous avez terminé la semaine {week} de la simulation.' },
+    projectProgress: { en: 'Your project is {percent}% complete and the team is counting on you!', fr: 'Votre projet est complété à {percent}% et l\'équipe compte sur vous!' },
+    upgradeHook: { en: 'Upgrade to Professional to continue your journey and see how your decisions play out. Will you deliver on time? Will the stakeholders be happy?', fr: 'Passez au Professionnel pour continuer votre parcours et voir comment vos décisions se concrétisent. Allez-vous livrer à temps? Les parties prenantes seront-elles satisfaites?' },
+    upgradeNow: { en: 'Upgrade Now', fr: 'Passer au supérieur' },
+    maybeLater: { en: 'Maybe Later', fr: 'Peut-être plus tard' },
+    unlimitedPlays: { en: 'Unlimited simulation plays', fr: 'Simulations illimitées' },
+    allScenarios: { en: 'All scenarios unlocked', fr: 'Tous les scénarios débloqués' },
+    detailedAnalytics: { en: 'Detailed analytics', fr: 'Analyses détaillées' },
+    certificates: { en: 'Certificates of completion', fr: 'Certificats de complétion' },
+  },
+
+  // ============================================
+  // RESULTS
+  // ============================================
+  results: {
+    simulationComplete: { en: 'Simulation Complete!', fr: 'Simulation terminée!' },
+    points: { en: 'points', fr: 'points' },
+    budget: { en: 'Budget', fr: 'Budget' },
+    schedule: { en: 'Schedule', fr: 'Calendrier' },
+    scope: { en: 'Scope', fr: 'Périmètre' },
+    quality: { en: 'Quality', fr: 'Qualité' },
+    complete: { en: 'complete', fr: 'complété' },
+    teamProcess: { en: 'Team Process', fr: 'Processus d\'équipe' },
+    avgMorale: { en: 'avg morale', fr: 'moral moyen' },
+    consistencyBonus: { en: 'Consistency Bonus', fr: 'Bonus de cohérence' },
+    prototypeBonus: { en: 'Prototype Bonus', fr: 'Bonus de prototype' },
+    pts: { en: 'pts', fr: 'pts' },
+    playAgain: { en: 'Play Again', fr: 'Rejouer' },
+    tryDifferent: { en: 'Try Different Scenario', fr: 'Essayer un autre scénario' },
+    backToDashboard: { en: 'Back to Dashboard', fr: 'Retour au tableau de bord' },
+  },
+
+  // ============================================
+  // MASCOT
+  // ============================================
+  mascot: {
+    normal: { en: 'Looking good!', fr: 'Ça se présente bien!' },
+    concerned: { en: 'Hmm, keep an eye on this...', fr: 'Hmm, gardez un œil là-dessus...' },
+    stressed: { en: 'We might need to talk...', fr: 'On devrait peut-être en parler...' },
+    success: { en: 'Nailed it! 🎯', fr: 'Parfait! 🎯' },
+    due: { en: 'DUE', fr: 'ÉCHÉANCE' },
+  },
+
+  // ============================================
+  // AUTHENTICATION
+  // ============================================
+  auth: {
+    welcome: { en: 'Welcome', fr: 'Bienvenue' },
+    createAccount: { en: 'Create Account', fr: 'Créer un compte' },
+    signInContinue: { en: 'Sign in to continue learning', fr: 'Connectez-vous pour continuer à apprendre' },
+    startJourney: { en: 'Start your learning journey', fr: 'Commencez votre parcours d\'apprentissage' },
+    fullName: { en: 'Full Name', fr: 'Nom complet' },
+    email: { en: 'Email', fr: 'Courriel' },
+    password: { en: 'Password', fr: 'Mot de passe' },
+    pleaseWait: { en: 'Please wait...', fr: 'Veuillez patienter...' },
+    signIn: { en: 'Sign In', fr: 'Connexion' },
+    signUp: { en: 'Sign Up', fr: 'Inscription' },
+    or: { en: 'or', fr: 'ou' },
+    continueGoogle: { en: 'Continue with Google', fr: 'Continuer avec Google' },
+    noAccount: { en: "Don't have an account?", fr: 'Vous n\'avez pas de compte?' },
+    haveAccount: { en: 'Already have an account?', fr: 'Vous avez déjà un compte?' },
+  },
+
+  // ============================================
+  // ADMIN PANEL
+  // ============================================
+  admin: {
+    title: { en: 'Admin Panel', fr: 'Panneau d\'administration' },
+    overview: { en: 'Overview', fr: 'Aperçu' },
+    users: { en: 'Users', fr: 'Utilisateurs' },
+    analytics: { en: 'Analytics', fr: 'Analytique' },
+    revenue: { en: 'Revenue', fr: 'Revenus' },
+    content: { en: 'Content', fr: 'Contenu' },
+    system: { en: 'System', fr: 'Système' },
+    dashboardOverview: { en: 'Dashboard Overview', fr: 'Aperçu du tableau de bord' },
+    totalUsers: { en: 'Total Users', fr: 'Utilisateurs totaux' },
+    monthlyRevenue: { en: 'Monthly Revenue', fr: 'Revenus mensuels' },
+    completionRate: { en: 'Completion Rate', fr: 'Taux de complétion' },
+    activeNow: { en: 'Active Now', fr: 'Actifs maintenant' },
+    live: { en: 'Live', fr: 'En direct' },
+    avgSessionTime: { en: 'Avg Session Time', fr: 'Temps moyen de session' },
+    perSession: { en: 'Per user session', fr: 'Par session utilisateur' },
+    sinceLaunch: { en: 'Since launch', fr: 'Depuis le lancement' },
+    recentActivity: { en: 'Recent Activity', fr: 'Activité récente' },
+    userManagement: { en: 'User Management', fr: 'Gestion des utilisateurs' },
+    manageUsers: { en: 'Manage and monitor all platform users', fr: 'Gérer et surveiller tous les utilisateurs' },
+    active: { en: 'Active', fr: 'Actif' },
+    churned: { en: 'Churned', fr: 'Désabonnés' },
+    allPlans: { en: 'All Plans', fr: 'Tous les plans' },
+    allStatus: { en: 'All Status', fr: 'Tous les statuts' },
+    inactive: { en: 'Inactive', fr: 'Inactif' },
+    user: { en: 'User', fr: 'Utilisateur' },
+    plan: { en: 'Plan', fr: 'Plan' },
+    status: { en: 'Status', fr: 'Statut' },
+    simulations: { en: 'Simulations', fr: 'Simulations' },
+    lastActive: { en: 'Last Active', fr: 'Dernière activité' },
+    actions: { en: 'Actions', fr: 'Actions' },
+    view: { en: 'View', fr: 'Voir' },
+    makeTester: { en: 'Make Tester', fr: 'Faire testeur' },
+    removeTester: { en: 'Remove Tester', fr: 'Retirer testeur' },
+    makeAdmin: { en: 'Make Admin', fr: 'Faire admin' },
+    removeAdmin: { en: 'Remove Admin', fr: 'Retirer admin' },
+    delete: { en: 'Delete', fr: 'Supprimer' },
+    noUsersMatch: { en: 'No users match your search', fr: 'Aucun utilisateur ne correspond' },
+    noUsersYet: { en: 'No users yet', fr: 'Pas encore d\'utilisateurs' },
+    userDetails: { en: 'User Details', fr: 'Détails de l\'utilisateur' },
+    joined: { en: 'Joined', fr: 'Inscrit' },
+    never: { en: 'Never', fr: 'Jamais' },
+    simulationsPlayed: { en: 'Simulations Played', fr: 'Simulations jouées' },
+    completions: { en: 'Completions', fr: 'Complétions' },
+    sendEmail: { en: 'Send Email', fr: 'Envoyer un courriel' },
+    suspendUser: { en: 'Suspend User', fr: 'Suspendre l\'utilisateur' },
+    weeklyActivity: { en: 'Weekly Activity', fr: 'Activité hebdomadaire' },
+    popularSimulations: { en: 'Popular Simulations', fr: 'Simulations populaires' },
+    gradeDistribution: { en: 'Grade Distribution', fr: 'Distribution des notes' },
+    noSimulationData: { en: 'No simulation data yet', fr: 'Pas encore de données de simulation' },
+    mrr: { en: 'Monthly Recurring Revenue', fr: 'Revenus mensuels récurrents' },
+    arr: { en: 'Annual Recurring Revenue', fr: 'Revenus annuels récurrents' },
+    ltv: { en: 'Customer LTV', fr: 'Valeur vie client' },
+    churnRate: { en: 'Churn Rate', fr: 'Taux de désabonnement' },
+    subscriptionBreakdown: { en: 'Subscription Breakdown', fr: 'Répartition des abonnements' },
+    recentTransactions: { en: 'Recent Transactions', fr: 'Transactions récentes' },
+    noTransactions: { en: 'No transactions yet', fr: 'Pas encore de transactions' },
+    contentManagement: { en: 'Content Management', fr: 'Gestion du contenu' },
+    edit: { en: 'Edit', fr: 'Modifier' },
+    preview: { en: 'Preview', fr: 'Aperçu' },
+    publish: { en: 'Publish', fr: 'Publier' },
+    systemHealth: { en: 'System Health', fr: 'Santé du système' },
+    monitorPlatform: { en: 'Monitor platform performance and system status', fr: 'Surveiller les performances et l\'état du système' },
+    uptime: { en: 'Uptime', fr: 'Disponibilité' },
+    healthy: { en: 'Healthy', fr: 'En bonne santé' },
+    avgResponseTime: { en: 'Avg Response Time', fr: 'Temps de réponse moyen' },
+    errorRate: { en: 'Error Rate', fr: 'Taux d\'erreur' },
+    activeConnections: { en: 'Active Connections', fr: 'Connexions actives' },
+    resourceUsage: { en: 'Resource Usage', fr: 'Utilisation des ressources' },
+    cpuUsage: { en: 'CPU Usage', fr: 'Utilisation CPU' },
+    memoryUsage: { en: 'Memory Usage', fr: 'Utilisation mémoire' },
+    recentErrors: { en: 'Recent Errors', fr: 'Erreurs récentes' },
+    quickActions: { en: 'Quick Actions', fr: 'Actions rapides' },
+    retry: { en: 'Retry', fr: 'Réessayer' },
+    loading: { en: 'Loading admin data...', fr: 'Chargement des données admin...' },
+    tester: { en: 'Tester', fr: 'Testeur' },
+  },
+
+  // ============================================
+  // FOOTER
+  // ============================================
   footer: {
     product: { en: 'Product', fr: 'Produit' },
     company: { en: 'Company', fr: 'Entreprise' },
     about: { en: 'About', fr: 'À propos' },
     forEducators: { en: 'For Educators', fr: 'Pour les éducateurs' },
+    legal: { en: 'Legal', fr: 'Légal' },
+    privacy: { en: 'Privacy', fr: 'Confidentialité' },
+    terms: { en: 'Terms', fr: 'Conditions' },
     madeWith: { en: 'Made with ❤️ in Montreal', fr: 'Fait avec ❤️ à Montréal' },
     allRights: { en: 'All rights reserved.', fr: 'Tous droits réservés.' },
   },
+
+  // ============================================
+  // COMMON
+  // ============================================
   common: {
     comingSoon: { en: 'Coming Soon', fr: 'Bientôt' },
     back: { en: 'Back', fr: 'Retour' },
+    loading: { en: 'Loading...', fr: 'Chargement...' },
+    error: { en: 'Error', fr: 'Erreur' },
+    success: { en: 'Success', fr: 'Succès' },
+    cancel: { en: 'Cancel', fr: 'Annuler' },
+    save: { en: 'Save', fr: 'Enregistrer' },
+    close: { en: 'Close', fr: 'Fermer' },
+    yes: { en: 'Yes', fr: 'Oui' },
+    no: { en: 'No', fr: 'Non' },
+    unknown: { en: 'Unknown', fr: 'Inconnu' },
+  },
+
+  // ============================================
+  // OTHER SIMULATIONS (Coming Soon)
+  // ============================================
+  otherSims: {
+    marketDynamics: {
+      title: { en: 'Market Dynamics', fr: 'Dynamique de marché' },
+      subtitle: { en: 'Strategic Marketing Simulation', fr: 'Simulation de marketing stratégique' },
+      category: { en: 'Marketing', fr: 'Marketing' },
+      difficulty: { en: 'Intermediate', fr: 'Intermédiaire' },
+    },
+    supplyChain: {
+      title: { en: 'Supply Chain Crisis', fr: 'Crise de la chaîne d\'approvisionnement' },
+      subtitle: { en: 'Operations Management Simulation', fr: 'Simulation de gestion des opérations' },
+      category: { en: 'Operations', fr: 'Opérations' },
+      difficulty: { en: 'Advanced', fr: 'Avancé' },
+    },
+    startupJourney: {
+      title: { en: 'Startup Journey', fr: 'Parcours de startup' },
+      subtitle: { en: 'Entrepreneurship Simulation', fr: 'Simulation d\'entrepreneuriat' },
+      category: { en: 'Entrepreneurship', fr: 'Entrepreneuriat' },
+      difficulty: { en: 'Advanced', fr: 'Avancé' },
+    },
   },
 };
 
+// Translation helper function
 const t = (key, lang) => {
   const keys = key.split('.');
   let result = TRANSLATIONS;
@@ -143,7 +688,7 @@ const SadAnimation = () => (
 );
 
 // Gantt Chart Mascot - reacts to project health
-const GanttMascot = ({ mood = 'normal' }) => (
+const GanttMascot = ({ mood = 'normal', lang = 'en' }) => (
   <div className={`gantt-mascot ${mood}`}>
     <svg viewBox="0 0 120 100" className="gantt-svg">
       {/* Chart background */}
@@ -169,7 +714,7 @@ const GanttMascot = ({ mood = 'normal' }) => (
       
       {/* Deadline line */}
       <line x1="90" y1="10" x2="90" y2="90" stroke="#ef4444" strokeWidth="2" strokeDasharray="4,2" className="deadline"/>
-      <text x="92" y="18" fontSize="6" fill="#ef4444" fontWeight="bold" className="deadline-text">DUE</text>
+      <text x="92" y="18" fontSize="6" fill="#ef4444" fontWeight="bold" className="deadline-text">{t('mascot.due', lang)}</text>
       
       {/* Face */}
       <g className="gantt-face">
@@ -189,13 +734,14 @@ const GanttMascot = ({ mood = 'normal' }) => (
       </g>
     </svg>
     <div className="mascot-tooltip">
-      {mood === 'normal' && "Looking good!"}
-      {mood === 'concerned' && "Hmm, keep an eye on this..."}
-      {mood === 'stressed' && "We might need to talk..."}
-      {mood === 'success' && "Nailed it! 🎯"}
+      {mood === 'normal' && t('mascot.normal', lang)}
+      {mood === 'concerned' && t('mascot.concerned', lang)}
+      {mood === 'stressed' && t('mascot.stressed', lang)}
+      {mood === 'success' && t('mascot.success', lang)}
     </div>
   </div>
 );
+
 
 // ============================================
 // API CLIENT
@@ -289,21 +835,25 @@ const api = {
 };
 
 // ============================================
-// SIMULATIONS CATALOG
+// SIMULATIONS CATALOG (with translation support)
 // ============================================
 
-const SIMULATIONS = [
+const getSimulations = (lang) => [
   {
     id: 'project-apex',
-    title: 'Project Apex',
-    subtitle: 'Project Management Simulation',
-    description: 'Master the art of project management by navigating real-world challenges. Balance scope, schedule, budget, and team dynamics across multiple industry scenarios.',
+    title: lang === 'fr' ? 'Projet Apex' : 'Project Apex',
+    subtitle: lang === 'fr' ? 'Simulation de gestion de projet' : 'Project Management Simulation',
+    description: lang === 'fr' 
+      ? 'Maîtrisez l\'art de la gestion de projet en relevant des défis réels. Équilibrez le périmètre, le calendrier, le budget et la dynamique d\'équipe à travers plusieurs scénarios industriels.'
+      : 'Master the art of project management by navigating real-world challenges. Balance scope, schedule, budget, and team dynamics across multiple industry scenarios.',
     icon: '🎯',
-    category: 'Project Management',
-    difficulty: 'Intermediate',
+    category: lang === 'fr' ? 'Gestion de projet' : 'Project Management',
+    difficulty: lang === 'fr' ? 'Intermédiaire' : 'Intermediate',
     duration: '45-60 min',
     scenarios: 5,
-    skills: ['Resource Allocation', 'Risk Management', 'Team Leadership', 'Decision Making'],
+    skills: lang === 'fr' 
+      ? ['Allocation des ressources', 'Gestion des risques', 'Leadership d\'équipe', 'Prise de décision']
+      : ['Resource Allocation', 'Risk Management', 'Team Leadership', 'Decision Making'],
     featured: true,
     available: true,
     tier: 'free',
@@ -312,83 +862,114 @@ const SIMULATIONS = [
   },
   {
     id: 'market-dynamics',
-    title: 'Market Dynamics',
-    subtitle: 'Strategic Marketing Simulation',
-    description: 'Lead a marketing team through product launches, competitive battles, and market shifts.',
+    title: lang === 'fr' ? 'Dynamique de marché' : 'Market Dynamics',
+    subtitle: lang === 'fr' ? 'Simulation de marketing stratégique' : 'Strategic Marketing Simulation',
+    description: lang === 'fr'
+      ? 'Dirigez une équipe marketing à travers les lancements de produits, les batailles concurrentielles et les changements de marché.'
+      : 'Lead a marketing team through product launches, competitive battles, and market shifts.',
     icon: '📈',
-    category: 'Marketing',
-    difficulty: 'Intermediate',
+    category: lang === 'fr' ? 'Marketing' : 'Marketing',
+    difficulty: lang === 'fr' ? 'Intermédiaire' : 'Intermediate',
     duration: '30-45 min',
     scenarios: 4,
-    skills: ['Market Analysis', 'Brand Strategy', 'Budget Management'],
+    skills: lang === 'fr' 
+      ? ['Analyse de marché', 'Stratégie de marque', 'Gestion budgétaire']
+      : ['Market Analysis', 'Brand Strategy', 'Budget Management'],
     available: false,
     tier: 'pro',
     comingSoon: true
   },
   {
     id: 'supply-chain-crisis',
-    title: 'Supply Chain Crisis',
-    subtitle: 'Operations Management Simulation',
-    description: 'Navigate global supply chain disruptions, manage inventory levels, and optimize logistics.',
+    title: lang === 'fr' ? 'Crise de la chaîne d\'approvisionnement' : 'Supply Chain Crisis',
+    subtitle: lang === 'fr' ? 'Simulation de gestion des opérations' : 'Operations Management Simulation',
+    description: lang === 'fr'
+      ? 'Naviguez les perturbations de la chaîne d\'approvisionnement mondiale, gérez les niveaux de stock et optimisez la logistique.'
+      : 'Navigate global supply chain disruptions, manage inventory levels, and optimize logistics.',
     icon: '🚚',
-    category: 'Operations',
-    difficulty: 'Advanced',
+    category: lang === 'fr' ? 'Opérations' : 'Operations',
+    difficulty: lang === 'fr' ? 'Avancé' : 'Advanced',
     duration: '60-90 min',
     scenarios: 6,
-    skills: ['Logistics Planning', 'Vendor Management', 'Crisis Response'],
+    skills: lang === 'fr' 
+      ? ['Planification logistique', 'Gestion des fournisseurs', 'Réponse aux crises']
+      : ['Logistics Planning', 'Vendor Management', 'Crisis Response'],
     available: false,
     tier: 'pro',
     comingSoon: true
   },
   {
     id: 'startup-journey',
-    title: 'Startup Journey',
-    subtitle: 'Entrepreneurship Simulation',
-    description: 'Build a startup from idea to scale-up. Make critical decisions on funding, hiring, and market entry.',
+    title: lang === 'fr' ? 'Parcours de startup' : 'Startup Journey',
+    subtitle: lang === 'fr' ? 'Simulation d\'entrepreneuriat' : 'Entrepreneurship Simulation',
+    description: lang === 'fr'
+      ? 'Construisez une startup de l\'idée à la croissance. Prenez des décisions critiques sur le financement, l\'embauche et l\'entrée sur le marché.'
+      : 'Build a startup from idea to scale-up. Make critical decisions on funding, hiring, and market entry.',
     icon: '🚀',
-    category: 'Entrepreneurship',
-    difficulty: 'Advanced',
+    category: lang === 'fr' ? 'Entrepreneuriat' : 'Entrepreneurship',
+    difficulty: lang === 'fr' ? 'Avancé' : 'Advanced',
     duration: '60-90 min',
     scenarios: 5,
-    skills: ['Fundraising', 'Team Building', 'Product Strategy'],
+    skills: lang === 'fr' 
+      ? ['Collecte de fonds', 'Constitution d\'équipe', 'Stratégie produit']
+      : ['Fundraising', 'Team Building', 'Product Strategy'],
     available: false,
     tier: 'pro',
     comingSoon: true
   }
 ];
 
-const PRICING_PLANS = [
+const getPricingPlans = (lang) => [
   {
     id: 'free',
-    name: 'Free',
+    name: t('pricing.free', lang),
     price: 0,
     priceAnnual: 0,
     period: 'forever',
-    description: 'Perfect for trying out',
-    features: ['1 simulation (Project Apex)', 'Basic scenarios', 'Score tracking', 'Community support'],
-    cta: 'Current Plan',
+    description: t('pricing.freeDesc', lang),
+    features: [
+      t('pricing.feat1Sim', lang),
+      t('pricing.featBasicScenarios', lang),
+      t('pricing.featScoreTracking', lang),
+      t('pricing.featCommunitySupport', lang)
+    ],
+    cta: t('pricing.currentPlan', lang),
     popular: false
   },
   {
     id: 'pro',
-    name: 'Professional',
+    name: t('pricing.professional', lang),
     price: 19,
     priceAnnual: 190,
-    period: 'month',
-    description: 'For serious learners',
-    features: ['All simulations', 'All scenarios', 'Detailed analytics', 'Certificates', 'Priority support'],
-    cta: 'Upgrade Now',
+    period: lang === 'fr' ? 'mois' : 'month',
+    description: t('pricing.proDesc', lang),
+    features: [
+      t('pricing.featAllSimulations', lang),
+      t('pricing.featAllScenarios', lang),
+      t('pricing.featDetailedAnalytics', lang),
+      t('pricing.featCertificates', lang),
+      t('pricing.featPrioritySupport', lang)
+    ],
+    cta: t('pricing.upgradeNow', lang),
     popular: true
   },
   {
     id: 'enterprise',
-    name: 'Enterprise',
+    name: t('pricing.enterprise', lang),
     price: 199,
     priceAnnual: 1990,
-    period: 'month',
-    description: 'For teams and institutions',
-    features: ['Everything in Professional', 'Unlimited team members', 'Admin dashboard', 'Custom branding', 'LMS integration', 'Dedicated account manager', 'Custom simulation development'],
-    cta: 'Contact Sales',
+    period: lang === 'fr' ? 'mois' : 'month',
+    description: t('pricing.entDesc', lang),
+    features: [
+      t('pricing.featEverythingPro', lang),
+      t('pricing.featUnlimitedTeam', lang),
+      t('pricing.featAdminDashboard', lang),
+      t('pricing.featCustomBranding', lang),
+      t('pricing.featLmsIntegration', lang),
+      t('pricing.featDedicatedManager', lang),
+      t('pricing.featCustomDev', lang)
+    ],
+    cta: t('pricing.contactSales', lang),
     popular: false,
     hidden: true
   }
@@ -432,19 +1013,18 @@ const PRICING_PLANS = [
  *    - Each change after week 2 → -5 morale, +10 stress
  */
 
-const APEX_SCENARIOS = {
+const getApexScenarios = (lang) => ({
   tech_startup: {
     id: 'tech_startup',
-    title: 'Tech Startup',
-    subtitle: 'Software Product Launch',
+    title: t('scenarios.techStartup.title', lang),
+    subtitle: t('scenarios.techStartup.subtitle', lang),
     icon: '💻',
-    difficulty: 'Standard',
+    difficulty: t('scenarios.techStartup.difficulty', lang),
     difficultyColor: '#3b82f6',
-    description: 'You are the Project Manager at Nexus Technologies. Deliver a new SaaS platform while managing team dynamics and technical challenges.',
-    company: 'Nexus Technologies',
-    projectName: 'SaaS Platform',
+    description: t('scenarios.techStartup.description', lang),
+    company: t('scenarios.techStartup.company', lang),
+    projectName: t('scenarios.techStartup.projectName', lang),
     deliverable: 'features',
-    // Pedagogical focus: Learn basic mechanics, achievable targets
     pedagogicalFocus: 'mechanics',
     hasPrototyping: false,
     hasUncertainty: false,
@@ -455,62 +1035,57 @@ const APEX_SCENARIOS = {
       teamSize: 5, 
       quality: 85, 
       morale: 75,
-      stress: 20,      // NEW: Starting stress level
-      knowledge: 30,   // NEW: Starting knowledge (team familiarity)
+      stress: 20,
+      knowledge: 30,
     },
     weeklyCostPerPerson: 8000,
-    // CAUSAL EVENTS: Triggered by conditions, not random
     causalEvents: [
       { 
         id: 'scope_creep', 
-        title: 'Scope Creep Alert', 
-        description: 'The product owner wants to add 2 new features. Your response affects both scope and team stress.',
+        title: t('events.scope_creep.title', lang), 
+        description: t('events.scope_creep.description', lang),
         icon: '📈',
-        // Trigger condition: After week 3, if quality > 80
         triggerCondition: (state) => state.week >= 3 && state.scope.quality > 80,
         options: [
-          { id: 'accept', label: 'Accept all changes (+2 scope, +stress)', effects: { scope: 2, budget: -30000, stress: 15, morale: -5 } },
-          { id: 'negotiate', label: 'Negotiate to add 1 feature', effects: { scope: 1, budget: -15000, stress: 5 } },
-          { id: 'decline', label: 'Decline and stay focused (+morale)', effects: { morale: 8, quality: 2, stress: -5 } }
+          { id: 'accept', label: t('events.scope_creep.options.accept', lang), effects: { scope: 2, budget: -30000, stress: 15, morale: -5 } },
+          { id: 'negotiate', label: t('events.scope_creep.options.negotiate', lang), effects: { scope: 1, budget: -15000, stress: 5 } },
+          { id: 'decline', label: t('events.scope_creep.options.decline', lang), effects: { morale: 8, quality: 2, stress: -5 } }
         ]
       },
       { 
         id: 'tech_debt', 
-        title: 'Technical Debt Crisis', 
-        description: 'QA discovered critical technical debt. Addressing it now prevents larger problems later.',
+        title: t('events.tech_debt.title', lang), 
+        description: t('events.tech_debt.description', lang),
         icon: '🔧',
-        // Trigger: Mid-project if quality dropped below 75
         triggerCondition: (state) => state.week >= 4 && state.scope.quality < 75,
         options: [
-          { id: 'fix_now', label: 'Full refactor (schedule hit, quality gain)', effects: { schedule: -1, quality: 15, budget: -20000, knowledge: 10 } },
-          { id: 'patch', label: 'Quick patch', effects: { quality: 5, budget: -8000 } },
-          { id: 'defer', label: 'Document for v2 (risk)', effects: { quality: -15, stress: 10 } }
+          { id: 'fix_now', label: t('events.tech_debt.options.fix_now', lang), effects: { schedule: -1, quality: 15, budget: -20000, knowledge: 10 } },
+          { id: 'patch', label: t('events.tech_debt.options.patch', lang), effects: { quality: 5, budget: -8000 } },
+          { id: 'defer', label: t('events.tech_debt.options.defer', lang), effects: { quality: -15, stress: 10 } }
         ]
       },
       { 
         id: 'dev_resignation', 
-        title: 'Lead Developer Resigns', 
-        description: 'Your lead developer accepted a FAANG offer. This will cause knowledge loss.',
+        title: t('events.dev_resignation.title', lang), 
+        description: t('events.dev_resignation.description', lang),
         icon: '🚪',
-        // Trigger: If stress is high (>50) after week 5
         triggerCondition: (state) => state.week >= 5 && state.team.stress > 50,
         options: [
-          { id: 'counter', label: 'Counter-offer (expensive, retain knowledge)', effects: { budget: -45000, morale: 5, knowledge: 0 } },
-          { id: 'transition', label: 'Knowledge transfer period', effects: { team: -1, schedule: -1, morale: -5, knowledge: -15, stress: 15 } },
-          { id: 'contractor', label: 'Hire contractor (no knowledge loss)', effects: { budget: -55000, productivity: -0.1 } }
+          { id: 'counter', label: t('events.dev_resignation.options.counter', lang), effects: { budget: -45000, morale: 5, knowledge: 0 } },
+          { id: 'transition', label: t('events.dev_resignation.options.transition', lang), effects: { team: -1, schedule: -1, morale: -5, knowledge: -15, stress: 15 } },
+          { id: 'contractor', label: t('events.dev_resignation.options.contractor', lang), effects: { budget: -55000, productivity: -0.1 } }
         ]
       },
       { 
         id: 'team_conflict', 
-        title: 'Architecture Disagreement', 
-        description: 'Senior devs debate microservices vs monolith. Unresolved conflict will hurt productivity.',
+        title: t('events.team_conflict.title', lang), 
+        description: t('events.team_conflict.description', lang),
         icon: '🔥',
-        // Trigger: If team size > 5 and morale < 70
         triggerCondition: (state) => state.team.size > 5 && state.team.morale < 70,
         options: [
-          { id: 'mediate', label: 'Architecture review workshop (+knowledge)', effects: { budget: -8000, morale: 10, productivity: 0.1, knowledge: 8 } },
-          { id: 'decide', label: 'Executive decision (fast, some resentment)', effects: { morale: -10, productivity: 0.05 } },
-          { id: 'hybrid', label: 'Hybrid approach (compromise)', effects: { budget: -5000, morale: 5 } }
+          { id: 'mediate', label: t('events.team_conflict.options.mediate', lang), effects: { budget: -8000, morale: 10, productivity: 0.1, knowledge: 8 } },
+          { id: 'decide', label: t('events.team_conflict.options.decide', lang), effects: { morale: -10, productivity: 0.05 } },
+          { id: 'hybrid', label: t('events.team_conflict.options.hybrid', lang), effects: { budget: -5000, morale: 5 } }
         ]
       }
     ]
@@ -518,18 +1093,17 @@ const APEX_SCENARIOS = {
 
   live_show: {
     id: 'live_show',
-    title: 'Live Entertainment',
-    subtitle: 'Touring Show Production',
+    title: t('scenarios.liveShow.title', lang),
+    subtitle: t('scenarios.liveShow.subtitle', lang),
     icon: '🎪',
-    difficulty: 'Advanced',
+    difficulty: t('scenarios.liveShow.difficulty', lang),
     difficultyColor: '#f59e0b',
-    description: 'Executive Producer at Stellar Productions. Launch an ambitious touring show while managing creative talent and safety requirements.',
-    company: 'Stellar Productions',
-    projectName: 'AURORA - A Journey of Light',
+    description: t('scenarios.liveShow.description', lang),
+    company: t('scenarios.liveShow.company', lang),
+    projectName: t('scenarios.liveShow.projectName', lang),
     deliverable: 'acts',
-    // Pedagogical focus: People/creative management, high coordination needs
     pedagogicalFocus: 'people',
-    hasPrototyping: true,  // Tech rehearsals = prototypes
+    hasPrototyping: true,
     hasUncertainty: true,
     initial: { 
       budget: 2500000, 
@@ -539,46 +1113,45 @@ const APEX_SCENARIOS = {
       quality: 80, 
       morale: 80,
       stress: 25,
-      knowledge: 20,  // Lower starting knowledge - creative project
+      knowledge: 20,
     },
     weeklyCostPerPerson: 6000,
     causalEvents: [
       { 
         id: 'star_injury', 
-        title: 'Lead Performer Injury', 
-        description: 'Your star acrobat suffered a minor injury. How you handle this affects team trust.',
+        title: t('events.star_injury.title', lang), 
+        description: t('events.star_injury.description', lang),
         icon: '🤕',
         triggerCondition: (state) => state.week >= 4 && state.team.stress > 40,
         options: [
-          { id: 'rest', label: 'Full recovery time (+morale, +trust)', effects: { schedule: -2, quality: 10, morale: 15, stress: -10 } },
-          { id: 'modified', label: 'Modified choreography', effects: { quality: -5, budget: -20000 } },
-          { id: 'understudy', label: 'Promote understudy (risky)', effects: { morale: -10, quality: -10, stress: 10 } }
+          { id: 'rest', label: t('events.star_injury.options.rest', lang), effects: { schedule: -2, quality: 10, morale: 15, stress: -10 } },
+          { id: 'modified', label: t('events.star_injury.options.modified', lang), effects: { quality: -5, budget: -20000 } },
+          { id: 'understudy', label: t('events.star_injury.options.understudy', lang), effects: { morale: -10, quality: -10, stress: 10 } }
         ]
       },
       { 
         id: 'creative_conflict', 
-        title: 'Creative Vision Clash', 
-        description: 'Director and choreographer disagree on Act 3. Unresolved, this will fester.',
+        title: t('events.creative_conflict.title', lang), 
+        description: t('events.creative_conflict.description', lang),
         icon: '🎭',
         triggerCondition: (state) => state.week >= 5 && state.team.morale < 75,
         options: [
-          { id: 'director', label: "Back director's vision", effects: { morale: -15, quality: 5, stress: 5 } },
-          { id: 'choreographer', label: 'Support choreographer', effects: { morale: -10, quality: 5, stress: 5 } },
-          { id: 'workshop', label: 'Creative workshop (+knowledge)', effects: { budget: -30000, schedule: -1, quality: 15, morale: 10, knowledge: 12 } }
+          { id: 'director', label: t('events.creative_conflict.options.director', lang), effects: { morale: -15, quality: 5, stress: 5 } },
+          { id: 'choreographer', label: t('events.creative_conflict.options.choreographer', lang), effects: { morale: -10, quality: 5, stress: 5 } },
+          { id: 'workshop', label: t('events.creative_conflict.options.workshop', lang), effects: { budget: -30000, schedule: -1, quality: 15, morale: 10, knowledge: 12 } }
         ]
       },
       { 
         id: 'rigging_issue', 
-        title: 'Rigging Safety Concern', 
-        description: 'Aerial rigging may not meet safety standards. A prototype/tech rehearsal would have caught this earlier.',
+        title: t('events.rigging_issue.title', lang), 
+        description: t('events.rigging_issue.description', lang),
         icon: '⚠️',
-        // This event is MITIGATED if prototypes were built
         triggerCondition: (state) => state.week >= 6,
-        prototypeModifier: true, // If prototypes built, effects reduced
+        prototypeModifier: true,
         options: [
-          { id: 'redesign', label: 'Full redesign (safest)', effects: { budget: -150000, schedule: -2, quality: 15, stress: -10 } },
-          { id: 'reinforce', label: 'Reinforce current design', effects: { budget: -60000, quality: 5 } },
-          { id: 'simplify', label: 'Simplify aerial sequences', effects: { scope: -1, quality: -10, morale: -10 } }
+          { id: 'redesign', label: t('events.rigging_issue.options.redesign', lang), effects: { budget: -150000, schedule: -2, quality: 15, stress: -10 } },
+          { id: 'reinforce', label: t('events.rigging_issue.options.reinforce', lang), effects: { budget: -60000, quality: 5 } },
+          { id: 'simplify', label: t('events.rigging_issue.options.simplify', lang), effects: { scope: -1, quality: -10, morale: -10 } }
         ]
       }
     ]
@@ -586,18 +1159,17 @@ const APEX_SCENARIOS = {
 
   construction: {
     id: 'construction',
-    title: 'Construction',
-    subtitle: 'Commercial Building Project',
+    title: t('scenarios.construction.title', lang),
+    subtitle: t('scenarios.construction.subtitle', lang),
     icon: '🏗️',
-    difficulty: 'Standard',
+    difficulty: t('scenarios.construction.difficulty', lang),
     difficultyColor: '#3b82f6',
-    description: 'Project Manager at UrbanCore Construction. Build a 12-story mixed-use building while managing permits, weather, and safety.',
-    company: 'UrbanCore Construction',
-    projectName: 'Metropolitan Tower',
+    description: t('scenarios.construction.description', lang),
+    company: t('scenarios.construction.company', lang),
+    projectName: t('scenarios.construction.projectName', lang),
     deliverable: 'floors',
-    // Pedagogical focus: Risk management, prototyping value
     pedagogicalFocus: 'risk',
-    hasPrototyping: true,  // Mockups, inspections = prototypes
+    hasPrototyping: true,
     hasUncertainty: true,
     initial: { 
       budget: 8000000, 
@@ -607,76 +1179,74 @@ const APEX_SCENARIOS = {
       quality: 85, 
       morale: 70,
       stress: 30,
-      knowledge: 40,  // Higher starting knowledge - experienced crew
+      knowledge: 40,
     },
     weeklyCostPerPerson: 4500,
     causalEvents: [
       { 
         id: 'weather_delay', 
-        title: 'Severe Weather Alert', 
-        description: 'Major storm forecast for 10 days. Your choice affects both schedule and team safety.',
+        title: t('events.weather_delay.title', lang), 
+        description: t('events.weather_delay.description', lang),
         icon: '🌧️',
         triggerCondition: (state) => state.week >= 4 && state.week <= 12,
         options: [
-          { id: 'pause', label: 'Pause outdoor work (safe)', effects: { schedule: -2, morale: 5, stress: -5 } },
-          { id: 'interior', label: 'Interior work only', effects: { schedule: -1, budget: -50000, knowledge: 5 } },
-          { id: 'push', label: 'Continue with caution (risky)', effects: { budget: -80000, quality: -5, morale: -10, stress: 15 } }
+          { id: 'pause', label: t('events.weather_delay.options.pause', lang), effects: { schedule: -2, morale: 5, stress: -5 } },
+          { id: 'interior', label: t('events.weather_delay.options.interior', lang), effects: { schedule: -1, budget: -50000, knowledge: 5 } },
+          { id: 'push', label: t('events.weather_delay.options.push', lang), effects: { budget: -80000, quality: -5, morale: -10, stress: 15 } }
         ]
       },
       { 
         id: 'permit_issue', 
-        title: 'Permit Inspection Failed', 
-        description: 'Inspector flagged electrical issues. A prototype/mockup inspection would have caught this earlier.',
+        title: t('events.permit_issue.title', lang), 
+        description: t('events.permit_issue.description', lang),
         icon: '📋',
         triggerCondition: (state) => state.week >= 6,
         prototypeModifier: true,
         options: [
-          { id: 'rework', label: 'Full rework (+quality)', effects: { schedule: -2, budget: -120000, quality: 10, knowledge: 8 } },
-          { id: 'appeal', label: 'Appeal decision', effects: { schedule: -1, budget: -30000, stress: 10 } },
-          { id: 'expedite', label: 'Hire specialist (expensive)', effects: { budget: -180000 } }
+          { id: 'rework', label: t('events.permit_issue.options.rework', lang), effects: { schedule: -2, budget: -120000, quality: 10, knowledge: 8 } },
+          { id: 'appeal', label: t('events.permit_issue.options.appeal', lang), effects: { schedule: -1, budget: -30000, stress: 10 } },
+          { id: 'expedite', label: t('events.permit_issue.options.expedite', lang), effects: { budget: -180000 } }
         ]
       },
       { 
         id: 'safety_incident', 
-        title: 'Safety Near-Miss', 
-        description: 'Scaffold bracket failed. OSHA will investigate. This affects team morale and stress significantly.',
+        title: t('events.safety_incident.title', lang), 
+        description: t('events.safety_incident.description', lang),
         icon: '🦺',
         triggerCondition: (state) => state.week >= 5 && state.team.stress > 45,
         options: [
-          { id: 'full_audit', label: 'Full safety audit (+trust)', effects: { schedule: -1, budget: -60000, quality: 10, morale: 15, stress: -15, knowledge: 10 } },
-          { id: 'targeted', label: 'Targeted inspection', effects: { budget: -25000, quality: 5 } },
-          { id: 'minimal', label: 'Document and continue (risky)', effects: { quality: -10, morale: -15, stress: 20 } }
+          { id: 'full_audit', label: t('events.safety_incident.options.full_audit', lang), effects: { schedule: -1, budget: -60000, quality: 10, morale: 15, stress: -15, knowledge: 10 } },
+          { id: 'targeted', label: t('events.safety_incident.options.targeted', lang), effects: { budget: -25000, quality: 5 } },
+          { id: 'minimal', label: t('events.safety_incident.options.minimal', lang), effects: { quality: -10, morale: -15, stress: 20 } }
         ]
       },
       { 
         id: 'materials_shortage', 
-        title: 'Materials Shortage', 
-        description: 'Supply chain issue: steel delivery delayed 3 weeks. Prototyping/early ordering would have mitigated this.',
+        title: t('events.materials_shortage.title', lang), 
+        description: t('events.materials_shortage.description', lang),
         icon: '📦',
         triggerCondition: (state) => state.week >= 7,
         prototypeModifier: true,
         options: [
-          { id: 'wait', label: 'Wait for delivery', effects: { schedule: -3, morale: -10, stress: 15 } },
-          { id: 'alternative', label: 'Source alternative supplier', effects: { budget: -200000, schedule: -1 } },
-          { id: 'redesign', label: 'Redesign with available materials', effects: { budget: -100000, quality: -5, knowledge: 5 } }
+          { id: 'wait', label: t('events.materials_shortage.options.wait', lang), effects: { schedule: -3, morale: -10, stress: 15 } },
+          { id: 'alternative', label: t('events.materials_shortage.options.alternative', lang), effects: { budget: -200000, schedule: -1 } },
+          { id: 'redesign', label: t('events.materials_shortage.options.redesign', lang), effects: { budget: -100000, quality: -5, knowledge: 5 } }
         ]
       }
     ]
   },
 
-  // NEW SCENARIO: High-Uncertainty R&D Project
   rd_innovation: {
     id: 'rd_innovation',
-    title: 'R&D Innovation',
-    subtitle: 'New Technology Development',
+    title: t('scenarios.rdInnovation.title', lang),
+    subtitle: t('scenarios.rdInnovation.subtitle', lang),
     icon: '🔬',
-    difficulty: 'Expert',
+    difficulty: t('scenarios.rdInnovation.difficulty', lang),
     difficultyColor: '#dc2626',
-    description: 'Lead a cutting-edge R&D project with high uncertainty. Prototyping is essential to surface problems early.',
-    company: 'FutureTech Labs',
-    projectName: 'Quantum Sensor Array',
+    description: t('scenarios.rdInnovation.description', lang),
+    company: t('scenarios.rdInnovation.company', lang),
+    projectName: t('scenarios.rdInnovation.projectName', lang),
     deliverable: 'milestones',
-    // Pedagogical focus: Prototyping value in uncertainty
     pedagogicalFocus: 'prototyping',
     hasPrototyping: true,
     hasUncertainty: true,
@@ -685,53 +1255,53 @@ const APEX_SCENARIOS = {
       weeks: 14, 
       scope: 10, 
       teamSize: 8, 
-      quality: 75,  // Lower starting quality - R&D uncertainty
+      quality: 75,
       morale: 85,
-      stress: 35,   // Higher stress - cutting edge work
-      knowledge: 25, // Low knowledge - novel technology
+      stress: 35,
+      knowledge: 25,
     },
     weeklyCostPerPerson: 10000,
     causalEvents: [
       { 
         id: 'tech_failure', 
-        title: 'Core Technology Failure', 
-        description: 'The main sensor approach isn\'t working as expected. Prototypes would have revealed this earlier.',
+        title: t('events.tech_failure.title', lang), 
+        description: t('events.tech_failure.description', lang),
         icon: '💥',
         triggerCondition: (state) => state.week >= 5,
-        prototypeModifier: true, // Severity significantly reduced if prototypes built
+        prototypeModifier: true,
         options: [
-          { id: 'pivot', label: 'Pivot to backup approach', effects: { scope: -2, budget: -200000, knowledge: 15, stress: -10 } },
-          { id: 'iterate', label: 'Iterate on current design', effects: { schedule: -3, budget: -150000, quality: -10, stress: 15 } },
-          { id: 'parallel', label: 'Run parallel approaches', effects: { budget: -400000, team: 2, stress: 20 } }
+          { id: 'pivot', label: t('events.tech_failure.options.pivot', lang), effects: { scope: -2, budget: -200000, knowledge: 15, stress: -10 } },
+          { id: 'iterate', label: t('events.tech_failure.options.iterate', lang), effects: { schedule: -3, budget: -150000, quality: -10, stress: 15 } },
+          { id: 'parallel', label: t('events.tech_failure.options.parallel', lang), effects: { budget: -400000, team: 2, stress: 20 } }
         ]
       },
       { 
         id: 'breakthrough', 
-        title: 'Unexpected Breakthrough', 
-        description: 'A team member discovered a shortcut. How you capitalize on it matters.',
+        title: t('events.breakthrough.title', lang), 
+        description: t('events.breakthrough.description', lang),
         icon: '💡',
         triggerCondition: (state) => state.week >= 6 && state.team.knowledge > 50,
         options: [
-          { id: 'focus', label: 'Focus resources on breakthrough', effects: { quality: 15, morale: 15, knowledge: 10, stress: -10 } },
-          { id: 'validate', label: 'Build prototype to validate', effects: { budget: -50000, quality: 10, knowledge: 20 } },
-          { id: 'patent', label: 'Document for patent first', effects: { schedule: -1, morale: -5 } }
+          { id: 'focus', label: t('events.breakthrough.options.focus', lang), effects: { quality: 15, morale: 15, knowledge: 10, stress: -10 } },
+          { id: 'validate', label: t('events.breakthrough.options.validate', lang), effects: { budget: -50000, quality: 10, knowledge: 20 } },
+          { id: 'patent', label: t('events.breakthrough.options.patent', lang), effects: { schedule: -1, morale: -5 } }
         ]
       },
       { 
         id: 'competitor_announcement', 
-        title: 'Competitor Announcement', 
-        description: 'A competitor announced a similar product launching in 8 weeks. Time pressure increases.',
+        title: t('events.competitor_announcement.title', lang), 
+        description: t('events.competitor_announcement.description', lang),
         icon: '⚡',
         triggerCondition: (state) => state.week >= 7,
         options: [
-          { id: 'accelerate', label: 'Accelerate timeline (-3 weeks)', effects: { schedule: -3, stress: 25, morale: -10 } },
-          { id: 'differentiate', label: 'Pivot to differentiation (+scope)', effects: { scope: 2, budget: -100000, knowledge: 5 } },
-          { id: 'stay_course', label: 'Stay the course (quality focus)', effects: { quality: 10, morale: 5 } }
+          { id: 'accelerate', label: t('events.competitor_announcement.options.accelerate', lang), effects: { schedule: -3, stress: 25, morale: -10 } },
+          { id: 'differentiate', label: t('events.competitor_announcement.options.differentiate', lang), effects: { scope: 2, budget: -100000, knowledge: 5 } },
+          { id: 'stay_course', label: t('events.competitor_announcement.options.stay_course', lang), effects: { quality: 10, morale: 5 } }
         ]
       }
     ]
   }
-};
+});
 
 // ============================================
 // ENHANCED GAME MECHANICS - HBP CAUSAL MODEL
@@ -741,56 +1311,56 @@ const APEX_SCENARIOS = {
  * MEETING TYPES (replacing simple "boost morale")
  * Based on HBP simulation's three meeting types with distinct effects
  */
-const MEETING_TYPES = {
+const getMeetingTypes = (lang) => ({
   coaching: {
     id: 'coaching',
-    name: 'One-on-One Coaching',
-    description: 'Build team knowledge and skills. Best early in project.',
+    name: t('meetings.coaching.name', lang),
+    description: t('meetings.coaching.description', lang),
     hoursPerWeek: 2,
-    costPerSession: 500, // per team member
+    costPerSession: 500,
     effects: {
-      knowledge: 8,      // Primary benefit: builds knowledge
-      morale: 3,         // Secondary: some morale boost
-      stress: -2,        // Slight stress relief
+      knowledge: 8,
+      morale: 3,
+      stress: -2,
     },
     icon: '🎓'
   },
   standup: {
     id: 'standup',
-    name: 'Daily Standups',
-    description: 'Prevent coordination mistakes. Essential for larger teams.',
-    hoursPerWeek: 1.25, // 15 min/day × 5 days
-    costPerSession: 0,  // No direct cost, just time
+    name: t('meetings.standup.name', lang),
+    description: t('meetings.standup.description', lang),
+    hoursPerWeek: 1.25,
+    costPerSession: 0,
     effects: {
-      coordination: 10,  // Reduces mistake rate
-      productivity: 0.02, // Slight productivity boost from alignment
+      coordination: 10,
+      productivity: 0.02,
     },
     icon: '📊'
   },
   status: {
     id: 'status',
-    name: 'Status Review',
-    description: 'Team alignment and stakeholder communication.',
+    name: t('meetings.status.name', lang),
+    description: t('meetings.status.description', lang),
     hoursPerWeek: 2,
-    costPerSession: 300, // room, materials
+    costPerSession: 300,
     effects: {
-      morale: 5,        // Team feels heard
-      stress: -5,       // Clarity reduces anxiety
-      stakeholder: 10,  // Better stakeholder relations
+      morale: 5,
+      stress: -5,
+      stakeholder: 10,
     },
     icon: '📋'
   }
-};
+});
 
 /*
  * PROTOTYPING MECHANIC
  * Prototypes cost time/money upfront but reduce severity of uncertainty events
  */
 const PROTOTYPE_COST = {
-  tech_startup: { budget: 15000, time: 0.5 }, // 0.5 = half a week of reduced progress
-  live_show: { budget: 50000, time: 1 },      // Tech rehearsal
-  construction: { budget: 80000, time: 1 },   // Mockup/inspection
-  rd_innovation: { budget: 100000, time: 1 }, // Lab prototype
+  tech_startup: { budget: 15000, time: 0.5 },
+  live_show: { budget: 50000, time: 1 },
+  construction: { budget: 80000, time: 1 },
+  rd_innovation: { budget: 100000, time: 1 },
 };
 
 /*
@@ -801,28 +1371,19 @@ const PROTOTYPE_COST = {
 const calculateStress = (state, scenario) => {
   let stress = state.team.stress;
   
-  // Factor 1: Schedule pressure (unrealistic deadline)
   const weeksRemaining = state.schedule.deadline - state.week;
   const workRemaining = state.scope.totalFeatures - state.scope.completed;
   const weeklyCapacity = calculateWeeklyCapacity(state.team, state);
   const weeksNeeded = workRemaining / (weeklyCapacity * state.scope.totalFeatures);
   
   if (weeksNeeded > weeksRemaining) {
-    // Schedule is unrealistic - add stress proportional to gap
     stress += Math.min(15, (weeksNeeded - weeksRemaining) * 5);
   }
   
-  // Factor 2: Recent team changes (hiring/firing causes transition stress)
-  // This is handled in action effects
-  
-  // Factor 3: Low knowledge early in project
   if (state.team.knowledge < 40 && state.week <= 4) {
     stress += 5;
   }
   
-  // Factor 4: Crunch/overtime (handled in action effects)
-  
-  // Natural stress decay if conditions are good
   if (weeksNeeded <= weeksRemaining && state.team.morale > 70) {
     stress -= 3;
   }
@@ -830,42 +1391,41 @@ const calculateStress = (state, scenario) => {
   return Math.max(0, Math.min(100, stress));
 };
 
-// Stress affects morale (HBP: high stress → lower morale)
+// Stress affects morale
 const calculateMoraleFromStress = (currentMorale, stress) => {
   let moraleDelta = 0;
   
   if (stress > 60) {
-    moraleDelta = -((stress - 60) * 0.3); // High stress drains morale
+    moraleDelta = -((stress - 60) * 0.3);
   } else if (stress < 30) {
-    moraleDelta = 2; // Low stress allows morale recovery
+    moraleDelta = 2;
   }
   
   return Math.max(10, Math.min(100, currentMorale + moraleDelta));
 };
 
-// Morale affects productivity (HBP: low morale → fewer hours worked)
+// Morale affects productivity
 const calculateProductivityFromMorale = (baseProductivity, morale) => {
   if (morale >= 80) {
-    return baseProductivity * 1.1; // High morale bonus
+    return baseProductivity * 1.1;
   } else if (morale >= 60) {
     return baseProductivity;
   } else if (morale >= 40) {
-    return baseProductivity * 0.85; // Moderate penalty
+    return baseProductivity * 0.85;
   } else {
-    return baseProductivity * 0.65; // Severe penalty
+    return baseProductivity * 0.65;
   }
 };
 
-// Knowledge affects mistake rate (HBP: low knowledge → more rework)
+// Knowledge affects mistake rate
 const calculateMistakeRate = (knowledge, hasStandups) => {
-  let baseRate = 0.15 - (knowledge * 0.001); // 15% base, reduced by knowledge
+  let baseRate = 0.15 - (knowledge * 0.001);
   
-  // Standups reduce coordination mistakes
   if (hasStandups) {
-    baseRate *= 0.7; // 30% reduction
+    baseRate *= 0.7;
   }
   
-  return Math.max(0.02, baseRate); // Minimum 2% mistake rate
+  return Math.max(0.02, baseRate);
 };
 
 // Weekly capacity calculation (enhanced)
@@ -874,12 +1434,8 @@ const calculateWeeklyCapacity = (team, state) => {
   const moraleAdjustedProductivity = calculateProductivityFromMorale(team.productivity, team.morale);
   const mistakeRate = calculateMistakeRate(state.team.knowledge, state.meetings?.standup);
   
-  // Effective capacity accounts for mistakes (rework)
   const effectiveCapacity = (team.size * moraleAdjustedProductivity * (team.morale / 100)) * (1 - mistakeRate);
   
-  // Normalize progress so scenarios complete in roughly their intended duration
-  // Dividing by team size prevents large teams from finishing too fast
-  // The 0.11 multiplier is tuned for ~10-12 week completion at good morale
   return (effectiveCapacity / team.size) * 0.11;
 };
 
@@ -894,108 +1450,101 @@ const calculateScheduleConsistencyPenalty = (scheduleChanges) => {
   if (scheduleChanges <= 1) return { morale: 0, stress: 0 };
   if (scheduleChanges === 2) return { morale: -3, stress: 5 };
   if (scheduleChanges === 3) return { morale: -8, stress: 10 };
-  return { morale: -15, stress: 20 }; // 4+ changes
+  return { morale: -15, stress: 20 };
 };
 
 // Enhanced scoring (HBP-style with bonus for consistency)
 const calculateScore = (state) => {
-  const budgetScore = Math.max(0, (1 - state.budget.spent / state.budget.total)) * 200;
-  const scheduleScore = state.week <= state.schedule.deadline 
-    ? 200 
-    : Math.max(0, 200 - (state.week - state.schedule.deadline) * 40);
+  const budgetScore = Math.max(0, ((state.budget.total - state.budget.spent) / state.budget.total) * 300);
+  const scheduleBonus = state.week <= state.schedule.deadline ? 200 : Math.max(0, 200 - ((state.week - state.schedule.deadline) * 50));
   const scopeScore = (state.scope.completed / state.scope.totalFeatures) * 200;
   const qualityScore = (state.scope.quality / 100) * 200;
+  const teamScore = (state.moraleHistory.reduce((a, b) => a + b, 0) / state.moraleHistory.length / 100) * 50;
   
-  // NEW: Team process score (HBP has this as 100 points)
-  const avgMorale = state.moraleHistory 
-    ? state.moraleHistory.reduce((a, b) => a + b, 0) / state.moraleHistory.length 
-    : state.team.morale;
-  const teamProcessScore = (avgMorale / 100) * 100;
+  // Consistency bonus: reward not changing schedule
+  const consistencyBonus = state.scheduleChanges <= 1 ? 50 : state.scheduleChanges <= 2 ? 25 : 0;
   
-  // NEW: Bonus for schedule consistency
-  const consistencyBonus = state.scheduleChanges <= 1 ? 50 : state.scheduleChanges === 2 ? 25 : 0;
+  // Prototype bonus
+  const prototypeBonus = state.prototypesBuilt * 25;
   
-  // NEW: Prototype bonus (if applicable and prototypes were built)
-  const prototypeBonus = state.prototypesBuilt > 0 ? state.prototypesBuilt * 25 : 0;
-  
-  return Math.round(budgetScore + scheduleScore + scopeScore + qualityScore + teamProcessScore + consistencyBonus + prototypeBonus);
+  return Math.round(budgetScore + scheduleBonus + scopeScore + qualityScore + teamScore + consistencyBonus + prototypeBonus);
 };
 
+// Grade calculation
 const getGrade = (score) => {
   if (score >= 900) return 'A+';
-  if (score >= 800) return 'A';
-  if (score >= 700) return 'B+';
-  if (score >= 600) return 'B';
-  if (score >= 500) return 'C';
+  if (score >= 850) return 'A';
+  if (score >= 800) return 'A-';
+  if (score >= 750) return 'B+';
+  if (score >= 700) return 'B';
+  if (score >= 650) return 'B-';
+  if (score >= 600) return 'C+';
+  if (score >= 550) return 'C';
+  if (score >= 500) return 'C-';
+  if (score >= 450) return 'D+';
   if (score >= 400) return 'D';
   return 'F';
 };
 
-// Enhanced initial state with new fields
-const createApexInitialState = (scenario) => ({
-  scenario: scenario.id,
-  week: 1,
-  totalWeeks: scenario.initial.weeks,
-  budget: { total: scenario.initial.budget, spent: 0 },
-  schedule: { 
-    deadline: scenario.initial.weeks,
-    originalDeadline: scenario.initial.weeks // Track original for consistency
-  },
-  scope: { 
-    totalFeatures: scenario.initial.scope, 
-    completed: 0, 
-    quality: scenario.initial.quality 
-  },
-  team: { 
-    size: scenario.initial.teamSize, 
-    morale: scenario.initial.morale, 
-    productivity: 1.0,
-    stress: scenario.initial.stress,
-    knowledge: scenario.initial.knowledge
-  },
-  // NEW: Meeting tracking
-  meetings: {
-    coaching: false,
-    standup: false,
-    status: false
-  },
-  // NEW: Schedule change tracking
-  scheduleChanges: 0,
-  // NEW: Prototype tracking
-  prototypesBuilt: 0,
-  maxPrototypes: scenario.hasPrototyping ? 3 : 0,
-  // NEW: Morale history for team process score
-  moraleHistory: [scenario.initial.morale],
-  // Decision tracking
-  decisions: [],
-  triggeredEvents: [], // Track which events have fired
-  gamePhase: 'playing',
-  currentEvent: null,
-  startTime: Date.now()
-});
+// Get scope levels for a scenario (translated)
+const getScopeLevels = (scenarioId, lang) => {
+  const levels = {
+    tech_startup: [
+      { level: 1, name: t('deliverables.tech_startup.level1.name', lang), desc: t('deliverables.tech_startup.level1.desc', lang), tasks: 3 },
+      { level: 2, name: t('deliverables.tech_startup.level2.name', lang), desc: t('deliverables.tech_startup.level2.desc', lang), tasks: 4 },
+      { level: 3, name: t('deliverables.tech_startup.level3.name', lang), desc: t('deliverables.tech_startup.level3.desc', lang), tasks: 3 },
+      { level: 4, name: t('deliverables.tech_startup.level4.name', lang), desc: t('deliverables.tech_startup.level4.desc', lang), tasks: 2 }
+    ],
+    live_show: [
+      { level: 1, name: t('deliverables.live_show.level1.name', lang), desc: t('deliverables.live_show.level1.desc', lang), tasks: 2 },
+      { level: 2, name: t('deliverables.live_show.level2.name', lang), desc: t('deliverables.live_show.level2.desc', lang), tasks: 2 },
+      { level: 3, name: t('deliverables.live_show.level3.name', lang), desc: t('deliverables.live_show.level3.desc', lang), tasks: 2 },
+      { level: 4, name: t('deliverables.live_show.level4.name', lang), desc: t('deliverables.live_show.level4.desc', lang), tasks: 2 }
+    ],
+    construction: [
+      { level: 1, name: t('deliverables.construction.level1.name', lang), desc: t('deliverables.construction.level1.desc', lang), tasks: 3 },
+      { level: 2, name: t('deliverables.construction.level2.name', lang), desc: t('deliverables.construction.level2.desc', lang), tasks: 4 },
+      { level: 3, name: t('deliverables.construction.level3.name', lang), desc: t('deliverables.construction.level3.desc', lang), tasks: 3 }
+    ],
+    rd_innovation: [
+      { level: 1, name: t('deliverables.rd_innovation.level1.name', lang), desc: t('deliverables.rd_innovation.level1.desc', lang), tasks: 2 },
+      { level: 2, name: t('deliverables.rd_innovation.level2.name', lang), desc: t('deliverables.rd_innovation.level2.desc', lang), tasks: 3 },
+      { level: 3, name: t('deliverables.rd_innovation.level3.name', lang), desc: t('deliverables.rd_innovation.level3.desc', lang), tasks: 3 },
+      { level: 4, name: t('deliverables.rd_innovation.level4.name', lang), desc: t('deliverables.rd_innovation.level4.desc', lang), tasks: 2 }
+    ]
+  };
+  return levels[scenarioId] || [];
+};
+
+// Free trial limit
+const FREE_TRIAL_WEEKS = 3;
 
 // ============================================
 // MAIN APP COMPONENT
 // ============================================
 
-export default function BizSimHub() {
-  // Language state - persisted in localStorage
-  const [lang, setLang] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('bizsimhub-lang') || 'en';
-    }
-    return 'en';
-  });
+function App() {
+  // Language state
+  const [lang, setLang] = useState(() => localStorage.getItem('bizsimhub-lang') || 'en');
   
+  // Page/navigation state
   const [currentPage, setCurrentPage] = useState('landing');
+  
+  // Auth state
   const [currentUser, setCurrentUser] = useState(null);
   const [authMode, setAuthMode] = useState('login');
   const [authError, setAuthError] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
+  
+  // Subscription/billing state
+  const [subscription, setSubscription] = useState(null);
   const [billingCycle, setBillingCycle] = useState('monthly');
   const [checkoutLoading, setCheckoutLoading] = useState(null);
+  
+  // User data
   const [userScores, setUserScores] = useState({ scores: [], bestScores: [] });
-  const [subscription, setSubscription] = useState(null);
+  
+  // UI state
   const [toast, setToast] = useState(null);
   
   // Simulation state
@@ -1004,15 +1553,17 @@ export default function BizSimHub() {
   const [gameState, setGameState] = useState(null);
   const [simPhase, setSimPhase] = useState('select');
   
-  // NEW: How to Play modal
-  const [showHowToPlay, setShowHowToPlay] = useState(false);
-  
-  // NEW: Paywall modal for free users
+  // Paywall modal for free users
   const [showPaywall, setShowPaywall] = useState(false);
-  const FREE_TRIAL_WEEKS = 3; // Allow free users to play until week 3
   
-  // NEW: Brief tab for HBP-style intro
+  // Brief tab for HBP-style intro
   const [briefTab, setBriefTab] = useState('brief');
+
+  // Get translated data
+  const SIMULATIONS = getSimulations(lang);
+  const PRICING_PLANS = getPricingPlans(lang);
+  const APEX_SCENARIOS = getApexScenarios(lang);
+  const MEETING_TYPES = getMeetingTypes(lang);
 
   // Toast helper
   const showToast = (message, type = 'info') => {
@@ -1052,10 +1603,10 @@ export default function BizSimHub() {
         setCurrentUser(data.user);
         setCurrentPage('dashboard');
         loadUserData();
-        showToast('🎉 Successfully signed in with Google!', 'success');
+        showToast(lang === 'fr' ? '🎉 Connexion Google réussie!' : '🎉 Successfully signed in with Google!', 'success');
       }).catch(() => {
         api.setToken(null);
-        showToast('Authentication failed. Please try again.', 'error');
+        showToast(lang === 'fr' ? 'Échec de l\'authentification. Veuillez réessayer.' : 'Authentication failed. Please try again.', 'error');
       });
       window.history.replaceState({}, '', window.location.pathname);
     }
@@ -1063,13 +1614,13 @@ export default function BizSimHub() {
     // Handle Google OAuth errors
     const authError = params.get('error');
     if (authError) {
-      showToast('Google sign-in failed. Please try again.', 'error');
+      showToast(lang === 'fr' ? 'Échec de la connexion Google. Veuillez réessayer.' : 'Google sign-in failed. Please try again.', 'error');
       window.history.replaceState({}, '', window.location.pathname);
     }
     
     // Check for success redirect from Stripe
     if (params.get('session_id')) {
-      showToast('🎉 Payment successful! Your subscription is now active.', 'success');
+      showToast(lang === 'fr' ? '🎉 Paiement réussi! Votre abonnement est maintenant actif.' : '🎉 Payment successful! Your subscription is now active.', 'success');
       window.history.replaceState({}, '', window.location.pathname);
     }
   }, []);
@@ -1112,7 +1663,7 @@ export default function BizSimHub() {
       api.setToken(data.token);
       setCurrentUser(data.user);
       setCurrentPage('dashboard');
-      showToast('Welcome to BizSimHub! 🎉', 'success');
+      showToast(lang === 'fr' ? 'Bienvenue sur BizSimHub! 🎉' : 'Welcome to BizSimHub! 🎉', 'success');
     } catch (e) {
       setAuthError(e.message);
     } finally {
@@ -1141,7 +1692,7 @@ export default function BizSimHub() {
       const data = await api.createCheckoutSession(planId, billingCycle);
       window.location.href = data.url;
     } catch (e) {
-      showToast('Failed to start checkout. Please try again.', 'error');
+      showToast(lang === 'fr' ? 'Échec du paiement. Veuillez réessayer.' : 'Failed to start checkout. Please try again.', 'error');
     } finally {
       setCheckoutLoading(null);
     }
@@ -1152,7 +1703,7 @@ export default function BizSimHub() {
       const data = await api.createPortalSession();
       window.location.href = data.url;
     } catch (e) {
-      showToast('Failed to open subscription portal.', 'error');
+      showToast(lang === 'fr' ? 'Échec de l\'ouverture du portail d\'abonnement.' : 'Failed to open subscription portal.', 'error');
     }
   };
 
@@ -1168,12 +1719,40 @@ export default function BizSimHub() {
     setSimPhase('brief');
   };
 
+  // Initialize game state
+  const createApexInitialState = (scenario) => ({
+    week: 1,
+    budget: { total: scenario.initial.budget, spent: 0 },
+    schedule: { deadline: scenario.initial.weeks },
+    scope: { 
+      totalFeatures: scenario.initial.scope, 
+      completed: 0, 
+      quality: scenario.initial.quality 
+    },
+    team: { 
+      size: scenario.initial.teamSize, 
+      morale: scenario.initial.morale, 
+      productivity: 0.8,
+      stress: scenario.initial.stress,
+      knowledge: scenario.initial.knowledge
+    },
+    gamePhase: 'action',
+    currentEvent: null,
+    usedEvents: [],
+    moraleHistory: [scenario.initial.morale],
+    decisions: [],
+    meetings: { coaching: false, standup: false, status: false },
+    prototypesBuilt: 0,
+    maxPrototypes: scenario.hasPrototyping ? 3 : 0,
+    scheduleChanges: 0
+  });
+
   const beginSimulation = () => {
     setGameState(createApexInitialState(selectedScenario));
     setSimPhase('playing');
   };
 
-  // ENHANCED ACTION HANDLER with causal effects
+  // Action handler
   const handleAction = (action) => {
     setGameState(prev => {
       const newState = { ...prev };
@@ -1185,8 +1764,8 @@ export default function BizSimHub() {
             ...prev.team, 
             size: prev.team.size + 1,
             morale: Math.min(100, prev.team.morale + 3),
-            stress: prev.team.stress + 8, // Hiring causes transition stress
-            knowledge: Math.max(prev.team.knowledge - 3, 10) // Dilutes team knowledge slightly
+            stress: prev.team.stress + 8,
+            knowledge: Math.max(prev.team.knowledge - 3, 10)
           };
           newState.budget = { ...prev.budget, spent: prev.budget.spent + action.cost };
           break;
@@ -1195,93 +1774,84 @@ export default function BizSimHub() {
           newState.team = { 
             ...prev.team, 
             size: Math.max(2, prev.team.size - 1),
-            morale: Math.max(0, prev.team.morale - 12), // Firing hurts morale more
-            stress: prev.team.stress + 10, // Also stressful
-            knowledge: Math.max(prev.team.knowledge - 8, 10) // Knowledge loss
+            morale: Math.max(0, prev.team.morale - 12),
+            stress: prev.team.stress + 10,
+            knowledge: Math.max(prev.team.knowledge - 8, 10)
           };
           break;
           
-        // NEW: Meeting type actions (replacing simple boost_morale)
         case 'meeting_coaching':
-          const coachingCost = MEETING_TYPES.coaching.costPerSession * prev.team.size;
-          newState.budget = { ...prev.budget, spent: prev.budget.spent + coachingCost };
-          newState.team = { 
-            ...prev.team, 
-            knowledge: Math.min(100, prev.team.knowledge + MEETING_TYPES.coaching.effects.knowledge),
-            morale: Math.min(100, prev.team.morale + MEETING_TYPES.coaching.effects.morale),
-            stress: Math.max(0, prev.team.stress + MEETING_TYPES.coaching.effects.stress)
-          };
-          newState.meetings = { ...prev.meetings, coaching: true };
+          if (!prev.meetings.coaching) {
+            newState.meetings = { ...prev.meetings, coaching: true };
+            newState.team = {
+              ...prev.team,
+              knowledge: Math.min(100, prev.team.knowledge + 8),
+              morale: Math.min(100, prev.team.morale + 3),
+              stress: Math.max(0, prev.team.stress - 2)
+            };
+            newState.budget = { ...prev.budget, spent: prev.budget.spent + (500 * prev.team.size) };
+          }
           break;
           
         case 'meeting_standup':
-          newState.team = { 
-            ...prev.team, 
-            productivity: Math.min(1.5, prev.team.productivity + MEETING_TYPES.standup.effects.productivity)
-          };
-          newState.meetings = { ...prev.meetings, standup: true };
+          if (!prev.meetings.standup) {
+            newState.meetings = { ...prev.meetings, standup: true };
+            newState.team = { ...prev.team, productivity: prev.team.productivity + 0.02 };
+          }
           break;
           
         case 'meeting_status':
-          const statusCost = MEETING_TYPES.status.costPerSession;
-          newState.budget = { ...prev.budget, spent: prev.budget.spent + statusCost };
-          newState.team = { 
-            ...prev.team, 
-            morale: Math.min(100, prev.team.morale + MEETING_TYPES.status.effects.morale),
-            stress: Math.max(0, prev.team.stress + MEETING_TYPES.status.effects.stress)
-          };
-          newState.meetings = { ...prev.meetings, status: true };
+          if (!prev.meetings.status) {
+            newState.meetings = { ...prev.meetings, status: true };
+            newState.team = {
+              ...prev.team,
+              morale: Math.min(100, prev.team.morale + 5),
+              stress: Math.max(0, prev.team.stress - 5)
+            };
+            newState.budget = { ...prev.budget, spent: prev.budget.spent + 300 };
+          }
           break;
           
         case 'quality_review':
-          newState.budget = { ...prev.budget, spent: prev.budget.spent + action.cost };
           newState.scope = { ...prev.scope, quality: Math.min(100, prev.scope.quality + 5) };
-          newState.team = { ...prev.team, knowledge: Math.min(100, prev.team.knowledge + 2) };
+          newState.budget = { ...prev.budget, spent: prev.budget.spent + action.cost };
+          newState.team = { ...prev.team, knowledge: Math.min(100, prev.team.knowledge + 3) };
           break;
           
         case 'crunch':
-          newState.budget = { ...prev.budget, spent: prev.budget.spent + action.cost };
-          newState.scope = { ...prev.scope, completed: prev.scope.completed + 0.5 };
+          const crunchProgress = calculateWeeklyProgress(prev.team, prev.scope, prev) * 0.3;
+          newState.scope = { 
+            ...prev.scope, 
+            completed: Math.min(prev.scope.totalFeatures, prev.scope.completed + crunchProgress * prev.scope.totalFeatures),
+            quality: Math.max(50, prev.scope.quality - 3)
+          };
           newState.team = { 
             ...prev.team, 
-            morale: Math.max(10, prev.team.morale - 15),
-            stress: Math.min(100, prev.team.stress + 20) // Crunch is very stressful
+            morale: Math.max(0, prev.team.morale - 15),
+            stress: Math.min(100, prev.team.stress + 20)
           };
+          newState.budget = { ...prev.budget, spent: prev.budget.spent + action.cost };
           break;
           
-        // NEW: Prototype action
         case 'build_prototype':
-          if (scenario.hasPrototyping && prev.prototypesBuilt < prev.maxPrototypes) {
-            const protoCost = PROTOTYPE_COST[scenario.id];
-            newState.budget = { ...prev.budget, spent: prev.budget.spent + protoCost.budget };
+          if (prev.prototypesBuilt < prev.maxPrototypes && PROTOTYPE_COST[scenario.id]) {
             newState.prototypesBuilt = prev.prototypesBuilt + 1;
-            newState.team = { 
-              ...prev.team, 
-              knowledge: Math.min(100, prev.team.knowledge + 10) // Prototypes build knowledge
-            };
-            // Slight progress penalty for time spent
-            newState.scope = { 
-              ...prev.scope, 
-              completed: Math.max(0, prev.scope.completed - (protoCost.time * 0.03))
-            };
+            newState.budget = { ...prev.budget, spent: prev.budget.spent + PROTOTYPE_COST[scenario.id].budget };
+            newState.team = { ...prev.team, knowledge: Math.min(100, prev.team.knowledge + 10) };
           }
           break;
           
-        // NEW: Adjust schedule (with consistency tracking)
         case 'extend_deadline':
-          if (prev.week > 2) {
-            newState.scheduleChanges = prev.scheduleChanges + 1;
-            const penalty = calculateScheduleConsistencyPenalty(newState.scheduleChanges);
+          newState.schedule = { ...prev.schedule, deadline: prev.schedule.deadline + 1 };
+          newState.scheduleChanges = prev.scheduleChanges + 1;
+          if (prev.scheduleChanges > 1) {
+            const penalty = calculateScheduleConsistencyPenalty(prev.scheduleChanges + 1);
             newState.team = {
               ...prev.team,
-              morale: Math.max(10, prev.team.morale + penalty.morale),
+              morale: Math.max(0, prev.team.morale + penalty.morale),
               stress: Math.min(100, prev.team.stress + penalty.stress)
             };
           }
-          newState.schedule = { 
-            ...prev.schedule, 
-            deadline: prev.schedule.deadline + 1 
-          };
           break;
       }
       
@@ -1289,14 +1859,11 @@ export default function BizSimHub() {
     });
   };
 
-  // ENHANCED WEEK ADVANCEMENT with causal model
+  // Advance week
   const advanceWeek = () => {
     // Check paywall for free users
-    const userTier = currentUser?.subscription_tier?.toLowerCase() || 'free';
-    const isPaidUser = userTier === 'pro' || userTier === 'professional' || userTier === 'enterprise';
-    const isTester = currentUser?.is_tester === true;
-    
-    if (!isPaidUser && !isTester && gameState.week >= FREE_TRIAL_WEEKS) {
+    const isPro = subscription?.status === 'active' || currentUser?.isTester || currentUser?.isAdmin;
+    if (!isPro && gameState.week >= FREE_TRIAL_WEEKS) {
       setShowPaywall(true);
       return;
     }
@@ -1304,184 +1871,171 @@ export default function BizSimHub() {
     setGameState(prev => {
       const scenario = selectedScenario;
       const progress = calculateWeeklyProgress(prev.team, prev.scope, prev);
-      const weeklyCost = prev.team.size * scenario.weeklyCostPerPerson;
+      const weeklyPersonnelCost = prev.team.size * scenario.weeklyCostPerPerson;
       
-      // Calculate new stress based on causal factors
+      // Calculate causal effects
       const newStress = calculateStress(prev, scenario);
-      
-      // Stress affects morale
-      const stressAdjustedMorale = calculateMoraleFromStress(prev.team.morale, newStress);
-      
-      // Small natural morale drift
-      const moraleDrift = (Math.random() - 0.5) * 4;
+      const newMorale = calculateMoraleFromStress(prev.team.morale, newStress);
       
       const newState = {
         ...prev,
         week: prev.week + 1,
-        budget: { ...prev.budget, spent: prev.budget.spent + weeklyCost },
-        scope: { 
-          ...prev.scope, 
-          completed: prev.scope.completed + (progress * prev.scope.totalFeatures) 
+        scope: {
+          ...prev.scope,
+          completed: Math.min(prev.scope.totalFeatures, prev.scope.completed + progress * prev.scope.totalFeatures)
         },
-        team: { 
-          ...prev.team, 
-          morale: Math.max(10, Math.min(100, stressAdjustedMorale + moraleDrift)),
+        budget: {
+          ...prev.budget,
+          spent: prev.budget.spent + weeklyPersonnelCost
+        },
+        team: {
+          ...prev.team,
+          morale: newMorale,
           stress: newStress
         },
-        // Track morale history for team process score
-        moraleHistory: [...prev.moraleHistory, stressAdjustedMorale + moraleDrift],
-        // Reset weekly meeting flags
+        moraleHistory: [...prev.moraleHistory, newMorale],
         meetings: { coaching: false, standup: false, status: false }
       };
       
-      // CHECK FOR CAUSAL EVENTS (condition-based, not random)
-      if (prev.week < prev.totalWeeks) {
-        const availableEvents = scenario.causalEvents.filter(e => 
-          !prev.triggeredEvents.includes(e.id) && 
-          e.triggerCondition(newState)
-        );
-        
-        if (availableEvents.length > 0) {
-          // Pick the most relevant event (first one that triggers)
-          const event = availableEvents[0];
-          
-          // If event has prototypeModifier and prototypes were built, modify effects
-          if (event.prototypeModifier && prev.prototypesBuilt > 0) {
-            // Create modified event with reduced severity
-            const modifiedEvent = {
-              ...event,
-              description: event.description + ` (Severity reduced by ${prev.prototypesBuilt} prototype(s))`,
-              options: event.options.map(opt => ({
-                ...opt,
-                effects: Object.fromEntries(
-                  Object.entries(opt.effects).map(([key, val]) => {
-                    // Reduce negative effects based on prototypes built
-                    if (val < 0) {
-                      return [key, Math.round(val * (1 - prev.prototypesBuilt * 0.2))];
-                    }
-                    return [key, val];
-                  })
-                )
-              }))
-            };
-            newState.currentEvent = modifiedEvent;
-          } else {
-            newState.currentEvent = event;
-          }
-          newState.gamePhase = 'event';
-          newState.triggeredEvents = [...prev.triggeredEvents, event.id];
+      // Check for causal events
+      const triggeredEvent = scenario.causalEvents.find(event => 
+        !prev.usedEvents.includes(event.id) && event.triggerCondition(newState)
+      );
+      
+      if (triggeredEvent) {
+        // Modify event if prototype was built
+        if (triggeredEvent.prototypeModifier && prev.prototypesBuilt > 0) {
+          const modifiedEvent = { ...triggeredEvent };
+          modifiedEvent.options = modifiedEvent.options.map(opt => ({
+            ...opt,
+            effects: Object.fromEntries(
+              Object.entries(opt.effects).map(([k, v]) => [k, typeof v === 'number' ? Math.round(v * 0.6) : v])
+            )
+          }));
+          newState.currentEvent = modifiedEvent;
+        } else {
+          newState.currentEvent = triggeredEvent;
         }
+        newState.gamePhase = 'event';
+        newState.usedEvents = [...prev.usedEvents, triggeredEvent.id];
       }
       
       // Check for game end
-      if (newState.scope.completed >= newState.scope.totalFeatures || newState.week > newState.totalWeeks + 3) {
-        const finalScore = calculateScore(newState);
-        const grade = getGrade(finalScore);
-        
-        // Record score to backend
-        if (currentUser) {
-          api.recordScore(selectedSimulation.id, {
-            scenarioId: selectedScenario.id,
-            score: finalScore,
-            grade,
-            decisionsMade: newState.decisions.length,
-            budgetScore: Math.round(Math.max(0, (1 - newState.budget.spent / newState.budget.total)) * 200),
-            scheduleScore: Math.round(newState.week <= newState.schedule.deadline ? 200 : Math.max(0, 200 - (newState.week - newState.schedule.deadline) * 40)),
-            scopeScore: Math.round((newState.scope.completed / newState.scope.totalFeatures) * 200),
-            qualityScore: Math.round((newState.scope.quality / 100) * 200),
-            teamProcessScore: Math.round((newState.moraleHistory.reduce((a, b) => a + b, 0) / newState.moraleHistory.length / 100) * 100),
-            consistencyBonus: newState.scheduleChanges <= 1 ? 50 : newState.scheduleChanges === 2 ? 25 : 0,
-            prototypeBonus: newState.prototypesBuilt * 25,
-            prototypesBuilt: newState.prototypesBuilt,
-            scheduleChanges: newState.scheduleChanges
-          }).then(() => loadUserData()).catch(console.error);
-        }
-        
+      const isComplete = newState.scope.completed >= newState.scope.totalFeatures * 0.95;
+      const deadlinePassed = newState.week > newState.schedule.deadline;
+      const budgetExceeded = newState.budget.spent >= newState.budget.total;
+      
+      if (isComplete || deadlinePassed || budgetExceeded) {
         setSimPhase('ended');
+        // Record score
+        if (currentUser) {
+          const finalScore = calculateScore(newState);
+          api.recordScore('project-apex', {
+            score: finalScore,
+            grade: getGrade(finalScore),
+            scenarioId: scenario.id,
+            weeksUsed: newState.week,
+            budgetUsed: newState.budget.spent
+          });
+        }
       }
       
       return newState;
     });
   };
 
+  // Handle event choice
   const handleEventChoice = (option) => {
     setGameState(prev => {
-      const effects = option.effects;
-      const newState = {
-        ...prev,
-        gamePhase: 'playing',
-        currentEvent: null,
-        decisions: [...prev.decisions, { eventId: prev.currentEvent.id, choice: option.id, week: prev.week }]
-      };
+      const newState = { ...prev };
       
-      // Apply all effects
-      if (effects.scope) newState.scope = { ...prev.scope, totalFeatures: Math.max(1, prev.scope.totalFeatures + effects.scope) };
-      if (effects.budget) newState.budget = { ...prev.budget, spent: prev.budget.spent + Math.abs(effects.budget) };
-      if (effects.schedule) newState.schedule = { ...prev.schedule, deadline: Math.max(1, prev.schedule.deadline + effects.schedule) };
-      if (effects.morale) newState.team = { ...prev.team, morale: Math.max(5, Math.min(100, prev.team.morale + effects.morale)) };
-      if (effects.productivity) newState.team = { ...newState.team, productivity: Math.max(0.4, Math.min(1.6, prev.team.productivity + effects.productivity)) };
-      if (effects.quality) newState.scope = { ...newState.scope, quality: Math.max(0, Math.min(100, prev.scope.quality + effects.quality)) };
-      if (effects.team) newState.team = { ...newState.team, size: Math.max(2, prev.team.size + effects.team) };
-      if (effects.stress) newState.team = { ...newState.team, stress: Math.max(0, Math.min(100, prev.team.stress + effects.stress)) };
-      if (effects.knowledge) newState.team = { ...newState.team, knowledge: Math.max(0, Math.min(100, prev.team.knowledge + effects.knowledge)) };
+      // Apply effects
+      if (option.effects.budget) newState.budget = { ...prev.budget, spent: prev.budget.spent - option.effects.budget };
+      if (option.effects.schedule) newState.schedule = { ...prev.schedule, deadline: Math.max(prev.week + 1, prev.schedule.deadline + option.effects.schedule) };
+      if (option.effects.scope) newState.scope = { ...prev.scope, totalFeatures: prev.scope.totalFeatures + option.effects.scope };
+      if (option.effects.quality) newState.scope = { ...newState.scope, quality: Math.max(0, Math.min(100, prev.scope.quality + option.effects.quality)) };
+      if (option.effects.team) newState.team = { ...prev.team, size: Math.max(2, prev.team.size + option.effects.team) };
+      if (option.effects.morale) newState.team = { ...newState.team, morale: Math.max(0, Math.min(100, prev.team.morale + option.effects.morale)) };
+      if (option.effects.stress) newState.team = { ...newState.team, stress: Math.max(0, Math.min(100, prev.team.stress + option.effects.stress)) };
+      if (option.effects.knowledge) newState.team = { ...newState.team, knowledge: Math.max(0, Math.min(100, prev.team.knowledge + option.effects.knowledge)) };
+      if (option.effects.productivity) newState.team = { ...newState.team, productivity: Math.max(0.5, Math.min(1.5, prev.team.productivity + option.effects.productivity)) };
+      
+      newState.decisions = [...prev.decisions, { event: prev.currentEvent?.id, choice: option.id }];
+      newState.currentEvent = null;
+      newState.gamePhase = 'action';
       
       return newState;
     });
   };
 
-  // ============================================
-  // RENDER COMPONENTS
-  // ============================================
+  // Determine mascot mood
+  const getMascotMood = (state) => {
+    if (!state) return 'normal';
+    const budgetPercent = (state.budget.spent / state.budget.total) * 100;
+    const progressPercent = (state.scope.completed / state.scope.totalFeatures) * 100;
+    const weekPercent = (state.week / state.schedule.deadline) * 100;
+    
+    if (state.team.stress > 70 || budgetPercent > weekPercent + 30 || state.team.morale < 40) return 'stressed';
+    if (state.team.stress > 50 || progressPercent < weekPercent - 20) return 'concerned';
+    if (progressPercent >= 100 && state.week <= state.schedule.deadline) return 'success';
+    return 'normal';
+  };
 
-  const renderNavbar = (transparent = false) => (
-    <nav className={`navbar ${transparent ? 'navbar-transparent' : ''}`}>
-      <div className="nav-container">
-        <div className="nav-logo" onClick={() => setCurrentPage(currentUser ? 'dashboard' : 'landing')}>
-          <span className="logo-icon">🎓</span>
-          <span className="logo-text">BizSim<span className="logo-accent">Hub</span></span>
+  // ============================================
+  // RENDER NAVBAR
+  // ============================================
+  const renderNavbar = () => (
+    <nav className="navbar">
+      <div className="nav-content">
+        <div className="nav-left">
+          <div className="logo" onClick={() => setCurrentPage(currentUser ? 'dashboard' : 'landing')}>
+            <span className="logo-icon">📊</span>
+            <span className="logo-text">BizSim<span className="logo-accent">Hub</span></span>
+          </div>
         </div>
-        <div className="nav-links">
+        
+        <div className="nav-center">
+          <button className="nav-link" onClick={() => setCurrentPage(currentUser ? 'dashboard' : 'landing')}>
+            {t('nav.home', lang)}
+          </button>
+          <button className="nav-link" onClick={() => setCurrentPage('simulations')}>
+            {t('nav.simulations', lang)}
+          </button>
+          <button className="nav-link" onClick={() => setCurrentPage('pricing')}>
+            {t('nav.pricing', lang)}
+          </button>
+        </div>
+        
+        <div className="nav-right">
           {/* Language Toggle */}
           <button 
+            className="lang-toggle" 
             onClick={() => setLang(lang === 'en' ? 'fr' : 'en')}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
-              padding: '6px 12px',
-              background: 'rgba(99, 102, 241, 0.1)',
-              border: '1px solid rgba(99, 102, 241, 0.3)',
-              borderRadius: '20px',
-              color: '#e2e8f0',
-              fontSize: '13px',
-              fontWeight: '500',
-              cursor: 'pointer',
-              marginRight: '8px',
-            }}
+            title={lang === 'en' ? 'Français' : 'English'}
           >
             {lang === 'en' ? '🇫🇷 FR' : '🇬🇧 EN'}
           </button>
-          {!currentUser ? (
+          
+          {currentUser ? (
             <>
-              <button className="nav-link" onClick={() => setCurrentPage('pricing')}>{t('nav.pricing', lang)}</button>
-              <a href="/contact.html" className="nav-link">{t('nav.contact', lang)}</a>
-              <button className="nav-link" onClick={() => { setCurrentPage('auth'); setAuthMode('login'); }}>{t('nav.login', lang)}</button>
-              <button className="nav-btn-primary" onClick={() => { setCurrentPage('auth'); setAuthMode('signup'); }}>{t('nav.getStarted', lang)}</button>
+              {currentUser.isAdmin && (
+                <button className="nav-link admin-link" onClick={() => setCurrentPage('admin')} title={t('admin.title', lang)}>⚙️</button>
+              )}
+              <button className="nav-link" onClick={() => setCurrentPage('dashboard')}>
+                {t('nav.dashboard', lang)}
+              </button>
+              <button className="btn-secondary" onClick={handleLogout}>
+                {t('nav.logout', lang)}
+              </button>
             </>
           ) : (
             <>
-              <button className="nav-link" onClick={() => setCurrentPage('dashboard')}>{t('nav.dashboard', lang)}</button>
-              <button className="nav-link" onClick={() => setCurrentPage('catalog')}>{t('nav.simulations', lang)}</button>
-              <button className="nav-link" onClick={() => setCurrentPage('pricing')}>{t('nav.pricing', lang)}</button>
-              <a href="/contact.html" className="nav-link">{t('nav.contact', lang)}</a>
-              {currentUser.is_admin && (
-                <button className="nav-link admin-link" onClick={() => setCurrentPage('admin')} title="Admin Panel">⚙️</button>
-              )}
-              <div className="nav-user">
-                <span className="user-avatar">{currentUser.name?.charAt(0)}</span>
-                <span className="user-name">{currentUser.name}</span>
-                <button className="nav-link-small" onClick={handleLogout}>{t('nav.logout', lang)}</button>
-              </div>
+              <button className="nav-link" onClick={() => { setCurrentPage('auth'); setAuthMode('login'); }}>
+                {t('nav.login', lang)}
+              </button>
+              <button className="btn-primary" onClick={() => { setCurrentPage('auth'); setAuthMode('signup'); }}>
+                {t('nav.getStarted', lang)}
+              </button>
             </>
           )}
         </div>
@@ -1489,205 +2043,289 @@ export default function BizSimHub() {
     </nav>
   );
 
+  // ============================================
+  // RENDER LANDING PAGE
+  // ============================================
   const renderLanding = () => (
     <div className="landing-page">
-      {renderNavbar(true)}
+      {renderNavbar()}
+      
+      {/* Hero Section */}
       <section className="hero">
-        <div className="hero-bg"></div>
         <div className="hero-content">
-          <div className="hero-badge">{t('landing.badge', lang)}</div>
-          <h1 className="hero-title">{t('landing.heroTitle1', lang)} <span className="gradient-text">{t('landing.heroTitle2', lang)}</span></h1>
+          <span className="hero-badge">{t('landing.badge', lang)}</span>
+          <h1>
+            {t('landing.heroTitle1', lang)}<br/>
+            <span className="accent">{t('landing.heroTitle2', lang)}</span>
+          </h1>
           <p className="hero-subtitle">{t('landing.heroSubtitle', lang)}</p>
-          <div className="hero-cta">
-            <button className="btn-primary-lg" onClick={() => { setCurrentPage('auth'); setAuthMode('signup'); }}>{t('landing.startTrial', lang)}</button>
-            <button className="btn-secondary-lg" onClick={() => setCurrentPage('catalog')}>{t('landing.browseSimulations', lang)}</button>
+          <div className="hero-buttons">
+            <button className="btn-primary btn-lg" onClick={() => { setCurrentPage('auth'); setAuthMode('signup'); }}>
+              {t('landing.startTrial', lang)}
+            </button>
+            <button className="btn-secondary btn-lg" onClick={() => setCurrentPage('simulations')}>
+              {t('landing.browseSimulations', lang)}
+            </button>
           </div>
           <div className="hero-stats">
-            <div className="stat"><span className="stat-num">4+</span><span className="stat-label">{t('landing.simulations', lang)}</span></div>
+            <div className="stat"><span className="stat-num">4</span><span className="stat-label">{t('landing.simulations', lang)}</span></div>
             <div className="stat"><span className="stat-num">16+</span><span className="stat-label">{t('landing.scenarios', lang)}</span></div>
-            <div className="stat"><span className="stat-num">4</span><span className="stat-label">{lang === 'en' ? 'Industries' : 'Industries'}</span></div>
-          </div>
-        </div>
-        {/* CSS Hero animation */}
-        <div className="hero-animation">
-          <div className="rocket-container">
-            <div className="rocket">🚀</div>
-            <div className="rocket-trail"></div>
+            <div className="stat"><span className="stat-num">1K+</span><span className="stat-label">{t('landing.learners', lang)}</span></div>
+            <div className="stat"><span className="stat-num">4</span><span className="stat-label">{t('landing.industries', lang)}</span></div>
           </div>
         </div>
       </section>
 
+      {/* Featured Section */}
       <section className="featured-section">
-        <div className="section-container">
-          <div className="section-header">
-            <span className="section-badge">Featured</span>
-            <h2>Project Apex</h2>
-            <p>Our flagship project management simulation</p>
-          </div>
+        <div className="featured-content">
+          <span className="section-badge">{t('landing.featured', lang)}</span>
+          <h2>{t('landing.projectApex', lang)}</h2>
+          <p>{t('landing.flagshipSimulation', lang)}</p>
           <div className="featured-card">
-            <div className="featured-icon">🎯</div>
-            <div className="featured-content">
-              <h3>Master Project Management</h3>
-              <p>Navigate real-world challenges across 4 industry scenarios. Balance scope, schedule, budget, and team dynamics with our HBP-inspired causal model.</p>
-              <div className="featured-tags">
-                <span>Tech Startup</span><span>Live Entertainment</span><span>Construction</span><span>R&D Innovation</span>
+            <div className="featured-info">
+              <h3>{t('landing.masterPM', lang)}</h3>
+              <p>{SIMULATIONS[0].description}</p>
+              <div className="scenario-tags">
+                <span>{lang === 'fr' ? 'Startup Tech' : 'Tech Startup'}</span>
+                <span>{lang === 'fr' ? 'Spectacle vivant' : 'Live Entertainment'}</span>
+                <span>{lang === 'fr' ? 'Construction' : 'Construction'}</span>
+                <span>{lang === 'fr' ? 'Innovation R&D' : 'R&D Innovation'}</span>
               </div>
-              <button className="btn-primary" onClick={() => currentUser ? startSimulation('project-apex') : setCurrentPage('auth')}>
-                {currentUser ? 'Play Now' : 'Try Free Now'}
+              <button className="btn-primary" onClick={() => startSimulation('project-apex')}>
+                {currentUser ? t('landing.playNow', lang) : t('landing.tryFreeNow', lang)}
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="simulations-section">
-        <div className="section-container">
-          <div className="section-header">
-            <h2>Simulation Library</h2>
-            <p>Comprehensive business simulations for every skill</p>
-          </div>
+      {/* Simulation Library */}
+      <section className="library-section">
+        <div className="library-content">
+          <h2>{t('landing.simulationLibrary', lang)}</h2>
+          <p>{t('landing.comprehensiveSims', lang)}</p>
           <div className="sim-grid">
             {SIMULATIONS.map(sim => (
               <div key={sim.id} className={`sim-card ${sim.comingSoon ? 'coming-soon' : ''}`}>
-                <div className="sim-icon">{sim.icon}</div>
-                <div className="sim-category">{sim.category}</div>
+                <span className="sim-icon">{sim.icon}</span>
+                {sim.comingSoon && <div className="sim-badge-soon">{t('simulations.comingSoon', lang)}</div>}
+                {sim.featured && <div className="sim-badge-featured">{t('simulations.availableNow', lang)}</div>}
                 <h3>{sim.title}</h3>
                 <p>{sim.subtitle}</p>
-                <div className="sim-meta"><span>{sim.difficulty}</span><span>{sim.duration}</span></div>
-                {sim.comingSoon && <div className="sim-badge-soon">Coming Soon</div>}
-                {sim.featured && <div className="sim-badge-featured">Available Now</div>}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section className="pricing-section-landing" style={{ padding: '5rem 2rem', background: 'var(--bg-secondary)' }}>
-        <div className="section-container" style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <div className="section-header" style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>{lang === 'en' ? 'Simple Pricing' : 'Tarification simple'}</h2>
-            <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>{lang === 'en' ? 'Start free, upgrade when ready' : 'Commencez gratuitement, passez au supérieur quand vous êtes prêt'}</p>
+      {/* Why Choose Section */}
+      <section className="why-section">
+        <h2>{t('landing.whyChoose', lang)}</h2>
+        <div className="features-grid">
+          <div className="feature-card">
+            <span className="feature-icon">🎮</span>
+            <h3>{t('landing.feature1Title', lang)}</h3>
+            <p>{t('landing.feature1Desc', lang)}</p>
           </div>
-          <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            {/* Free Plan */}
-            <div style={{ 
-              background: 'var(--bg-card)', 
-              border: '1px solid var(--border)', 
-              borderRadius: '16px', 
-              padding: '2rem', 
-              width: '300px',
-              textAlign: 'center'
-            }}>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{lang === 'en' ? 'Free' : 'Gratuit'}</h3>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '1rem', fontSize: '0.9rem' }}>
-                {lang === 'en' ? 'Perfect for trying out' : 'Parfait pour essayer'}
-              </p>
-              <div style={{ fontSize: '3.5rem', fontWeight: '700', marginBottom: '1rem' }}>
-                $0 <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>/{lang === 'en' ? 'forever' : 'toujours'}</span>
-              </div>
-              <ul style={{ textAlign: 'left', listStyle: 'none', padding: 0, marginBottom: '1.5rem' }}>
-                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)' }}>✓ 1 simulation (Project Apex)</li>
-                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)' }}>{lang === 'en' ? '✓ Basic scenarios' : '✓ Scénarios de base'}</li>
-                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)' }}>{lang === 'en' ? '✓ Score tracking' : '✓ Suivi des scores'}</li>
-                <li style={{ padding: '0.5rem 0' }}>{lang === 'en' ? '✓ Community support' : '✓ Support communautaire'}</li>
-              </ul>
-              <button 
-                className="btn-secondary btn-full"
-                onClick={() => { setCurrentPage('auth'); setAuthMode('signup'); }}
-              >
-                {lang === 'en' ? 'Get Started Free' : 'Commencer gratuitement'}
-              </button>
-            </div>
-            
-            {/* Pro Plan */}
-            <div style={{ 
-              background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1))',
-              border: '2px solid var(--accent-primary)', 
-              borderRadius: '16px', 
-              padding: '2rem', 
-              width: '300px',
-              textAlign: 'center',
-              position: 'relative'
-            }}>
-              <div style={{ 
-                position: 'absolute', 
-                top: '-12px', 
-                left: '50%', 
-                transform: 'translateX(-50%)',
-                background: 'var(--accent-primary)',
-                color: 'white',
-                padding: '4px 16px',
-                borderRadius: '20px',
-                fontSize: '0.8rem',
-                fontWeight: '600'
-              }}>
-                {lang === 'en' ? 'Most Popular' : 'Plus populaire'}
-              </div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{lang === 'en' ? 'Professional' : 'Professionnel'}</h3>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '1rem', fontSize: '0.9rem' }}>
-                {lang === 'en' ? 'For serious learners' : 'Pour les apprenants sérieux'}
-              </p>
-              <div style={{ fontSize: '3.5rem', fontWeight: '700', marginBottom: '1rem' }}>
-                $19 <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>/{lang === 'en' ? 'month' : 'mois'}</span>
-              </div>
-              <ul style={{ textAlign: 'left', listStyle: 'none', padding: 0, marginBottom: '1.5rem' }}>
-                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)' }}>{lang === 'en' ? '✓ All simulations' : '✓ Toutes les simulations'}</li>
-                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)' }}>{lang === 'en' ? '✓ All scenarios' : '✓ Tous les scénarios'}</li>
-                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)' }}>{lang === 'en' ? '✓ Detailed analytics' : '✓ Analyses détaillées'}</li>
-                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)' }}>{lang === 'en' ? '✓ Certificates' : '✓ Certificats'}</li>
-                <li style={{ padding: '0.5rem 0' }}>{lang === 'en' ? '✓ Priority support' : '✓ Support prioritaire'}</li>
-              </ul>
-              <button 
-                className="btn-primary btn-full"
-                onClick={() => { setCurrentPage('auth'); setAuthMode('signup'); }}
-              >
-                {lang === 'en' ? 'Start Free Trial' : 'Commencer l\'essai gratuit'}
-              </button>
-            </div>
+          <div className="feature-card">
+            <span className="feature-icon">🛡️</span>
+            <h3>{t('landing.feature2Title', lang)}</h3>
+            <p>{t('landing.feature2Desc', lang)}</p>
+          </div>
+          <div className="feature-card">
+            <span className="feature-icon">📊</span>
+            <h3>{t('landing.feature3Title', lang)}</h3>
+            <p>{t('landing.feature3Desc', lang)}</p>
+          </div>
+          <div className="feature-card">
+            <span className="feature-icon">🏢</span>
+            <h3>{t('landing.feature4Title', lang)}</h3>
+            <p>{t('landing.feature4Desc', lang)}</p>
           </div>
         </div>
       </section>
 
+      {/* Pricing Preview */}
+      <section className="pricing-preview">
+        <h2>{t('pricing.title', lang)}</h2>
+        <p>{t('pricing.subtitle', lang)}</p>
+        <div className="pricing-preview-cards">
+          <div className="price-card-mini">
+            <h3>{t('pricing.free', lang)}</h3>
+            <p className="price-desc">{t('pricing.freeDesc', lang)}</p>
+            <div className="price-amount">
+              <span className="price-num">$0</span>
+            </div>
+            <ul>
+              <li>✓ {t('pricing.feat1Sim', lang)}</li>
+              <li>✓ {t('pricing.featBasicScenarios', lang)}</li>
+              <li>✓ {t('pricing.featScoreTracking', lang)}</li>
+            </ul>
+            <button className="btn-secondary" onClick={() => { setCurrentPage('auth'); setAuthMode('signup'); }}>
+              {t('pricing.getStartedFree', lang)}
+            </button>
+          </div>
+          
+          <div className="price-card-mini popular">
+            <div className="popular-badge">{t('pricing.mostPopular', lang)}</div>
+            <h3>{t('pricing.professional', lang)}</h3>
+            <p className="price-desc">{t('pricing.proDesc', lang)}</p>
+            <div className="price-amount">
+              <span className="price-num">$19</span>
+              <span className="price-period">{t('pricing.perMonth', lang)}</span>
+            </div>
+            <ul>
+              <li>✓ {t('pricing.featAllSimulations', lang)}</li>
+              <li>✓ {t('pricing.featAllScenarios', lang)}</li>
+              <li>✓ {t('pricing.featDetailedAnalytics', lang)}</li>
+              <li>✓ {t('pricing.featCertificates', lang)}</li>
+            </ul>
+            <button className="btn-primary" onClick={() => handleCheckout('pro')}>
+              {t('pricing.startFreeTrial', lang)}
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="cta-section">
+        <h2>{t('landing.readyToStart', lang)}</h2>
+        <p>{t('landing.joinLearners', lang)}</p>
+        <button className="btn-primary btn-lg" onClick={() => { setCurrentPage('auth'); setAuthMode('signup'); }}>
+          {t('landing.startLearning', lang)}
+        </button>
+      </section>
+
+      {/* Footer */}
       <footer className="footer">
-        <div className="footer-container">
+        <div className="footer-content">
           <div className="footer-brand">
-            <span className="logo-icon">🎓</span>
             <span className="logo-text">BizSim<span className="logo-accent">Hub</span></span>
-            <p>{t('footer.madeWith', lang)}</p>
-            <div className="social-links" style={{ display: 'flex', gap: '12px', marginTop: '16px' }}>
-              <a href="https://www.linkedin.com/company/sylvain-pmo-consulting" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', fontSize: '20px', transition: 'color 0.2s' }} title="LinkedIn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            <div className="social-links">
+              <a href="https://www.linkedin.com/company/sylvain-pmo-consulting" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', fontSize: '20px' }} title="LinkedIn">
+                in
               </a>
-              <a href="https://x.com/Sylgau" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', fontSize: '20px', transition: 'color 0.2s' }} title="X (Twitter)">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              <a href="https://www.facebook.com/profile.php?id=61586908877730" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', fontSize: '20px' }} title="Facebook">
+                f
               </a>
-              <a href="https://www.facebook.com/profile.php?id=61586908877730" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', fontSize: '20px', transition: 'color 0.2s' }} title="Facebook">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-              </a>
-              <a href="https://www.instagram.com/sylv.ainpmo/" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', fontSize: '20px', transition: 'color 0.2s' }} title="Instagram">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              <a href="https://www.instagram.com/sylv.ainpmo/" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', fontSize: '20px' }} title="Instagram">
+                📷
               </a>
             </div>
           </div>
           <div className="footer-links">
-            <div className="footer-col"><h4>{t('footer.product', lang)}</h4><a href="#" onClick={() => setCurrentPage('catalog')}>{t('nav.simulations', lang)}</a><a href="#">{t('footer.forEducators', lang)}</a></div>
-            <div className="footer-col"><h4>{t('footer.company', lang)}</h4><a href="#">{t('footer.about', lang)}</a><a href="/contact.html">{t('nav.contact', lang)}</a></div>
-            <div className="footer-col"><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a></div>
+            <div className="footer-col"><h4>{t('footer.product', lang)}</h4><a href="#">{t('nav.simulations', lang)}</a><a href="#">{t('nav.pricing', lang)}</a></div>
+            <div className="footer-col"><h4>{t('footer.company', lang)}</h4><a href="#">{t('footer.about', lang)}</a><a href="#">{t('footer.forEducators', lang)}</a></div>
+            <div className="footer-col"><h4>{t('footer.legal', lang)}</h4><a href="#">{t('footer.privacy', lang)}</a><a href="#">{t('footer.terms', lang)}</a></div>
           </div>
         </div>
-        <div className="footer-bottom"><p>© 2025 BizSimHub. {t('footer.allRights', lang)}</p></div>
+        <div className="footer-bottom">
+          <p>{t('footer.madeWith', lang)}</p>
+          <p>© 2025 BizSimHub. {t('footer.allRights', lang)}</p>
+        </div>
       </footer>
     </div>
   );
 
+  // ============================================
+  // RENDER DASHBOARD
+  // ============================================
+  const renderDashboard = () => {
+    const bestScore = userScores?.bestScores?.[0];
+    const recentScores = userScores?.scores?.slice(0, 5) || [];
+    
+    return (
+      <div className="dashboard-page">
+        {renderNavbar()}
+        <div className="dashboard-content">
+          <div className="welcome-section">
+            <h1>{t('dashboard.welcome', lang)}, {currentUser?.name?.split(' ')[0] || currentUser?.email}! 👋</h1>
+            <p>{t('dashboard.readyToContinue', lang)}</p>
+          </div>
+          
+          <div className="quick-actions">
+            <h2>{t('dashboard.quickActions', lang)}</h2>
+            <div className="action-buttons">
+              <button className="action-card" onClick={() => startSimulation('project-apex')}>
+                <span className="action-icon">🎯</span>
+                <span>{t('dashboard.playProjectApex', lang)}</span>
+              </button>
+              <button className="action-card" onClick={() => setCurrentPage('simulations')}>
+                <span className="action-icon">📚</span>
+                <span>{t('dashboard.browseSimulations', lang)}</span>
+              </button>
+            </div>
+          </div>
+          
+          <div className="stats-section">
+            <h2>{t('dashboard.yourStats', lang)}</h2>
+            <div className="stats-grid">
+              <div className="stat-card">
+                <span className="stat-value">{userScores?.scores?.length || 0}</span>
+                <span className="stat-name">{t('dashboard.simulationsPlayed', lang)}</span>
+              </div>
+              <div className="stat-card">
+                <span className="stat-value">{bestScore?.grade || '-'}</span>
+                <span className="stat-name">{t('dashboard.bestGrade', lang)}</span>
+              </div>
+              <div className="stat-card">
+                <span className="stat-value">{bestScore?.score || 0}</span>
+                <span className="stat-name">{t('dashboard.highScore', lang)}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="recent-section">
+            <h2>{t('dashboard.recentScores', lang)}</h2>
+            {recentScores.length > 0 ? (
+              <div className="scores-list">
+                {recentScores.map((score, i) => {
+                  const dateStr = score.created_at ? new Date(score.created_at).toLocaleDateString() : '';
+                  const isValidDate = dateStr && dateStr !== 'Invalid Date';
+                  return (
+                    <div key={i} className="score-item">
+                      <span className="score-grade" style={{color: score.grade?.startsWith('A') ? '#10b981' : score.grade?.startsWith('B') ? '#6366f1' : '#f59e0b'}}>{score.grade}</span>
+                      <span className="score-points">{score.score} pts</span>
+                      <span className="score-scenario">{score.scenario_id?.replace('_', ' ') || t('dashboard.unknown', lang)}</span>
+                      <span className="score-date">{isValidDate ? dateStr : t('dashboard.recent', lang)}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="no-scores">
+                <p>{t('dashboard.noScoresYet', lang)}</p>
+                <p>{t('dashboard.playFirst', lang)}</p>
+              </div>
+            )}
+          </div>
+          
+          <div className="featured-section-dash">
+            <h2>{t('dashboard.featuredSimulation', lang)}</h2>
+            <div className="featured-card-dash" onClick={() => startSimulation('project-apex')}>
+              <span className="sim-icon">🎯</span>
+              <div>
+                <h3>{lang === 'fr' ? 'Projet Apex' : 'Project Apex'}</h3>
+                <p>{SIMULATIONS[0].description}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // ============================================
+  // RENDER AUTH PAGE
+  // ============================================
   const renderAuth = () => (
     <div className="auth-page">
       {renderNavbar()}
       <div className="auth-container">
         <div className="auth-card">
-          <h2>{authMode === 'login' ? (lang === 'en' ? 'Welcome' : 'Bienvenue') : (lang === 'en' ? 'Create Account' : 'Créer un compte')}</h2>
-          <p className="auth-subtitle">{authMode === 'login' ? 'Sign in to continue learning' : 'Start your learning journey'}</p>
+          <h2>{authMode === 'login' ? t('auth.welcome', lang) : t('auth.createAccount', lang)}</h2>
+          <p className="auth-subtitle">{authMode === 'login' ? t('auth.signInContinue', lang) : t('auth.startJourney', lang)}</p>
           
           {authError && <div className="auth-error">{authError}</div>}
           
@@ -1702,34 +2340,34 @@ export default function BizSimHub() {
           }}>
             {authMode === 'signup' && (
               <div className="form-group">
-                <label>Full Name</label>
+                <label>{t('auth.fullName', lang)}</label>
                 <input type="text" name="name" placeholder="John Doe" required />
               </div>
             )}
             <div className="form-group">
-              <label>Email</label>
+              <label>{t('auth.email', lang)}</label>
               <input type="email" name="email" placeholder="you@example.com" required />
             </div>
             <div className="form-group">
-              <label>Password</label>
+              <label>{t('auth.password', lang)}</label>
               <input type="password" name="password" placeholder="••••••••" required minLength={6} />
             </div>
             <button type="submit" className="btn-primary btn-full" disabled={authLoading}>
-              {authLoading ? 'Please wait...' : authMode === 'login' ? 'Sign In' : 'Create Account'}
+              {authLoading ? t('auth.pleaseWait', lang) : authMode === 'login' ? t('auth.signIn', lang) : t('auth.createAccount', lang)}
             </button>
           </form>
           
-          <div className="auth-divider"><span>or</span></div>
+          <div className="auth-divider"><span>{t('auth.or', lang)}</span></div>
           
           <button className="btn-google" onClick={() => window.location.href = `${API_BASE}/auth/google`}>
             <span className="google-icon">G</span>
-            Continue with Google
+            {t('auth.continueGoogle', lang)}
           </button>
           
           <p className="auth-toggle">
-            {authMode === 'login' ? "Don't have an account? " : 'Already have an account? '}
+            {authMode === 'login' ? t('auth.noAccount', lang) + ' ' : t('auth.haveAccount', lang) + ' '}
             <button onClick={() => { setAuthMode(authMode === 'login' ? 'signup' : 'login'); setAuthError(''); }}>
-              {authMode === 'login' ? 'Sign Up' : 'Sign In'}
+              {authMode === 'login' ? t('auth.signUp', lang) : t('auth.signIn', lang)}
             </button>
           </p>
         </div>
@@ -1738,150 +2376,971 @@ export default function BizSimHub() {
   );
 
   // ============================================
-  // ADMIN DASHBOARD
+  // RENDER SIMULATIONS CATALOG
   // ============================================
-  
-  const [adminTab, setAdminTab] = useState('overview');
-  const [adminSearch, setAdminSearch] = useState('');
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [adminLoading, setAdminLoading] = useState(false);
-  const [adminError, setAdminError] = useState(null);
-  
-  // Admin data state (fetched from API)
-  const [adminData, setAdminData] = useState({
-    overview: {
-      totalUsers: 0,
-      activeUsers: 0,
-      totalRevenue: 0,
-      monthlyRevenue: 0,
-      completionRate: 0,
-      avgSessionTime: '0 min',
-      newUsersToday: 0,
-      activeNow: 0,
-      subscriptions: { free: 0, pro: 0, enterprise: 0 },
-      recentActivity: []
-    },
-    users: [],
-    revenue: {
-      mrr: 0,
-      arr: 0,
-      growth: 0,
-      churnRate: 0,
-      ltv: 0,
-      subscriptions: { free: 0, professional: 0, enterprise: 0 },
-      recentTransactions: []
-    },
-    analytics: {
-      popularSimulations: [],
-      weeklyActivity: [
-        { day: 'Mon', users: 0, sessions: 0 },
-        { day: 'Tue', users: 0, sessions: 0 },
-        { day: 'Wed', users: 0, sessions: 0 },
-        { day: 'Thu', users: 0, sessions: 0 },
-        { day: 'Fri', users: 0, sessions: 0 },
-        { day: 'Sat', users: 0, sessions: 0 },
-        { day: 'Sun', users: 0, sessions: 0 },
-      ],
-      gradeDistribution: { A: 0, B: 0, C: 0, D: 0, F: 0 }
-    },
-    content: {
-      simulations: SIMULATIONS.map(s => ({
-        id: s.id,
-        name: s.title,
-        status: s.available ? 'published' : 'draft',
-        plays: 0,
-        rating: null,
-        lastUpdated: new Date().toISOString().split('T')[0]
-      }))
-    },
-    system: {
-      uptime: 99.9,
-      avgResponseTime: 150,
-      errorRate: 0.01,
-      activeConnections: 0,
-      cpuUsage: 25,
-      memoryUsage: 45,
-      recentErrors: []
+  const renderSimulations = () => (
+    <div className="simulations-page">
+      {renderNavbar()}
+      <div className="simulations-content">
+        <h1>{t('simulations.catalog', lang)}</h1>
+        <p>{t('simulations.catalogSubtitle', lang)}</p>
+        
+        {/* Pricing banner for non-pro users */}
+        {!subscription?.status && (
+          <div className="pricing-banner">
+            <span>💡</span>
+            <p>{t('pricing.choosePlan', lang)}</p>
+          </div>
+        )}
+        
+        {/* Pricing mini cards */}
+        {!subscription?.status && (
+          <div className="pricing-mini">
+            <div className="price-mini-card">
+              <h3>{t('pricing.free', lang)}</h3>
+              <p className="price-desc">{t('pricing.freeDesc', lang)}</p>
+              <div className="price-amount"><span className="price-num">$0</span></div>
+              <ul>
+                <li>✓ {t('pricing.feat1Sim', lang)}</li>
+                <li>✓ {t('pricing.featBasicScenarios', lang)}</li>
+              </ul>
+              <button className="btn-secondary" onClick={() => { setCurrentPage('auth'); setAuthMode('signup'); }}>
+                {t('pricing.getStartedFree', lang)}
+              </button>
+            </div>
+            
+            <div className="price-mini-card popular">
+              <div className="popular-badge">{t('pricing.mostPopular', lang)}</div>
+              <h3>{t('pricing.professional', lang)}</h3>
+              <p className="price-desc">{t('pricing.proDesc', lang)}</p>
+              <div className="price-amount">
+                <span className="price-num">$19</span>
+                <span className="price-period">{t('pricing.perMonth', lang)}</span>
+              </div>
+              <ul>
+                <li>✓ {t('pricing.featAllSimulations', lang)}</li>
+                <li>✓ {t('pricing.featAllScenarios', lang)}</li>
+              </ul>
+              <button className="btn-primary" onClick={() => handleCheckout('pro')}>
+                {t('pricing.upgradeNow', lang)}
+              </button>
+            </div>
+          </div>
+        )}
+        
+        {/* Simulation cards */}
+        <div className="sim-catalog-grid">
+          {SIMULATIONS.map(sim => (
+            <div key={sim.id} className={`sim-catalog-card ${sim.comingSoon ? 'disabled' : ''}`}>
+              <div className="sim-header">
+                <span className="sim-icon">{sim.icon}</span>
+                <div className="sim-badges">
+                  {sim.featured && <span className="badge-featured">{t('simulations.available', lang)}</span>}
+                  {sim.comingSoon && <span className="badge-soon">{t('simulations.comingSoon', lang)}</span>}
+                  {sim.tier === 'pro' && <span className="badge-pro">{t('simulations.pro', lang)}</span>}
+                </div>
+              </div>
+              <h3>{sim.title}</h3>
+              <p className="sim-subtitle">{sim.subtitle}</p>
+              <p className="sim-description">{sim.description}</p>
+              <div className="sim-meta">
+                <span>{sim.scenarios} {t('simulations.scenarios', lang)}</span>
+                <span>{sim.duration}</span>
+                <span>{sim.difficulty}</span>
+              </div>
+              <button 
+                className="btn-primary" 
+                disabled={sim.comingSoon}
+                onClick={() => startSimulation(sim.id)}
+              >
+                {sim.comingSoon ? t('simulations.comingSoon', lang) : t('simulations.startSimulation', lang)}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  // ============================================
+  // RENDER PRICING PAGE
+  // ============================================
+  const renderPricing = () => (
+    <div className="pricing-page">
+      {renderNavbar()}
+      <div className="pricing-content">
+        <h1>{t('pricing.title', lang)}</h1>
+        <p>{t('pricing.chooseYourPlan', lang)}</p>
+        
+        <div className="billing-toggle">
+          <button className={billingCycle === 'monthly' ? 'active' : ''} onClick={() => setBillingCycle('monthly')}>
+            {t('pricing.monthly', lang)}
+          </button>
+          <button className={billingCycle === 'annual' ? 'active' : ''} onClick={() => setBillingCycle('annual')}>
+            {t('pricing.annual', lang)} (Save 17%)
+          </button>
+        </div>
+        
+        <div className="pricing-grid">
+          {PRICING_PLANS.filter(p => !p.hidden).map(plan => (
+            <div key={plan.id} className={`pricing-card ${plan.popular ? 'popular' : ''}`}>
+              {plan.popular && <div className="popular-badge">{t('pricing.mostPopular', lang)}</div>}
+              <h3>{plan.name}</h3>
+              <p className="plan-desc">{plan.description}</p>
+              <div className="plan-price">
+                <span className="price-amount">${billingCycle === 'annual' ? Math.round(plan.priceAnnual / 12) : plan.price}</span>
+                {plan.price > 0 && <span className="price-period">{t('pricing.perMonth', lang)}</span>}
+              </div>
+              <ul className="plan-features">
+                {plan.features.map((f, i) => <li key={i}>✓ {f}</li>)}
+              </ul>
+              <button 
+                className={plan.popular ? 'btn-primary' : 'btn-secondary'}
+                onClick={() => plan.id === 'free' 
+                  ? (currentUser ? null : setCurrentPage('auth'))
+                  : handleCheckout(plan.id)
+                }
+                disabled={checkoutLoading === plan.id || (currentUser && plan.id === 'free')}
+              >
+                {checkoutLoading === plan.id ? t('common.loading', lang) : plan.cta}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  // ============================================
+  // RENDER SIMULATION
+  // ============================================
+  const renderSimulation = () => {
+    // Phase: Scenario Selection
+    if (simPhase === 'select') {
+      return (
+        <div className="sim-page">
+          {renderNavbar()}
+          <div className="sim-select-container">
+            <button className="back-link" onClick={() => setCurrentPage('catalog')}>
+              ← {t('game.backToLibrary', lang)}
+            </button>
+            <div className="sim-select-header">
+              <span className="sim-select-icon">{selectedSimulation?.icon}</span>
+              <h1>{selectedSimulation?.title}</h1>
+              <p>{selectedSimulation?.description}</p>
+            </div>
+            <h3 className="scenarios-title">{t('game.chooseScenario', lang)}</h3>
+            <div className="scenarios-grid">
+              {Object.values(APEX_SCENARIOS).map(scenario => (
+                <button key={scenario.id} className="scenario-card" onClick={() => selectScenario(scenario)}>
+                  <div className="scenario-icon">{scenario.icon}</div>
+                  <div className="scenario-info">
+                    <h3>{scenario.title}</h3>
+                    <p className="scenario-sub">{scenario.subtitle}</p>
+                    <p className="scenario-desc">{scenario.description}</p>
+                    {scenario.hasPrototyping && <span className="scenario-badge">🔬 {t('game.prototypingAvailable', lang)}</span>}
+                    {scenario.hasUncertainty && <span className="scenario-badge">⚡ {t('game.highUncertainty', lang)}</span>}
+                  </div>
+                  <div className="scenario-meta">
+                    <span className="difficulty" style={{color: scenario.difficultyColor}}>{scenario.difficulty}</span>
+                    <span>{scenario.initial.weeks} {t('game.weeks', lang)}</span>
+                    <span>{t('game.focus', lang)}: {scenario.pedagogicalFocus}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
     }
-  });
-  
-  // Fetch admin data when admin page is accessed
-  const fetchAdminData = async () => {
-    if (!currentUser) return;
-    
-    setAdminLoading(true);
-    setAdminError(null);
-    
-    try {
-      // Fetch all admin data in parallel
-      const [overviewRes, usersRes, analyticsRes, revenueRes] = await Promise.allSettled([
-        api.getAdminOverview(),
-        api.getAdminUsers(),
-        api.getAdminAnalytics(),
-        api.getAdminRevenue()
-      ]);
+
+    // Phase: Project Briefing
+    if (simPhase === 'brief') {
+      const getProjectBrief = () => {
+        const briefs = {
+          tech_startup: {
+            context: lang === 'fr'
+              ? `Vous êtes chef de projet senior chez ${selectedScenario.company}, une entreprise technologique en pleine croissance spécialisée dans les solutions d'affaires infonuagiques. L'entreprise a identifié une opportunité de marché significative pour une nouvelle plateforme SaaS.`
+              : `You are a senior project manager at ${selectedScenario.company}, a fast-growing technology company specializing in cloud-based business solutions. The company has identified a significant market opportunity for a new SaaS platform.`,
+            challenge: lang === 'fr'
+              ? `Votre PDG vous a confié la mission d'assembler et de diriger une équipe de développement pour livrer cette plateforme. L'analyse de marché suggère que des concurrents travaillent sur des solutions similaires, vous mettant sous pression pour livrer un produit de haute qualité.`
+              : `Your CEO has tasked you with assembling and leading a product development team to deliver this platform. Market analysis suggests that competitors are working on similar solutions, putting pressure on you to deliver a high-quality product.`,
+            deliverables: lang === 'fr' ? [
+              { level: 1, name: 'Plateforme de base', desc: 'Gestion des utilisateurs, authentification et stockage des données', tasks: 3 },
+              { level: 2, name: 'Fonctionnalités standard', desc: 'Tableau de bord, rapports et intégrations API', tasks: 4 },
+              { level: 3, name: 'Fonctionnalités avancées', desc: 'Analytique, automatisation et support multi-locataires', tasks: 3 },
+              { level: 4, name: 'Fonctionnalités premium', desc: 'Insights IA et sécurité entreprise', tasks: 2 }
+            ] : [
+              { level: 1, name: 'Core Platform', desc: 'Basic user management, authentication, and data storage', tasks: 3 },
+              { level: 2, name: 'Standard Features', desc: 'Dashboard, reporting, and API integrations', tasks: 4 },
+              { level: 3, name: 'Advanced Features', desc: 'Analytics, automation, and multi-tenant support', tasks: 3 },
+              { level: 4, name: 'Premium Features', desc: 'AI-powered insights and enterprise security', tasks: 2 }
+            ]
+          },
+          live_show: {
+            context: lang === 'fr'
+              ? `Vous êtes le Producteur Exécutif chez ${selectedScenario.company}, une entreprise de divertissement de renommée mondiale. L'entreprise a donné le feu vert à un nouveau spectacle ambitieux combinant acrobaties, musique et technologie de pointe.`
+              : `You are the Executive Producer at ${selectedScenario.company}, a world-renowned live entertainment company. The company has greenlit an ambitious new touring show that combines acrobatics, music, and cutting-edge technology.`,
+            challenge: lang === 'fr'
+              ? `Votre directeur artistique a une vision audacieuse pour "${selectedScenario.projectName}" mais les exigences techniques et créatives sont importantes. Vous devez gérer une équipe diversifiée tout en assurant le respect des normes de sécurité.`
+              : `Your artistic director has a bold vision for "${selectedScenario.projectName}" but the technical and creative demands are significant. You must manage a diverse team while ensuring safety standards are met.`,
+            deliverables: lang === 'fr' ? [
+              { level: 1, name: 'Actes de fondation', desc: 'Séquence d\'ouverture et performances d\'ensemble', tasks: 2 },
+              { level: 2, name: 'Actes vedettes', desc: 'Séquences aériennes et performances spéciales', tasks: 2 },
+              { level: 3, name: 'Intégration technique', desc: 'Éclairage, son et mapping vidéo', tasks: 2 },
+              { level: 4, name: 'Grande finale', desc: 'Séquence culminante avec intégration complète', tasks: 2 }
+            ] : [
+              { level: 1, name: 'Foundation Acts', desc: 'Opening sequence and core ensemble performances', tasks: 2 },
+              { level: 2, name: 'Feature Acts', desc: 'Aerial sequences and specialty performances', tasks: 2 },
+              { level: 3, name: 'Technical Integration', desc: 'Lighting, sound, and projection mapping', tasks: 2 },
+              { level: 4, name: 'Grand Finale', desc: 'Climactic sequence with full cast integration', tasks: 2 }
+            ]
+          },
+          construction: {
+            context: lang === 'fr'
+              ? `Vous êtes le Chef de Projet chez ${selectedScenario.company}, une entreprise de construction commerciale réputée. L'entreprise a remporté le contrat pour construire un nouveau développement à usage mixte.`
+              : `You are the Project Manager at ${selectedScenario.company}, a commercial construction company with a strong reputation. The company has won the contract to build a new mixed-use development.`,
+            challenge: lang === 'fr'
+              ? `Le projet "${selectedScenario.projectName}" implique un bâtiment de 12 étages avec espaces commerciaux, bureaux et résidentiels. Vous devez naviguer les permis, les défis météo et la coordination des sous-traitants.`
+              : `The "${selectedScenario.projectName}" project involves a 12-story building with retail, office, and residential spaces. You must navigate permitting, weather challenges, and subcontractor coordination.`,
+            deliverables: lang === 'fr' ? [
+              { level: 1, name: 'Fondations & Stationnement', desc: 'Stationnement souterrain et fondations', tasks: 3 },
+              { level: 2, name: 'Structure principale', desc: 'Étages 1-6 avec espaces commerciaux', tasks: 4 },
+              { level: 3, name: 'Étages supérieurs', desc: 'Étages 7-10 unités résidentielles', tasks: 3 },
+              { level: 4, name: 'Penthouse & Systèmes', desc: 'Étages 11-12 et intégration des systèmes', tasks: 2 }
+            ] : [
+              { level: 1, name: 'Foundation & Parking', desc: 'Underground parking and structural foundation', tasks: 3 },
+              { level: 2, name: 'Core Structure', desc: 'Floors 1-6 with retail and office space', tasks: 4 },
+              { level: 3, name: 'Upper Floors', desc: 'Floors 7-10 residential units', tasks: 3 },
+              { level: 4, name: 'Penthouse & Systems', desc: 'Floors 11-12 and building systems integration', tasks: 2 }
+            ]
+          },
+          rd_innovation: {
+            context: lang === 'fr'
+              ? `Vous êtes le Chef de Projet Principal chez ${selectedScenario.company}, un laboratoire de R&D de pointe. L'entreprise a obtenu un financement pour développer une technologie révolutionnaire de capteurs quantiques.`
+              : `You are the Lead Project Manager at ${selectedScenario.company}, a cutting-edge R&D laboratory. The company has secured funding to develop a breakthrough quantum sensing technology.`,
+            challenge: lang === 'fr'
+              ? `Le projet "${selectedScenario.projectName}" est hautement innovant avec une incertitude technique significative. Votre équipe doit repousser les limites de la technologie actuelle tout en gérant les risques inhérents à la R&D.`
+              : `The "${selectedScenario.projectName}" project is highly innovative with significant technical uncertainty. Your team must push the boundaries of current technology while managing R&D risks.`,
+            deliverables: lang === 'fr' ? [
+              { level: 1, name: 'Preuve de concept', desc: 'Démontrer la capacité de base des capteurs quantiques', tasks: 2 },
+              { level: 2, name: 'Prototype Alpha', desc: 'Prototype fonctionnel avec fonctionnalités de base', tasks: 3 },
+              { level: 3, name: 'Prototype Bêta', desc: 'Prototype amélioré avec précision accrue', tasks: 3 },
+              { level: 4, name: 'Prêt pour production', desc: 'Design manufacturable avec documentation', tasks: 2 }
+            ] : [
+              { level: 1, name: 'Proof of Concept', desc: 'Demonstrate basic quantum sensing capability', tasks: 2 },
+              { level: 2, name: 'Prototype Alpha', desc: 'Functional prototype with core features', tasks: 3 },
+              { level: 3, name: 'Prototype Beta', desc: 'Refined prototype with improved accuracy', tasks: 3 },
+              { level: 4, name: 'Production Ready', desc: 'Manufacturable design with documentation', tasks: 2 }
+            ]
+          }
+        };
+        return briefs[selectedScenario.id] || briefs.tech_startup;
+      };
+
+      const brief = getProjectBrief();
+
+      return (
+        <div className="sim-page">
+          {renderNavbar()}
+          <div className="brief-container hbp-style">
+            <button className="back-link" onClick={() => { setSimPhase('select'); setBriefTab('brief'); }}>
+              ← {t('game.backToScenarios', lang)}
+            </button>
+            
+            <div className="brief-header">
+              <div className="brief-icon">{selectedScenario.icon}</div>
+              <div>
+                <h1>{selectedScenario.projectName}</h1>
+                <p className="brief-company">{selectedScenario.company}</p>
+              </div>
+            </div>
+
+            <div className="brief-tabs">
+              <button className={`brief-tab ${briefTab === 'brief' ? 'active' : ''}`} onClick={() => setBriefTab('brief')}>
+                {t('game.projectBrief', lang)}
+              </button>
+              <button className={`brief-tab ${briefTab === 'objectives' ? 'active' : ''}`} onClick={() => setBriefTab('objectives')}>
+                {t('game.scenarioObjectives', lang)}
+              </button>
+              <button className={`brief-tab ${briefTab === 'managing' ? 'active' : ''}`} onClick={() => setBriefTab('managing')}>
+                {t('game.managingYourProject', lang)}
+              </button>
+            </div>
+
+            <div className="brief-tab-content">
+              {briefTab === 'brief' && (
+                <div className="tab-panel">
+                  <h2>{t('game.projectBrief', lang)}: <span className="highlight">{selectedScenario.title}</span></h2>
+                  <p className="brief-paragraph">{brief.context}</p>
+                  <p className="brief-paragraph">{brief.challenge}</p>
+
+                  <h3>{t('game.projectDeliverables', lang)}</h3>
+                  <p>{lang === 'fr' 
+                    ? `Votre projet comprend ${selectedScenario.initial.scope} ${selectedScenario.deliverable} organisés en niveaux progressifs.`
+                    : `Your project consists of ${selectedScenario.initial.scope} ${selectedScenario.deliverable} organized into progressive levels.`
+                  }</p>
+                  
+                  <div className="deliverables-list">
+                    {brief.deliverables.map((d, i) => (
+                      <div key={i} className="deliverable-item">
+                        <div className="deliverable-icon">📋</div>
+                        <div className="deliverable-content">
+                          <strong>{lang === 'fr' ? 'NIVEAU' : 'LEVEL'} {d.level}: {d.name.toUpperCase()}</strong>
+                          <p>{d.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {briefTab === 'objectives' && (
+                <div className="tab-panel">
+                  <h2>{t('game.scenarioObjectives', lang)}: <span className="highlight">{selectedScenario.title}</span></h2>
+                  
+                  <p className="brief-paragraph">
+                    {lang === 'fr'
+                      ? `La direction s'attend à ce que vous livriez ce projet en atteignant les objectifs ci-dessous. Vous serez évalué sur votre capacité à équilibrer portée, échéancier, budget, qualité et bien-être de l'équipe.`
+                      : `Management expects you to deliver this project meeting the targets below. You will be evaluated on your ability to balance scope, schedule, budget, quality, and team wellbeing.`
+                    }
+                  </p>
+
+                  <div className="objectives-section">
+                    <h3>{lang === 'fr' ? 'Objectifs spécifiques' : 'Specific Objectives'}</h3>
+
+                    <div className="objective-block">
+                      <h4>{lang === 'fr' ? 'Portée cible' : 'Target Scope'}: <span className="highlight">{selectedScenario.initial.scope} {selectedScenario.deliverable}</span></h4>
+                      <p>{lang === 'fr'
+                        ? `Vous recevrez jusqu'à 200 points pour livrer la portée complète. Une livraison partielle résultera en moins de points proportionnellement.`
+                        : `You will receive up to 200 points for delivering the full scope. Partial completion will result in proportionally fewer points.`
+                      }</p>
+                    </div>
+
+                    <div className="objective-block">
+                      <h4>{lang === 'fr' ? 'Échéancier cible' : 'Target Schedule'}: <span className="highlight">{lang === 'fr' ? 'Semaine' : 'Week'} {selectedScenario.initial.weeks}</span></h4>
+                      <p>{lang === 'fr'
+                        ? `Vous recevrez 200 points pour respecter votre échéancier et perdrez 40 points par semaine de dépassement.`
+                        : `You will receive 200 points for meeting your schedule goal and lose 40 points for each week you exceed the deadline.`
+                      }</p>
+                    </div>
+
+                    <div className="objective-block">
+                      <h4>{lang === 'fr' ? 'Budget cible' : 'Target Budget'}: <span className="highlight">${(selectedScenario.initial.budget / 1000).toFixed(0)}K</span></h4>
+                      <p>{lang === 'fr'
+                        ? `Vous recevrez jusqu'à 200 points en respectant le budget. Terminer sous budget maximisera votre score.`
+                        : `You will receive up to 200 points for staying within budget. Coming in under budget will maximize your score.`
+                      }</p>
+                    </div>
+
+                    <div className="objective-block">
+                      <h4>{lang === 'fr' ? 'Qualité cible' : 'Target Quality'}: <span className="highlight">{selectedScenario.initial.quality}%+</span></h4>
+                      <p>{lang === 'fr'
+                        ? `Livrez un produit de haute qualité. La qualité vaut 200 points et peut être améliorée par des revues de qualité.`
+                        : `Deliver a high-quality product. Quality is worth 200 points and can be improved through quality reviews.`
+                      }</p>
+                    </div>
+
+                    <div className="objective-block">
+                      <h4>{lang === 'fr' ? 'Processus d\'équipe' : 'Team Process'}: <span className="highlight">100 points</span></h4>
+                      <p>{lang === 'fr'
+                        ? `Maintenez une dynamique d'équipe saine. Ce score reflète le moral moyen avec des bonus pour la constance.`
+                        : `Maintain healthy team dynamics. This score reflects average morale, with bonuses for schedule consistency.`
+                      }</p>
+                    </div>
+                  </div>
+
+                  <div className="scoring-summary">
+                    <h4>📊 {lang === 'fr' ? 'Score total possible: 1000 points' : 'Total Possible Score: 1000 points'}</h4>
+                    <div className="score-breakdown">
+                      <span>{lang === 'fr' ? 'Portée' : 'Scope'}: 200</span>
+                      <span>{lang === 'fr' ? 'Échéancier' : 'Schedule'}: 200</span>
+                      <span>Budget: 200</span>
+                      <span>{lang === 'fr' ? 'Qualité' : 'Quality'}: 200</span>
+                      <span>{lang === 'fr' ? 'Processus' : 'Team Process'}: 100</span>
+                      <span>Bonus: 100</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {briefTab === 'managing' && (
+                <div className="tab-panel">
+                  <h2>{t('game.managingYourProject', lang)}: <span className="highlight">{selectedScenario.title}</span></h2>
+                  
+                  <p className="brief-paragraph">
+                    {lang === 'fr'
+                      ? `Chaque semaine, vous aurez l'occasion d'ajuster les paramètres du projet et de prendre des décisions. Comprendre les relations causales vous aidera à faire de meilleurs choix.`
+                      : `Each week you will have opportunities to adjust project parameters and make decisions. Understanding the causal relationships will help you make better choices.`
+                    }
+                  </p>
+
+                  <div className="managing-section">
+                    <h3>{lang === 'fr' ? '1. Le modèle causal' : '1. The Causal Model'}</h3>
+                    <p>{lang === 'fr' 
+                      ? 'Cette simulation utilise des systèmes interconnectés où vos décisions ont des effets en cascade:'
+                      : 'This simulation uses interconnected systems where your decisions have cascading effects:'
+                    }</p>
+                    
+                    <div className="causal-relationships">
+                      <div className="causal-item">
+                        <span className="causal-icon">😰</span>
+                        <div>
+                          <strong>{lang === 'fr' ? 'Stress → Moral → Productivité' : 'Stress → Morale → Productivity'}</strong>
+                          <p>{lang === 'fr'
+                            ? 'Les délais irréalistes et les heures supplémentaires augmentent le stress. Un stress élevé diminue le moral, ce qui réduit directement la productivité.'
+                            : 'Unrealistic deadlines and overtime increase stress. High stress lowers morale, which directly reduces productivity.'
+                          }</p>
+                        </div>
+                      </div>
+                      <div className="causal-item">
+                        <span className="causal-icon">🧠</span>
+                        <div>
+                          <strong>{lang === 'fr' ? 'Développement des connaissances' : 'Knowledge Building'}</strong>
+                          <p>{lang === 'fr'
+                            ? 'Votre équipe commence avec des connaissances limitées. Les réunions de coaching réduisent les erreurs au fil du temps.'
+                            : 'Your team starts with limited project knowledge. Coaching meetings reduce mistake rates over time.'
+                          }</p>
+                        </div>
+                      </div>
+                      <div className="causal-item">
+                        <span className="causal-icon">📅</span>
+                        <div>
+                          <strong>{lang === 'fr' ? 'Constance de l\'échéancier' : 'Schedule Consistency'}</strong>
+                          <p>{lang === 'fr'
+                            ? 'Les changements fréquents érodent la confiance de l\'équipe. Chaque changement après la semaine 2 entraîne des pénalités.'
+                            : 'Frequent deadline changes erode team trust. Each change after week 2 incurs morale and stress penalties.'
+                          }</p>
+                        </div>
+                      </div>
+                      {selectedScenario.hasPrototyping && (
+                        <div className="causal-item">
+                          <span className="causal-icon">🔬</span>
+                          <div>
+                            <strong>{lang === 'fr' ? 'Valeur du prototypage' : 'Prototyping Value'}</strong>
+                            <p>{lang === 'fr'
+                              ? 'Construire des prototypes tôt fait ressortir les problèmes avant qu\'ils ne deviennent coûteux.'
+                              : 'Building prototypes early surfaces problems before they become expensive.'
+                            }</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="managing-section">
+                    <h3>{lang === 'fr' ? '2. Actions hebdomadaires' : '2. Weekly Actions'}</h3>
+                    <p>{lang === 'fr'
+                      ? 'Chaque semaine, vous pouvez prendre plusieurs actions pour gérer votre projet:'
+                      : 'Each week you can take several actions to manage your project:'
+                    }</p>
+                    
+                    <div className="actions-grid">
+                      <div className="action-item">
+                        <strong>👥 {lang === 'fr' ? 'Gestion d\'équipe' : 'Team Management'}</strong>
+                        <p>{lang === 'fr'
+                          ? 'Embauchez ou libérez des membres. Les nouvelles recrues augmentent la capacité mais causent du stress temporaire.'
+                          : 'Hire or release team members. New hires increase capacity but cause temporary stress.'
+                        }</p>
+                      </div>
+                      <div className="action-item">
+                        <strong>📅 {lang === 'fr' ? 'Ajustement d\'échéancier' : 'Schedule Adjustment'}</strong>
+                        <p>{lang === 'fr'
+                          ? 'Prolongez votre échéance si nécessaire. Les ajustements précoces coûtent moins cher.'
+                          : 'Extend your deadline if needed. Early adjustments are less costly than late ones.'
+                        }</p>
+                      </div>
+                      <div className="action-item">
+                        <strong>🎯 {lang === 'fr' ? 'Réunions' : 'Meetings'}</strong>
+                        <p>{lang === 'fr'
+                          ? 'Coaching (connaissances), standups (erreurs), ou revues de statut (parties prenantes).'
+                          : 'Coaching (builds knowledge), standups (reduces mistakes), or status reviews (stakeholder alignment).'
+                        }</p>
+                      </div>
+                      <div className="action-item">
+                        <strong>⭐ {lang === 'fr' ? 'Revue de qualité' : 'Quality Review'}</strong>
+                        <p>{lang === 'fr'
+                          ? 'Investissez du temps pour améliorer la qualité. Coûte du budget mais assure de meilleurs résultats.'
+                          : 'Invest time in improving quality. Costs budget but ensures better outcomes.'
+                        }</p>
+                      </div>
+                      <div className="action-item">
+                        <strong>⚡ {lang === 'fr' ? 'Mode crunch' : 'Crunch Mode'}</strong>
+                        <p>{lang === 'fr'
+                          ? 'Poussez l\'équipe à faire des heures supplémentaires. Augmente la production à court terme au détriment du stress.'
+                          : 'Push the team to work overtime. Increases short-term output at the cost of stress and morale.'
+                        }</p>
+                      </div>
+                      {selectedScenario.hasPrototyping && (
+                        <div className="action-item">
+                          <strong>🔬 {lang === 'fr' ? 'Construire un prototype' : 'Build Prototype'}</strong>
+                          <p>{lang === 'fr'
+                            ? 'Investissez dans des tests précoces pour réduire les risques futurs.'
+                            : 'Invest in early testing to reduce future risks.'
+                          }</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="brief-actions">
+              <button className="btn-primary btn-lg" onClick={beginSimulation}>
+                {t('game.beginSimulation', lang)} →
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Phase: Playing the simulation
+    if (simPhase === 'playing' && gameState) {
+      const scenario = selectedScenario;
+      const budgetRemaining = gameState.budget.total - gameState.budget.spent;
+      const budgetPercent = (budgetRemaining / gameState.budget.total) * 100;
+      const scopePercent = (gameState.scope.completed / gameState.scope.totalFeatures) * 100;
+      const weeksRemaining = gameState.schedule.deadline - gameState.week + 1;
+      const effectiveProductivity = calculateProductivityFromMorale(gameState.team.productivity, gameState.team.morale);
       
-      setAdminData(prev => ({
-        ...prev,
-        overview: overviewRes.status === 'fulfilled' ? overviewRes.value.overview : prev.overview,
-        users: usersRes.status === 'fulfilled' ? usersRes.value.users : prev.users,
-        analytics: analyticsRes.status === 'fulfilled' ? analyticsRes.value.analytics : prev.analytics,
-        revenue: revenueRes.status === 'fulfilled' ? revenueRes.value.revenue : prev.revenue,
-      }));
-      
-    } catch (error) {
-      console.error('Error fetching admin data:', error);
-      setAdminError('Failed to load admin data. Please try again.');
-    } finally {
-      setAdminLoading(false);
-    }
-  };
-  
-  // Fetch admin data when entering admin page or changing tabs
-  useEffect(() => {
-    if (currentPage === 'admin' && currentUser) {
-      fetchAdminData();
-    }
-  }, [currentPage, currentUser]);
+      return (
+        <div className="sim-playing">
+          {renderNavbar()}
+          <div className="game-header">
+            <div className="game-title">
+              <div className="game-icon">{scenario.icon}</div>
+              <div>
+                <h2>{scenario.projectName}</h2>
+                <span>{scenario.company}</span>
+              </div>
+            </div>
+            <div className="week-badge">{t('game.week', lang)} {gameState.week} / {gameState.totalWeeks}</div>
+          </div>
 
-  // Toggle admin status for a user
-  const handleToggleAdmin = async (userId, currentIsAdmin) => {
-    try {
-      const result = await api.toggleAdmin(userId, !currentIsAdmin);
-      if (result.success) {
-        // Update local state
-        setAdminData(prev => ({
-          ...prev,
-          users: prev.users.map(u => 
-            u.id === userId ? { ...u, isAdmin: !currentIsAdmin } : u
-          )
-        }));
-        showToast(result.message, 'success');
-      }
-    } catch (error) {
-      showToast(error.message || 'Failed to update admin status', 'error');
+          <div className="floating-shapes">
+            <div className="shape shape-1"></div>
+            <div className="shape shape-2"></div>
+            <div className="shape shape-3"></div>
+          </div>
+
+          <GanttMascot mood={
+            (budgetPercent < 20 || weeksRemaining <= 1 || gameState.team.stress > 80) ? 'stressed' :
+            (budgetPercent < 40 || weeksRemaining <= 3 || gameState.team.stress > 60) ? 'concerned' :
+            (scopePercent >= 90 && gameState.scope.quality >= 80) ? 'success' : 'normal'
+          } />
+
+          <div className="game-dashboard">
+            <div className="metric-card">
+              <div className="gauge-container">
+                <svg className="gauge" viewBox="0 0 100 100">
+                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
+                  <circle className="gauge-fill" cx="50" cy="50" r="40" 
+                    style={{
+                      strokeDasharray: `${Math.max(0, budgetPercent) * 2.51} 251`,
+                      stroke: budgetPercent > 30 ? '#10b981' : '#ef4444'
+                    }}
+                  />
+                </svg>
+                <div className="gauge-content">
+                  <span className="gauge-icon">💰</span>
+                  <span className="gauge-value">${(budgetRemaining / 1000).toFixed(0)}K</span>
+                </div>
+              </div>
+              <span className="metric-label">Budget</span>
+              <div className={`status-glow ${budgetPercent > 50 ? 'good' : budgetPercent > 30 ? 'warn' : 'bad'}`}></div>
+            </div>
+
+            <div className="metric-card">
+              <div className="gauge-container">
+                <svg className="gauge" viewBox="0 0 100 100">
+                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
+                  <circle className="gauge-fill" cx="50" cy="50" r="40" 
+                    style={{
+                      strokeDasharray: `${(weeksRemaining / gameState.totalWeeks) * 100 * 2.51} 251`,
+                      stroke: weeksRemaining > 3 ? '#10b981' : weeksRemaining > 1 ? '#f59e0b' : '#ef4444'
+                    }}
+                  />
+                </svg>
+                <div className="gauge-content">
+                  <span className="gauge-icon">📅</span>
+                  <span className="gauge-value">{Math.max(0, weeksRemaining)}</span>
+                </div>
+              </div>
+              <span className="metric-label">{t('game.weeksLeft', lang)}</span>
+              <div className={`status-glow ${weeksRemaining > 3 ? 'good' : weeksRemaining > 1 ? 'warn' : 'bad'}`}></div>
+            </div>
+
+            <div className="metric-card">
+              <div className="gauge-container">
+                <svg className="gauge" viewBox="0 0 100 100">
+                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
+                  <circle className="gauge-fill" cx="50" cy="50" r="40" 
+                    style={{ strokeDasharray: `${scopePercent * 2.51} 251`, stroke: '#6366f1' }}
+                  />
+                </svg>
+                <div className="gauge-content">
+                  <span className="gauge-icon">📦</span>
+                  <span className="gauge-value">{Math.round(scopePercent)}%</span>
+                </div>
+              </div>
+              <span className="metric-label">{t('game.scope', lang)}</span>
+              <div className={`status-glow ${scopePercent > 80 ? 'good' : scopePercent > 50 ? 'warn' : 'neutral'}`}></div>
+            </div>
+
+            <div className="metric-card">
+              <div className="gauge-container">
+                <svg className="gauge" viewBox="0 0 100 100">
+                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
+                  <circle className="gauge-fill" cx="50" cy="50" r="40" 
+                    style={{
+                      strokeDasharray: `${gameState.scope.quality * 2.51} 251`,
+                      stroke: gameState.scope.quality > 70 ? '#10b981' : '#f59e0b'
+                    }}
+                  />
+                </svg>
+                <div className="gauge-content">
+                  <span className="gauge-icon">⭐</span>
+                  <span className="gauge-value">{Math.round(gameState.scope.quality)}%</span>
+                </div>
+              </div>
+              <span className="metric-label">{t('game.quality', lang)}</span>
+              <div className={`status-glow ${gameState.scope.quality > 80 ? 'good' : gameState.scope.quality > 60 ? 'warn' : 'bad'}`}></div>
+            </div>
+
+            <div className="metric-card">
+              <div className="gauge-container mini">
+                <div className="team-display">
+                  <span className="gauge-icon large">👥</span>
+                  <span className="gauge-value large">{gameState.team.size}</span>
+                </div>
+              </div>
+              <span className="metric-label">{t('game.teamSize', lang)}</span>
+            </div>
+
+            <div className="metric-card">
+              <div className="gauge-container">
+                <svg className="gauge" viewBox="0 0 100 100">
+                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
+                  <circle className="gauge-fill" cx="50" cy="50" r="40" 
+                    style={{
+                      strokeDasharray: `${gameState.team.morale * 2.51} 251`,
+                      stroke: gameState.team.morale > 60 ? '#10b981' : gameState.team.morale > 40 ? '#f59e0b' : '#ef4444'
+                    }}
+                  />
+                </svg>
+                <div className="gauge-content">
+                  <span className="gauge-icon">😊</span>
+                  <span className="gauge-value">{Math.round(gameState.team.morale)}%</span>
+                </div>
+              </div>
+              <span className="metric-label">{t('game.morale', lang)}</span>
+              <div className={`status-glow ${gameState.team.morale > 70 ? 'good' : gameState.team.morale > 40 ? 'warn' : 'bad'}`}></div>
+            </div>
+
+            <div className="metric-card">
+              <div className="gauge-container">
+                <svg className="gauge" viewBox="0 0 100 100">
+                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
+                  <circle className="gauge-fill stress" cx="50" cy="50" r="40" 
+                    style={{
+                      strokeDasharray: `${gameState.team.stress * 2.51} 251`,
+                      stroke: gameState.team.stress < 40 ? '#10b981' : gameState.team.stress < 60 ? '#f59e0b' : '#ef4444'
+                    }}
+                  />
+                </svg>
+                <div className="gauge-content">
+                  <span className="gauge-icon">😰</span>
+                  <span className="gauge-value">{Math.round(gameState.team.stress)}%</span>
+                </div>
+              </div>
+              <span className="metric-label">{t('game.stress', lang)}</span>
+              <div className={`status-glow ${gameState.team.stress < 30 ? 'good' : gameState.team.stress < 60 ? 'warn' : 'bad'}`}></div>
+            </div>
+
+            <div className="metric-card">
+              <div className="gauge-container">
+                <svg className="gauge" viewBox="0 0 100 100">
+                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
+                  <circle className="gauge-fill" cx="50" cy="50" r="40" 
+                    style={{ strokeDasharray: `${gameState.team.knowledge * 2.51} 251`, stroke: '#8b5cf6' }}
+                  />
+                </svg>
+                <div className="gauge-content">
+                  <span className="gauge-icon">🧠</span>
+                  <span className="gauge-value">{Math.round(gameState.team.knowledge)}%</span>
+                </div>
+              </div>
+              <span className="metric-label">{t('game.knowledge', lang)}</span>
+              <div className="status-glow neutral"></div>
+            </div>
+
+            <div className="metric-card">
+              <div className="gauge-container">
+                <svg className="gauge" viewBox="0 0 100 100">
+                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
+                  <circle className="gauge-fill" cx="50" cy="50" r="40" 
+                    style={{ strokeDasharray: `${effectiveProductivity * 100 * 2.51} 251`, stroke: '#06b6d4' }}
+                  />
+                </svg>
+                <div className="gauge-content">
+                  <span className="gauge-icon">⚡</span>
+                  <span className="gauge-value">{Math.round(effectiveProductivity * 100)}%</span>
+                </div>
+              </div>
+              <span className="metric-label">{t('game.productivity', lang)}</span>
+              <div className={`status-glow ${effectiveProductivity > 0.9 ? 'good' : 'neutral'}`}></div>
+            </div>
+
+            {scenario.hasPrototyping && (
+              <div className="metric-card proto-card">
+                <div className="gauge-container mini">
+                  <div className="proto-display">
+                    <span className="gauge-icon large">🔬</span>
+                    <span className="gauge-value large">{gameState.prototypesBuilt}/{gameState.maxPrototypes}</span>
+                  </div>
+                </div>
+                <span className="metric-label">{t('game.prototypes', lang)}</span>
+                {gameState.prototypesBuilt > 0 && <div className="status-glow good"></div>}
+              </div>
+            )}
+          </div>
+
+          <div className="game-actions">
+            <h3>📋 {t('game.weeklyActions', lang)}</h3>
+            
+            <div className="action-section">
+              <h4>👥 {t('game.teamManagement', lang)}</h4>
+              <div className="action-row">
+                <button className="action-btn" onClick={() => handleAction({ type: 'fire' })} disabled={gameState.team.size <= 2}>
+                  − {t('game.fire', lang)}
+                </button>
+                <span className="team-count">{gameState.team.size} {t('game.members', lang)}</span>
+                <button className="action-btn" onClick={() => handleAction({ type: 'hire' })} disabled={gameState.team.size >= 12}>
+                  + {t('game.hire', lang)}
+                </button>
+              </div>
+            </div>
+
+            <div className="action-section">
+              <h4>📅 {t('game.scheduleAdjustment', lang)}</h4>
+              <div className="action-row">
+                <button className="action-btn" onClick={() => handleAction({ type: 'extend', weeks: 1 })}>
+                  +1 {t('game.weekExtension', lang)}
+                </button>
+                <span className="deadline-info">{t('game.deadline', lang)}: {t('game.week', lang)} {gameState.schedule.deadline}</span>
+                <button className="action-btn" onClick={() => handleAction({ type: 'extend', weeks: 2 })}>
+                  +2 {t('game.weeksExtension', lang)}
+                </button>
+              </div>
+              {gameState.scheduleChanges > 0 && (
+                <p className="warning-text">⚠️ {lang === 'fr' 
+                  ? `${gameState.scheduleChanges} changement(s) d'échéancier - impact sur le moral`
+                  : `${gameState.scheduleChanges} schedule change(s) - morale impact`
+                }</p>
+              )}
+            </div>
+
+            <div className="action-section">
+              <h4>🎯 {t('game.meetings', lang)}</h4>
+              <div className="meeting-buttons">
+                {MEETING_TYPES.map(meeting => (
+                  <button key={meeting.id} className="meeting-btn" onClick={() => handleAction({ type: 'meeting', meeting: meeting.id })}>
+                    <span className="meeting-icon">{meeting.icon}</span>
+                    <span>{meeting.name}</span>
+                    <small>{meeting.description}</small>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="action-section toggles">
+              <label className="toggle-option">
+                <input type="checkbox" checked={gameState.qualityReviewActive} onChange={() => handleAction({ type: 'toggleQuality' })} />
+                <span>⭐ {t('game.qualityReview', lang)}</span>
+                <small>{lang === 'fr' ? '+5% qualité, coût +$5K/sem' : '+5% quality, cost +$5K/week'}</small>
+              </label>
+              <label className="toggle-option">
+                <input type="checkbox" checked={gameState.crunchActive} onChange={() => handleAction({ type: 'toggleCrunch' })} />
+                <span>⚡ {t('game.crunchMode', lang)}</span>
+                <small>{lang === 'fr' ? '+25% productivité, +15% stress' : '+25% productivity, +15% stress'}</small>
+              </label>
+              {scenario.hasPrototyping && gameState.prototypesBuilt < gameState.maxPrototypes && (
+                <button className="proto-btn" onClick={() => handleAction({ type: 'prototype' })}>
+                  🔬 {t('game.buildPrototype', lang)} ({gameState.prototypesBuilt}/{gameState.maxPrototypes})
+                </button>
+              )}
+            </div>
+
+            <div className="week-progress">
+              <button className="btn-primary btn-lg" onClick={advanceWeek}>
+                {t('game.advanceToWeek', lang)} {gameState.week + 1} →
+              </button>
+            </div>
+          </div>
+
+          {showEventModal && currentEvent && (
+            <div className="event-modal-overlay">
+              <div className="event-modal">
+                <div className="event-header">
+                  <span className="event-icon">{currentEvent.icon}</span>
+                  <h2>{currentEvent.title}</h2>
+                </div>
+                <p className="event-description">{currentEvent.description}</p>
+                <div className="event-options">
+                  {currentEvent.options.map((option, i) => (
+                    <button key={i} className="event-option" onClick={() => handleEventChoice(option)}>
+                      <strong>{option.label}</strong>
+                      <span>{option.description}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
     }
+
+    // Phase: Results
+    if (simPhase === 'results' && results) {
+      const getGradeColor = (grade) => {
+        if (grade.startsWith('A')) return '#10b981';
+        if (grade.startsWith('B')) return '#6366f1';
+        if (grade.startsWith('C')) return '#f59e0b';
+        return '#ef4444';
+      };
+
+      return (
+        <div className="sim-results">
+          {renderNavbar()}
+          <div className="results-container">
+            <div className="results-header">
+              <h1>🎉 {t('results.projectComplete', lang)}!</h1>
+              <div className="final-grade" style={{color: getGradeColor(results.grade)}}>
+                {results.grade}
+              </div>
+              <div className="final-score">{results.totalScore} {t('results.points', lang)}</div>
+            </div>
+
+            <div className="score-breakdown-card">
+              <h3>{t('results.scoreBreakdown', lang)}</h3>
+              <div className="breakdown-items">
+                <div className="breakdown-item">
+                  <span className="breakdown-label">📦 {t('game.scope', lang)}</span>
+                  <div className="breakdown-bar">
+                    <div className="bar-fill" style={{width: `${(results.breakdown.scope / 200) * 100}%`}}></div>
+                  </div>
+                  <span className="breakdown-value">{results.breakdown.scope}/200</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="breakdown-label">📅 {t('game.schedule', lang)}</span>
+                  <div className="breakdown-bar">
+                    <div className="bar-fill" style={{width: `${Math.max(0, results.breakdown.schedule) / 200 * 100}%`}}></div>
+                  </div>
+                  <span className="breakdown-value">{results.breakdown.schedule}/200</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="breakdown-label">💰 Budget</span>
+                  <div className="breakdown-bar">
+                    <div className="bar-fill" style={{width: `${(results.breakdown.budget / 200) * 100}%`}}></div>
+                  </div>
+                  <span className="breakdown-value">{results.breakdown.budget}/200</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="breakdown-label">⭐ {t('game.quality', lang)}</span>
+                  <div className="breakdown-bar">
+                    <div className="bar-fill" style={{width: `${(results.breakdown.quality / 200) * 100}%`}}></div>
+                  </div>
+                  <span className="breakdown-value">{results.breakdown.quality}/200</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="breakdown-label">👥 {t('results.teamProcess', lang)}</span>
+                  <div className="breakdown-bar">
+                    <div className="bar-fill" style={{width: `${(results.breakdown.teamProcess / 100) * 100}%`}}></div>
+                  </div>
+                  <span className="breakdown-value">{results.breakdown.teamProcess}/100</span>
+                </div>
+                {results.breakdown.bonuses > 0 && (
+                  <div className="breakdown-item bonus">
+                    <span className="breakdown-label">🌟 Bonus</span>
+                    <div className="breakdown-bar">
+                      <div className="bar-fill bonus" style={{width: `${(results.breakdown.bonuses / 100) * 100}%`}}></div>
+                    </div>
+                    <span className="breakdown-value">+{results.breakdown.bonuses}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="results-summary">
+              <h3>{t('results.projectSummary', lang)}</h3>
+              <div className="summary-grid">
+                <div className="summary-item">
+                  <span className="summary-label">{t('results.finalScope', lang)}</span>
+                  <span className="summary-value">{results.summary.scopeCompleted}/{results.summary.scopeTotal} {selectedScenario.deliverable}</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">{t('results.completedIn', lang)}</span>
+                  <span className="summary-value">{results.summary.weeksUsed} {t('game.weeks', lang)}</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">{t('results.budgetUsed', lang)}</span>
+                  <span className="summary-value">${(results.summary.budgetSpent / 1000).toFixed(0)}K / ${(results.summary.budgetTotal / 1000).toFixed(0)}K</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">{t('results.finalQuality', lang)}</span>
+                  <span className="summary-value">{results.summary.finalQuality}%</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">{t('results.avgMorale', lang)}</span>
+                  <span className="summary-value">{results.summary.avgMorale}%</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">{t('results.scheduleChanges', lang)}</span>
+                  <span className="summary-value">{results.summary.scheduleChanges}</span>
+                </div>
+              </div>
+            </div>
+
+            {results.feedback && results.feedback.length > 0 && (
+              <div className="feedback-section">
+                <h3>{t('results.feedback', lang)}</h3>
+                <ul className="feedback-list">
+                  {results.feedback.map((fb, i) => (
+                    <li key={i} className={`feedback-item ${fb.type}`}>
+                      <span className="feedback-icon">{fb.type === 'success' ? '✅' : fb.type === 'warning' ? '⚠️' : 'ℹ️'}</span>
+                      {fb.message}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div className="results-actions">
+              <button className="btn-primary" onClick={() => {
+                setSimPhase('select');
+                setResults(null);
+                setGameState(null);
+              }}>
+                {t('results.playAgain', lang)}
+              </button>
+              <button className="btn-secondary" onClick={() => setCurrentPage('dashboard')}>
+                {t('results.backToDashboard', lang)}
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return null;
   };
 
-  // Toggle tester status for a user
-  const handleToggleTester = async (userId, currentIsTester) => {
-    try {
-      const result = await api.toggleTester(userId, !currentIsTester);
-      if (result.success) {
-        // Update local state
-        setAdminData(prev => ({
-          ...prev,
-          users: prev.users.map(u => 
-            u.id === userId ? { ...u, isTester: !currentIsTester } : u
-          )
-        }));
-        showToast(result.message, 'success');
-      }
-    } catch (error) {
-      showToast(error.message || 'Failed to update tester status', 'error');
-    }
-  };
-
+  // ============================================
+  // RENDER ADMIN DASHBOARD
+  // ============================================
   const renderAdminDashboard = () => {
     const filteredUsers = adminData.users.filter(u => 
       u.name?.toLowerCase().includes(adminSearch.toLowerCase()) ||
@@ -1892,88 +3351,82 @@ export default function BizSimHub() {
       <div className="admin-page">
         {renderNavbar()}
         
-        {/* Loading overlay */}
         {adminLoading && (
           <div className="admin-loading-overlay">
             <div className="admin-loading-spinner">
               <div className="spinner"></div>
-              <p>Loading admin data...</p>
+              <p>{t('admin.loadingData', lang)}</p>
             </div>
           </div>
         )}
         
-        {/* Error banner */}
         {adminError && (
           <div className="admin-error-banner">
             <span>⚠️ {adminError}</span>
-            <button onClick={fetchAdminData}>Retry</button>
+            <button onClick={fetchAdminData}>{t('admin.retry', lang)}</button>
           </div>
         )}
         
         <div className="admin-layout">
-          {/* Sidebar */}
           <aside className="admin-sidebar">
             <div className="admin-sidebar-header">
               <span className="admin-logo">⚙️</span>
-              <h2>Admin Panel</h2>
+              <h2>{t('admin.adminPanel', lang)}</h2>
             </div>
             <nav className="admin-nav">
               <button className={`admin-nav-btn ${adminTab === 'overview' ? 'active' : ''}`} onClick={() => setAdminTab('overview')}>
-                <span>📊</span> Overview
+                <span>📊</span> {t('admin.overview', lang)}
               </button>
               <button className={`admin-nav-btn ${adminTab === 'users' ? 'active' : ''}`} onClick={() => setAdminTab('users')}>
-                <span>👥</span> Users
+                <span>👥</span> {t('admin.users', lang)}
               </button>
               <button className={`admin-nav-btn ${adminTab === 'analytics' ? 'active' : ''}`} onClick={() => setAdminTab('analytics')}>
-                <span>📈</span> Analytics
+                <span>📈</span> {t('admin.analytics', lang)}
               </button>
               <button className={`admin-nav-btn ${adminTab === 'revenue' ? 'active' : ''}`} onClick={() => setAdminTab('revenue')}>
-                <span>💰</span> Revenue
+                <span>💰</span> {t('admin.revenue', lang)}
               </button>
               <button className={`admin-nav-btn ${adminTab === 'content' ? 'active' : ''}`} onClick={() => setAdminTab('content')}>
-                <span>📚</span> Content
+                <span>📚</span> {t('admin.content', lang)}
               </button>
               <button className={`admin-nav-btn ${adminTab === 'system' ? 'active' : ''}`} onClick={() => setAdminTab('system')}>
-                <span>🔧</span> System
+                <span>🔧</span> {t('admin.system', lang)}
               </button>
             </nav>
             <div className="admin-sidebar-footer">
               <button className="admin-back-btn" onClick={() => setCurrentPage('dashboard')}>
-                ← Back to App
+                ← {t('admin.backToApp', lang)}
               </button>
             </div>
           </aside>
 
-          {/* Main Content */}
           <main className="admin-main">
-            {/* Overview Tab */}
             {adminTab === 'overview' && (
               <div className="admin-content">
                 <div className="admin-header">
                   <div>
-                    <h1>Dashboard Overview</h1>
-                    <p>{lang === 'en' ? 'Welcome! Here\'s what\'s happening with BizSimHub today.' : 'Bienvenue! Voici ce qui se passe avec BizSimHub aujourd\'hui.'}</p>
+                    <h1>{t('admin.dashboardOverview', lang)}</h1>
+                    <p>{lang === 'fr' ? 'Bienvenue! Voici ce qui se passe avec BizSimHub aujourd\'hui.' : 'Welcome! Here\'s what\'s happening with BizSimHub today.'}</p>
                   </div>
                   <button className="admin-btn refresh-btn" onClick={fetchAdminData} disabled={adminLoading}>
-                    {adminLoading ? '↻ Loading...' : '↻ Refresh'}
+                    {adminLoading ? '↻ ' + t('common.loading', lang) : '↻ ' + t('admin.refresh', lang)}
                   </button>
                 </div>
 
-                {/* Key Metrics */}
                 <div className="admin-metrics-grid">
                   <div className="admin-metric-card">
                     <div className="metric-icon blue">👥</div>
                     <div className="metric-info">
                       <span className="metric-value">{adminData.overview.totalUsers.toLocaleString()}</span>
-                      <span className="metric-label">Total Users</span>
+                      <span className="metric-label">{t('admin.totalUsers', lang)}</span>
                     </div>
-                    <span className="metric-badge green">+{adminData.overview.newUsersToday} today</span>
+                    <span className="metric-badge green">+{adminData.overview.newUsersToday} {lang === 'fr' ? 'aujourd\'hui' : 'today'}</span>
                   </div>
                   <div className="admin-metric-card">
                     <div className="metric-icon green">💰</div>
                     <div className="metric-info">
                       <span className="metric-value">${adminData.overview.monthlyRevenue.toLocaleString()}</span>
-                      <span className="metric-label">Monthly Revenue</span>
+                      <span className="metric-label">{t('admin.monthlyRevenue', lang)}</span>
                     </div>
                     <span className="metric-badge green">+23% MoM</span>
                   </div>
@@ -1981,72 +3434,63 @@ export default function BizSimHub() {
                     <div className="metric-icon purple">🎯</div>
                     <div className="metric-info">
                       <span className="metric-value">{adminData.overview.completionRate}%</span>
-                      <span className="metric-label">Completion Rate</span>
+                      <span className="metric-label">{t('admin.completionRate', lang)}</span>
                     </div>
-                    <span className="metric-badge neutral">Avg</span>
+                    <span className="metric-badge neutral">{lang === 'fr' ? 'Moy' : 'Avg'}</span>
                   </div>
                   <div className="admin-metric-card">
                     <div className="metric-icon orange">⚡</div>
                     <div className="metric-info">
                       <span className="metric-value">{adminData.overview.activeNow}</span>
-                      <span className="metric-label">Active Now</span>
+                      <span className="metric-label">{t('admin.activeNow', lang)}</span>
                     </div>
-                    <span className="metric-badge blue">Live</span>
+                    <span className="metric-badge blue">{lang === 'fr' ? 'En direct' : 'Live'}</span>
                   </div>
                 </div>
 
-                {/* Quick Stats Row */}
                 <div className="admin-stats-row">
                   <div className="admin-stat-card">
-                    <h3>Active Users (30d)</h3>
+                    <h3>{t('admin.activeUsers30d', lang)}</h3>
                     <div className="stat-big">{adminData.overview.activeUsers.toLocaleString()}</div>
                     <div className="stat-bar">
                       <div className="stat-bar-fill" style={{width: `${(adminData.overview.activeUsers / adminData.overview.totalUsers) * 100}%`}}></div>
                     </div>
-                    <span className="stat-sub">{Math.round((adminData.overview.activeUsers / adminData.overview.totalUsers) * 100)}% of total users</span>
+                    <span className="stat-sub">{Math.round((adminData.overview.activeUsers / adminData.overview.totalUsers) * 100)}% {lang === 'fr' ? 'du total' : 'of total users'}</span>
                   </div>
                   <div className="admin-stat-card">
-                    <h3>Avg Session Time</h3>
+                    <h3>{t('admin.avgSessionTime', lang)}</h3>
                     <div className="stat-big">{adminData.overview.avgSessionTime}</div>
-                    <span className="stat-sub">Per user session</span>
+                    <span className="stat-sub">{lang === 'fr' ? 'Par session utilisateur' : 'Per user session'}</span>
                   </div>
                   <div className="admin-stat-card">
-                    <h3>Total Revenue (All Time)</h3>
+                    <h3>{t('admin.totalRevenueAllTime', lang)}</h3>
                     <div className="stat-big">${adminData.overview.totalRevenue.toLocaleString()}</div>
-                    <span className="stat-sub">Since launch</span>
+                    <span className="stat-sub">{lang === 'fr' ? 'Depuis le lancement' : 'Since launch'}</span>
                   </div>
                 </div>
 
-                {/* Recent Activity */}
                 <div className="admin-section">
-                  <h3>Recent Activity</h3>
+                  <h3>{t('admin.recentActivity', lang)}</h3>
                   <div className="activity-list">
                     <div className="activity-item">
                       <span className="activity-icon">🎉</span>
                       <div className="activity-content">
-                        <strong>Michael Brown</strong> completed Project Apex with Grade A
-                        <span className="activity-time">5 minutes ago</span>
+                        <strong>Michael Brown</strong> {lang === 'fr' ? 'a complété Project Apex avec Note A' : 'completed Project Apex with Grade A'}
+                        <span className="activity-time">{lang === 'fr' ? 'Il y a 5 minutes' : '5 minutes ago'}</span>
                       </div>
                     </div>
                     <div className="activity-item">
                       <span className="activity-icon">💳</span>
                       <div className="activity-content">
-                        <strong>Lisa Thompson</strong> upgraded to Professional plan
-                        <span className="activity-time">23 minutes ago</span>
+                        <strong>Lisa Thompson</strong> {lang === 'fr' ? 'est passée au plan Professionnel' : 'upgraded to Professional plan'}
+                        <span className="activity-time">{lang === 'fr' ? 'Il y a 23 minutes' : '23 minutes ago'}</span>
                       </div>
                     </div>
                     <div className="activity-item">
                       <span className="activity-icon">👤</span>
                       <div className="activity-content">
-                        <strong>New user registered:</strong> alex@company.com
-                        <span className="activity-time">1 hour ago</span>
-                      </div>
-                    </div>
-                    <div className="activity-item">
-                      <span className="activity-icon">🎯</span>
-                      <div className="activity-content">
-                        <strong>Enterprise Scale</strong> simulation reached 1,500 plays
-                        <span className="activity-time">2 hours ago</span>
+                        <strong>{lang === 'fr' ? 'Nouvel utilisateur inscrit:' : 'New user registered:'}</strong> alex@company.com
+                        <span className="activity-time">{lang === 'fr' ? 'Il y a 1 heure' : '1 hour ago'}</span>
                       </div>
                     </div>
                   </div>
@@ -2054,19 +3498,17 @@ export default function BizSimHub() {
               </div>
             )}
 
-            {/* Users Tab */}
             {adminTab === 'users' && (
               <div className="admin-content">
                 <div className="admin-header">
-                  <h1>User Management</h1>
-                  <p>Manage and monitor all platform users</p>
+                  <h1>{t('admin.userManagement', lang)}</h1>
+                  <p>{lang === 'fr' ? 'Gérer et surveiller tous les utilisateurs' : 'Manage and monitor all platform users'}</p>
                 </div>
 
-                {/* User Stats */}
                 <div className="admin-user-stats">
                   <div className="user-stat">
                     <span className="user-stat-value">{adminData.users.filter(u => u.status === 'active').length}</span>
-                    <span className="user-stat-label">Active</span>
+                    <span className="user-stat-label">{lang === 'fr' ? 'Actifs' : 'Active'}</span>
                   </div>
                   <div className="user-stat">
                     <span className="user-stat-value">{adminData.users.filter(u => u.plan === 'Professional').length}</span>
@@ -2078,49 +3520,41 @@ export default function BizSimHub() {
                   </div>
                   <div className="user-stat">
                     <span className="user-stat-value">{adminData.users.filter(u => u.status === 'churned').length}</span>
-                    <span className="user-stat-label">Churned</span>
+                    <span className="user-stat-label">{lang === 'fr' ? 'Perdus' : 'Churned'}</span>
                   </div>
                 </div>
 
-                {/* Search & Filter */}
                 <div className="admin-toolbar">
                   <div className="search-box">
                     <span>🔍</span>
                     <input 
                       type="text" 
-                      placeholder="Search users by name or email..." 
+                      placeholder={lang === 'fr' ? 'Rechercher par nom ou courriel...' : 'Search users by name or email...'} 
                       value={adminSearch}
                       onChange={(e) => setAdminSearch(e.target.value)}
                     />
                   </div>
                   <div className="toolbar-actions">
                     <select className="admin-select">
-                      <option>All Plans</option>
-                      <option>Free</option>
+                      <option>{lang === 'fr' ? 'Tous les plans' : 'All Plans'}</option>
+                      <option>{lang === 'fr' ? 'Gratuit' : 'Free'}</option>
                       <option>Professional</option>
                       <option>Enterprise</option>
                     </select>
-                    <select className="admin-select">
-                      <option>All Status</option>
-                      <option>Active</option>
-                      <option>Inactive</option>
-                      <option>Churned</option>
-                    </select>
-                    <button className="admin-btn primary">+ Add User</button>
+                    <button className="admin-btn primary">+ {lang === 'fr' ? 'Ajouter' : 'Add User'}</button>
                   </div>
                 </div>
 
-                {/* Users Table */}
                 <div className="admin-table-container">
                   {filteredUsers.length > 0 ? (
                     <table className="admin-table">
                       <thead>
                         <tr>
-                          <th>User</th>
+                          <th>{lang === 'fr' ? 'Utilisateur' : 'User'}</th>
                           <th>Plan</th>
-                          <th>Status</th>
+                          <th>{lang === 'fr' ? 'Statut' : 'Status'}</th>
                           <th>Simulations</th>
-                          <th>Last Active</th>
+                          <th>{lang === 'fr' ? 'Dernière activité' : 'Last Active'}</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
@@ -2142,7 +3576,7 @@ export default function BizSimHub() {
                             </td>
                             <td>
                               <span className={`plan-badge ${user.isTester ? 'tester' : (user.plan || 'free').toLowerCase()}`}>
-                                {user.isTester ? 'Tester' : (user.plan || 'Free')}
+                                {user.isTester ? 'Tester' : (user.plan || lang === 'fr' ? 'Gratuit' : 'Free')}
                               </span>
                             </td>
                             <td>
@@ -2150,27 +3584,27 @@ export default function BizSimHub() {
                             </td>
                             <td>
                               <span className="sim-count">{user.completions || 0}/{user.simulations || 0}</span>
-                              <span className="sim-label">completed</span>
+                              <span className="sim-label">{lang === 'fr' ? 'complétées' : 'completed'}</span>
                             </td>
-                            <td className="last-active">{user.lastActive || 'Never'}</td>
+                            <td className="last-active">{user.lastActive || (lang === 'fr' ? 'Jamais' : 'Never')}</td>
                             <td>
                               <div className="action-btns">
-                                <button className="action-btn" title="View" onClick={() => setSelectedUser(user)}>👁</button>
+                                <button className="action-btn" title={lang === 'fr' ? 'Voir' : 'View'} onClick={() => setSelectedUser(user)}>👁</button>
                                 <button 
                                   className={`action-btn ${user.isTester ? 'tester-active' : ''}`} 
-                                  title={user.isTester ? 'Remove Tester' : 'Make Tester'}
+                                  title={user.isTester ? (lang === 'fr' ? 'Retirer Testeur' : 'Remove Tester') : (lang === 'fr' ? 'Faire Testeur' : 'Make Tester')}
                                   onClick={() => handleToggleTester(user.id, user.isTester)}
                                 >
                                   🧪
                                 </button>
                                 <button 
                                   className={`action-btn ${user.isAdmin ? 'admin-active' : ''}`} 
-                                  title={user.isAdmin ? 'Remove Admin' : 'Make Admin'}
+                                  title={user.isAdmin ? (lang === 'fr' ? 'Retirer Admin' : 'Remove Admin') : (lang === 'fr' ? 'Faire Admin' : 'Make Admin')}
                                   onClick={() => handleToggleAdmin(user.id, user.isAdmin)}
                                 >
                                   👑
                                 </button>
-                                <button className="action-btn danger" title="Delete">🗑</button>
+                                <button className="action-btn danger" title={lang === 'fr' ? 'Supprimer' : 'Delete'}>🗑</button>
                               </div>
                             </td>
                           </tr>
@@ -2180,17 +3614,16 @@ export default function BizSimHub() {
                   ) : (
                     <div className="empty-state">
                       <div className="empty-icon">👥</div>
-                      <p>{adminSearch ? 'No users match your search' : 'No users yet'}</p>
+                      <p>{adminSearch ? (lang === 'fr' ? 'Aucun utilisateur trouvé' : 'No users match your search') : (lang === 'fr' ? 'Aucun utilisateur' : 'No users yet')}</p>
                     </div>
                   )}
                 </div>
 
-                {/* User Detail Modal */}
                 {selectedUser && (
                   <div className="admin-modal-overlay" onClick={() => setSelectedUser(null)}>
                     <div className="admin-modal" onClick={e => e.stopPropagation()}>
                       <div className="modal-header">
-                        <h2>User Details</h2>
+                        <h2>{lang === 'fr' ? 'Détails utilisateur' : 'User Details'}</h2>
                         <button className="modal-close" onClick={() => setSelectedUser(null)}>×</button>
                       </div>
                       <div className="modal-body">
@@ -2204,33 +3637,21 @@ export default function BizSimHub() {
                         <div className="user-detail-grid">
                           <div className="detail-item">
                             <label>Plan</label>
-                            <span className={`plan-badge ${(selectedUser.plan || 'free').toLowerCase()}`}>{selectedUser.plan || 'Free'}</span>
+                            <span className={`plan-badge ${(selectedUser.plan || 'free').toLowerCase()}`}>{selectedUser.plan || (lang === 'fr' ? 'Gratuit' : 'Free')}</span>
                           </div>
                           <div className="detail-item">
-                            <label>Status</label>
+                            <label>{lang === 'fr' ? 'Statut' : 'Status'}</label>
                             <span className={`status-badge ${selectedUser.status || 'active'}`}>{selectedUser.status || 'active'}</span>
                           </div>
                           <div className="detail-item">
                             <label>Admin</label>
                             <span className={`status-badge ${selectedUser.isAdmin ? 'active' : 'inactive'}`}>
-                              {selectedUser.isAdmin ? '✓ Yes' : 'No'}
+                              {selectedUser.isAdmin ? '✓ ' + (lang === 'fr' ? 'Oui' : 'Yes') : (lang === 'fr' ? 'Non' : 'No')}
                             </span>
                           </div>
                           <div className="detail-item">
-                            <label>Joined</label>
+                            <label>{lang === 'fr' ? 'Inscrit' : 'Joined'}</label>
                             <span>{selectedUser.joined || 'N/A'}</span>
-                          </div>
-                          <div className="detail-item">
-                            <label>Last Active</label>
-                            <span>{selectedUser.lastActive || 'Never'}</span>
-                          </div>
-                          <div className="detail-item">
-                            <label>Simulations Played</label>
-                            <span>{selectedUser.simulations || 0}</span>
-                          </div>
-                          <div className="detail-item">
-                            <label>Completions</label>
-                            <span>{selectedUser.completions || 0}</span>
                           </div>
                         </div>
                       </div>
@@ -2242,10 +3663,10 @@ export default function BizSimHub() {
                             setSelectedUser(prev => ({ ...prev, isAdmin: !prev.isAdmin }));
                           }}
                         >
-                          {selectedUser.isAdmin ? '👑 Remove Admin' : '👑 Make Admin'}
+                          {selectedUser.isAdmin ? '👑 ' + (lang === 'fr' ? 'Retirer Admin' : 'Remove Admin') : '👑 ' + (lang === 'fr' ? 'Faire Admin' : 'Make Admin')}
                         </button>
-                        <button className="admin-btn">Send Email</button>
-                        <button className="admin-btn danger">Suspend User</button>
+                        <button className="admin-btn">{lang === 'fr' ? 'Envoyer courriel' : 'Send Email'}</button>
+                        <button className="admin-btn danger">{lang === 'fr' ? 'Suspendre' : 'Suspend User'}</button>
                       </div>
                     </div>
                   </div>
@@ -2253,22 +3674,20 @@ export default function BizSimHub() {
               </div>
             )}
 
-            {/* Analytics Tab */}
             {adminTab === 'analytics' && (
               <div className="admin-content">
                 <div className="admin-header">
-                  <h1>Analytics</h1>
-                  <p>Platform performance and user engagement metrics</p>
+                  <h1>{t('admin.analytics', lang)}</h1>
+                  <p>{lang === 'fr' ? 'Performance de la plateforme et métriques d\'engagement' : 'Platform performance and user engagement metrics'}</p>
                 </div>
 
-                {/* Weekly Activity Chart */}
                 <div className="admin-chart-section">
-                  <h3>Weekly Activity</h3>
+                  <h3>{lang === 'fr' ? 'Activité hebdomadaire' : 'Weekly Activity'}</h3>
                   <div className="bar-chart">
                     {adminData.analytics.weeklyActivity.map((day, i) => (
                       <div key={i} className="bar-group">
                         <div className="bar-container">
-                          <div className="bar users" style={{height: `${(day.users / 600) * 100}%`}} title={`${day.users} users`}></div>
+                          <div className="bar users" style={{height: `${(day.users / 600) * 100}%`}} title={`${day.users} ${lang === 'fr' ? 'utilisateurs' : 'users'}`}></div>
                           <div className="bar sessions" style={{height: `${(day.sessions / 1000) * 100}%`}} title={`${day.sessions} sessions`}></div>
                         </div>
                         <span className="bar-label">{day.day}</span>
@@ -2276,14 +3695,13 @@ export default function BizSimHub() {
                     ))}
                   </div>
                   <div className="chart-legend">
-                    <span><i className="legend-dot users"></i> Users</span>
+                    <span><i className="legend-dot users"></i> {lang === 'fr' ? 'Utilisateurs' : 'Users'}</span>
                     <span><i className="legend-dot sessions"></i> Sessions</span>
                   </div>
                 </div>
 
-                {/* Popular Simulations */}
                 <div className="admin-section">
-                  <h3>Popular Simulations</h3>
+                  <h3>{lang === 'fr' ? 'Simulations populaires' : 'Popular Simulations'}</h3>
                   {adminData.analytics.popularSimulations?.length > 0 ? (
                     <div className="sim-rankings">
                       {adminData.analytics.popularSimulations.map((sim, i) => (
@@ -2292,14 +3710,14 @@ export default function BizSimHub() {
                           <div className="sim-rank-info">
                             <strong>{sim.name}</strong>
                             <div className="sim-rank-stats">
-                              <span>🎮 {(sim.plays || 0).toLocaleString()} plays</span>
-                              <span>✅ {(sim.completions || 0).toLocaleString()} completions</span>
-                              <span>⭐ {sim.avgScore || 0} avg score</span>
+                              <span>🎮 {(sim.plays || 0).toLocaleString()} {lang === 'fr' ? 'parties' : 'plays'}</span>
+                              <span>✅ {(sim.completions || 0).toLocaleString()} {lang === 'fr' ? 'complétées' : 'completions'}</span>
+                              <span>⭐ {sim.avgScore || 0} {lang === 'fr' ? 'score moy' : 'avg score'}</span>
                             </div>
                           </div>
                           <div className="completion-rate">
                             {sim.plays > 0 ? Math.round((sim.completions / sim.plays) * 100) : 0}%
-                            <span>completion</span>
+                            <span>{lang === 'fr' ? 'complétion' : 'completion'}</span>
                           </div>
                         </div>
                       ))}
@@ -2307,14 +3725,13 @@ export default function BizSimHub() {
                   ) : (
                     <div className="empty-state">
                       <div className="empty-icon">📊</div>
-                      <p>No simulation data yet</p>
+                      <p>{lang === 'fr' ? 'Aucune donnée de simulation' : 'No simulation data yet'}</p>
                     </div>
                   )}
                 </div>
 
-                {/* Grade Distribution */}
                 <div className="admin-section">
-                  <h3>Grade Distribution</h3>
+                  <h3>{lang === 'fr' ? 'Distribution des notes' : 'Grade Distribution'}</h3>
                   <div className="grade-chart">
                     {Object.entries(adminData.analytics.gradeDistribution).map(([grade, pct]) => (
                       <div key={grade} className="grade-bar-item">
@@ -2330,21 +3747,19 @@ export default function BizSimHub() {
               </div>
             )}
 
-            {/* Revenue Tab */}
             {adminTab === 'revenue' && (
               <div className="admin-content">
                 <div className="admin-header">
-                  <h1>Revenue</h1>
-                  <p>Financial metrics and subscription analytics</p>
+                  <h1>{t('admin.revenue', lang)}</h1>
+                  <p>{lang === 'fr' ? 'Métriques financières et analytiques d\'abonnements' : 'Financial metrics and subscription analytics'}</p>
                 </div>
 
-                {/* Revenue Metrics */}
                 <div className="admin-metrics-grid">
                   <div className="admin-metric-card">
                     <div className="metric-icon green">📈</div>
                     <div className="metric-info">
                       <span className="metric-value">${adminData.revenue.mrr.toLocaleString()}</span>
-                      <span className="metric-label">Monthly Recurring Revenue</span>
+                      <span className="metric-label">{lang === 'fr' ? 'Revenu mensuel récurrent' : 'Monthly Recurring Revenue'}</span>
                     </div>
                     <span className="metric-badge green">+{adminData.revenue.growth}%</span>
                   </div>
@@ -2352,28 +3767,27 @@ export default function BizSimHub() {
                     <div className="metric-icon blue">📊</div>
                     <div className="metric-info">
                       <span className="metric-value">${adminData.revenue.arr.toLocaleString()}</span>
-                      <span className="metric-label">Annual Recurring Revenue</span>
+                      <span className="metric-label">{lang === 'fr' ? 'Revenu annuel récurrent' : 'Annual Recurring Revenue'}</span>
                     </div>
                   </div>
                   <div className="admin-metric-card">
                     <div className="metric-icon purple">👤</div>
                     <div className="metric-info">
                       <span className="metric-value">${adminData.revenue.ltv}</span>
-                      <span className="metric-label">Customer LTV</span>
+                      <span className="metric-label">{lang === 'fr' ? 'Valeur vie client' : 'Customer LTV'}</span>
                     </div>
                   </div>
                   <div className="admin-metric-card">
                     <div className="metric-icon orange">📉</div>
                     <div className="metric-info">
                       <span className="metric-value">{adminData.revenue.churnRate}%</span>
-                      <span className="metric-label">Churn Rate</span>
+                      <span className="metric-label">{lang === 'fr' ? 'Taux d\'attrition' : 'Churn Rate'}</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Subscription Breakdown */}
                 <div className="admin-section">
-                  <h3>Subscription Breakdown</h3>
+                  <h3>{lang === 'fr' ? 'Répartition des abonnements' : 'Subscription Breakdown'}</h3>
                   <div className="subscription-breakdown">
                     {(() => {
                       const total = adminData.overview.totalUsers || 1;
@@ -2384,8 +3798,8 @@ export default function BizSimHub() {
                         <>
                           <div className="sub-item free">
                             <div className="sub-info">
-                              <span className="sub-plan">Free</span>
-                              <span className="sub-count">{free.toLocaleString()} users</span>
+                              <span className="sub-plan">{lang === 'fr' ? 'Gratuit' : 'Free'}</span>
+                              <span className="sub-count">{free.toLocaleString()} {lang === 'fr' ? 'utilisateurs' : 'users'}</span>
                             </div>
                             <div className="sub-bar">
                               <div className="sub-bar-fill" style={{width: `${(free / total) * 100}%`}}></div>
@@ -2395,7 +3809,7 @@ export default function BizSimHub() {
                           <div className="sub-item professional">
                             <div className="sub-info">
                               <span className="sub-plan">Professional</span>
-                              <span className="sub-count">{pro.toLocaleString()} users</span>
+                              <span className="sub-count">{pro.toLocaleString()} {lang === 'fr' ? 'utilisateurs' : 'users'}</span>
                             </div>
                             <div className="sub-bar">
                               <div className="sub-bar-fill" style={{width: `${(pro / total) * 100}%`}}></div>
@@ -2405,7 +3819,7 @@ export default function BizSimHub() {
                           <div className="sub-item enterprise">
                             <div className="sub-info">
                               <span className="sub-plan">Enterprise</span>
-                              <span className="sub-count">{enterprise.toLocaleString()} users</span>
+                              <span className="sub-count">{enterprise.toLocaleString()} {lang === 'fr' ? 'utilisateurs' : 'users'}</span>
                             </div>
                             <div className="sub-bar">
                               <div className="sub-bar-fill" style={{width: `${(enterprise / total) * 100}%`}}></div>
@@ -2418,9 +3832,8 @@ export default function BizSimHub() {
                   </div>
                 </div>
 
-                {/* Recent Transactions */}
                 <div className="admin-section">
-                  <h3>Recent Transactions</h3>
+                  <h3>{lang === 'fr' ? 'Transactions récentes' : 'Recent Transactions'}</h3>
                   {adminData.revenue.recentTransactions?.length > 0 ? (
                     <div className="transactions-list">
                       {adminData.revenue.recentTransactions.map(txn => (
@@ -2438,28 +3851,27 @@ export default function BizSimHub() {
                   ) : (
                     <div className="empty-state">
                       <div className="empty-icon">💳</div>
-                      <p>No transactions yet</p>
+                      <p>{lang === 'fr' ? 'Aucune transaction' : 'No transactions yet'}</p>
                     </div>
                   )}
                 </div>
               </div>
             )}
 
-            {/* Content Tab */}
             {adminTab === 'content' && (
               <div className="admin-content">
                 <div className="admin-header">
-                  <h1>Content Management</h1>
-                  <p>Manage simulations, scenarios, and learning content</p>
+                  <h1>{lang === 'fr' ? 'Gestion du contenu' : 'Content Management'}</h1>
+                  <p>{lang === 'fr' ? 'Gérer les simulations, scénarios et contenu d\'apprentissage' : 'Manage simulations, scenarios, and learning content'}</p>
                 </div>
 
                 <div className="admin-toolbar">
                   <div className="search-box">
                     <span>🔍</span>
-                    <input type="text" placeholder="Search content..." />
+                    <input type="text" placeholder={lang === 'fr' ? 'Rechercher du contenu...' : 'Search content...'} />
                   </div>
                   <div className="toolbar-actions">
-                    <button className="admin-btn primary">+ New Simulation</button>
+                    <button className="admin-btn primary">+ {lang === 'fr' ? 'Nouvelle simulation' : 'New Simulation'}</button>
                   </div>
                 </div>
 
@@ -2471,16 +3883,16 @@ export default function BizSimHub() {
                         <span className={`content-status ${sim.status}`}>{sim.status}</span>
                       </div>
                       <div className="content-stats">
-                        <span>🎮 {sim.plays.toLocaleString()} plays</span>
+                        <span>🎮 {sim.plays.toLocaleString()} {lang === 'fr' ? 'parties' : 'plays'}</span>
                         {sim.rating && <span>⭐ {sim.rating}</span>}
                       </div>
                       <div className="content-meta">
-                        Last updated: {sim.lastUpdated}
+                        {lang === 'fr' ? 'Dernière mise à jour:' : 'Last updated:'} {sim.lastUpdated}
                       </div>
                       <div className="content-actions">
-                        <button className="admin-btn small">Edit</button>
-                        <button className="admin-btn small">Preview</button>
-                        {sim.status === 'draft' && <button className="admin-btn small primary">Publish</button>}
+                        <button className="admin-btn small">{lang === 'fr' ? 'Modifier' : 'Edit'}</button>
+                        <button className="admin-btn small">{lang === 'fr' ? 'Aperçu' : 'Preview'}</button>
+                        {sim.status === 'draft' && <button className="admin-btn small primary">{lang === 'fr' ? 'Publier' : 'Publish'}</button>}
                       </div>
                     </div>
                   ))}
@@ -2488,54 +3900,51 @@ export default function BizSimHub() {
               </div>
             )}
 
-            {/* System Tab */}
             {adminTab === 'system' && (
               <div className="admin-content">
                 <div className="admin-header">
-                  <h1>System Health</h1>
-                  <p>Monitor platform performance and system status</p>
+                  <h1>{lang === 'fr' ? 'Santé du système' : 'System Health'}</h1>
+                  <p>{lang === 'fr' ? 'Surveiller la performance et le statut du système' : 'Monitor platform performance and system status'}</p>
                 </div>
 
-                {/* System Metrics */}
                 <div className="admin-metrics-grid">
                   <div className="admin-metric-card">
                     <div className="metric-icon green">✅</div>
                     <div className="metric-info">
                       <span className="metric-value">{adminData.system.uptime}%</span>
-                      <span className="metric-label">Uptime</span>
+                      <span className="metric-label">{lang === 'fr' ? 'Disponibilité' : 'Uptime'}</span>
                     </div>
-                    <span className="metric-badge green">Healthy</span>
+                    <span className="metric-badge green">{lang === 'fr' ? 'Sain' : 'Healthy'}</span>
                   </div>
                   <div className="admin-metric-card">
                     <div className="metric-icon blue">⚡</div>
                     <div className="metric-info">
                       <span className="metric-value">{adminData.system.avgResponseTime}ms</span>
-                      <span className="metric-label">Avg Response Time</span>
+                      <span className="metric-label">{lang === 'fr' ? 'Temps de réponse moy' : 'Avg Response Time'}</span>
                     </div>
                   </div>
                   <div className="admin-metric-card">
                     <div className="metric-icon orange">⚠️</div>
                     <div className="metric-info">
                       <span className="metric-value">{adminData.system.errorRate}%</span>
-                      <span className="metric-label">Error Rate</span>
+                      <span className="metric-label">{lang === 'fr' ? 'Taux d\'erreur' : 'Error Rate'}</span>
                     </div>
                   </div>
                   <div className="admin-metric-card">
                     <div className="metric-icon purple">🔌</div>
                     <div className="metric-info">
                       <span className="metric-value">{adminData.system.activeConnections}</span>
-                      <span className="metric-label">Active Connections</span>
+                      <span className="metric-label">{lang === 'fr' ? 'Connexions actives' : 'Active Connections'}</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Resource Usage */}
                 <div className="admin-section">
-                  <h3>Resource Usage</h3>
+                  <h3>{lang === 'fr' ? 'Utilisation des ressources' : 'Resource Usage'}</h3>
                   <div className="resource-grid">
                     <div className="resource-item">
                       <div className="resource-header">
-                        <span>CPU Usage</span>
+                        <span>{lang === 'fr' ? 'Utilisation CPU' : 'CPU Usage'}</span>
                         <span>{adminData.system.cpuUsage}%</span>
                       </div>
                       <div className="resource-bar">
@@ -2544,7 +3953,7 @@ export default function BizSimHub() {
                     </div>
                     <div className="resource-item">
                       <div className="resource-header">
-                        <span>Memory Usage</span>
+                        <span>{lang === 'fr' ? 'Utilisation mémoire' : 'Memory Usage'}</span>
                         <span>{adminData.system.memoryUsage}%</span>
                       </div>
                       <div className="resource-bar">
@@ -2554,9 +3963,8 @@ export default function BizSimHub() {
                   </div>
                 </div>
 
-                {/* Recent Errors */}
                 <div className="admin-section">
-                  <h3>Recent Errors</h3>
+                  <h3>{lang === 'fr' ? 'Erreurs récentes' : 'Recent Errors'}</h3>
                   <div className="errors-list">
                     {adminData.system.recentErrors.map((err, i) => (
                       <div key={i} className="error-item">
@@ -2569,14 +3977,13 @@ export default function BizSimHub() {
                   </div>
                 </div>
 
-                {/* Quick Actions */}
                 <div className="admin-section">
-                  <h3>Quick Actions</h3>
+                  <h3>{lang === 'fr' ? 'Actions rapides' : 'Quick Actions'}</h3>
                   <div className="system-actions">
-                    <button className="admin-btn">🔄 Clear Cache</button>
-                    <button className="admin-btn">📊 Export Logs</button>
-                    <button className="admin-btn">🔧 Run Diagnostics</button>
-                    <button className="admin-btn danger">🚨 Maintenance Mode</button>
+                    <button className="admin-btn">🔄 {lang === 'fr' ? 'Vider le cache' : 'Clear Cache'}</button>
+                    <button className="admin-btn">📊 {lang === 'fr' ? 'Exporter les logs' : 'Export Logs'}</button>
+                    <button className="admin-btn">🔧 {lang === 'fr' ? 'Diagnostics' : 'Run Diagnostics'}</button>
+                    <button className="admin-btn danger">🚨 {lang === 'fr' ? 'Mode maintenance' : 'Maintenance Mode'}</button>
                   </div>
                 </div>
               </div>
@@ -2586,1018 +3993,6 @@ export default function BizSimHub() {
       </div>
     );
   };
-
-  const renderDashboard = () => (
-    <div className="dashboard-page">
-      {renderNavbar()}
-      <div className="dashboard-layout">
-        <aside className="sidebar">
-          <div className="sidebar-section">
-            <h3>{t('dashboard.quickActions', lang)}</h3>
-            <button className="sidebar-btn" onClick={() => startSimulation('project-apex')}>▶️ {t('dashboard.playProjectApex', lang)}</button>
-            <button className="sidebar-btn" onClick={() => setCurrentPage('catalog')}>📚 {t('dashboard.browseSimulations', lang)}</button>
-          </div>
-          <div className="sidebar-section">
-            <h3>{t('dashboard.yourStats', lang)}</h3>
-            <div className="stat-item"><span>{t('dashboard.simulationsPlayed', lang)}</span><strong>{userScores.scores?.length || 0}</strong></div>
-            <div className="stat-item"><span>{t('dashboard.bestGrade', lang)}</span><strong>{userScores.bestScores?.[0]?.grade || '-'}</strong></div>
-            <div className="stat-item"><span>{t('dashboard.highScore', lang)}</span><strong>{userScores.bestScores?.[0]?.score || 0}</strong></div>
-          </div>
-        </aside>
-        <main className="dashboard-main">
-          <div className="welcome-card">
-            <h1>{t('dashboard.welcome', lang)}, {currentUser?.name?.split(' ')[0]}!</h1>
-            <p>{t('dashboard.readyToContinue', lang)}</p>
-          </div>
-          
-          <div className="dashboard-section">
-            <h2>{t('dashboard.recentScores', lang)}</h2>
-            {userScores.scores?.length > 0 ? (
-              <div className="scores-list">
-                {userScores.scores.slice(0, 5).map((score, idx) => {
-                  const dateStr = score.created_at ? new Date(score.created_at).toLocaleDateString() : '';
-                  const isValidDate = dateStr && dateStr !== 'Invalid Date';
-                  return (
-                    <div key={idx} className="score-item">
-                      <div className="score-info">
-                        <span className="score-scenario">{score.scenario_id?.replace('_', ' ') || 'Unknown'}</span>
-                        <span className="score-date">{isValidDate ? dateStr : 'Recent'}</span>
-                      </div>
-                      <div className="score-result">
-                        <span className="score-grade">{score.grade}</span>
-                        <span className="score-points">{score.score} pts</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <p className="no-scores">No scores yet. Start playing to track your progress!</p>
-            )}
-          </div>
-          
-          <div className="dashboard-section">
-            <h2>Featured Simulation</h2>
-            <div className="featured-sim-card" onClick={() => startSimulation('project-apex')}>
-              <div className="featured-sim-icon">🎯</div>
-              <div className="featured-sim-content">
-                <h3>Project Apex</h3>
-                <p>Master project management with our enhanced causal model simulation.</p>
-                <span className="featured-sim-cta">Play Now →</span>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
-  );
-
-  const renderCatalog = () => (
-    <div className="catalog-page">
-      {renderNavbar()}
-      <div className="catalog-container">
-        <div className="catalog-header">
-          <h1>{lang === 'en' ? 'Simulation Library' : 'Bibliothèque de simulations'}</h1>
-          <p>{lang === 'en' ? 'Choose your learning adventure' : 'Choisissez votre aventure d\'apprentissage'}</p>
-        </div>
-        
-        {/* Pricing Cards Section */}
-        <div className="pricing-section-inline" style={{ marginBottom: '3rem' }}>
-          <h2 style={{ textAlign: 'center', marginBottom: '1.5rem', fontSize: '1.5rem' }}>
-            {lang === 'en' ? 'Choose Your Plan' : 'Choisissez votre plan'}
-          </h2>
-          <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            {/* Free Plan */}
-            <div style={{ 
-              background: 'var(--bg-card)', 
-              border: '1px solid var(--border)', 
-              borderRadius: '16px', 
-              padding: '2rem', 
-              width: '280px',
-              textAlign: 'center'
-            }}>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{lang === 'en' ? 'Free' : 'Gratuit'}</h3>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '1rem', fontSize: '0.9rem' }}>
-                {lang === 'en' ? 'Perfect for trying out' : 'Parfait pour essayer'}
-              </p>
-              <div style={{ fontSize: '3rem', fontWeight: '700', marginBottom: '1rem' }}>
-                $0 <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>/{lang === 'en' ? 'forever' : 'toujours'}</span>
-              </div>
-              <ul style={{ textAlign: 'left', listStyle: 'none', padding: 0, marginBottom: '1.5rem' }}>
-                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)' }}>✓ 1 simulation (Project Apex)</li>
-                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)' }}>{lang === 'en' ? '✓ Basic scenarios' : '✓ Scénarios de base'}</li>
-                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)' }}>{lang === 'en' ? '✓ Score tracking' : '✓ Suivi des scores'}</li>
-                <li style={{ padding: '0.5rem 0' }}>{lang === 'en' ? '✓ Community support' : '✓ Support communautaire'}</li>
-              </ul>
-              <button 
-                className="btn-secondary btn-full"
-                onClick={() => { setCurrentPage('auth'); setAuthMode('signup'); }}
-              >
-                {lang === 'en' ? 'Get Started Free' : 'Commencer gratuitement'}
-              </button>
-            </div>
-            
-            {/* Pro Plan */}
-            <div style={{ 
-              background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1))',
-              border: '2px solid var(--accent-primary)', 
-              borderRadius: '16px', 
-              padding: '2rem', 
-              width: '280px',
-              textAlign: 'center',
-              position: 'relative'
-            }}>
-              <div style={{ 
-                position: 'absolute', 
-                top: '-12px', 
-                left: '50%', 
-                transform: 'translateX(-50%)',
-                background: 'var(--accent-primary)',
-                color: 'white',
-                padding: '4px 16px',
-                borderRadius: '20px',
-                fontSize: '0.8rem',
-                fontWeight: '600'
-              }}>
-                {lang === 'en' ? 'Most Popular' : 'Plus populaire'}
-              </div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{lang === 'en' ? 'Professional' : 'Professionnel'}</h3>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '1rem', fontSize: '0.9rem' }}>
-                {lang === 'en' ? 'For serious learners' : 'Pour les apprenants sérieux'}
-              </p>
-              <div style={{ fontSize: '3rem', fontWeight: '700', marginBottom: '1rem' }}>
-                $19 <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>/{lang === 'en' ? 'month' : 'mois'}</span>
-              </div>
-              <ul style={{ textAlign: 'left', listStyle: 'none', padding: 0, marginBottom: '1.5rem' }}>
-                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)' }}>{lang === 'en' ? '✓ All simulations' : '✓ Toutes les simulations'}</li>
-                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)' }}>{lang === 'en' ? '✓ All scenarios' : '✓ Tous les scénarios'}</li>
-                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)' }}>{lang === 'en' ? '✓ Detailed analytics' : '✓ Analyses détaillées'}</li>
-                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)' }}>{lang === 'en' ? '✓ Certificates' : '✓ Certificats'}</li>
-                <li style={{ padding: '0.5rem 0' }}>{lang === 'en' ? '✓ Priority support' : '✓ Support prioritaire'}</li>
-              </ul>
-              <button 
-                className="btn-primary btn-full"
-                onClick={() => currentUser ? handleCheckout('pro') : setCurrentPage('auth')}
-              >
-                {lang === 'en' ? 'Upgrade Now' : 'Passer au supérieur'}
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        <div className="catalog-grid">
-          {SIMULATIONS.map(sim => (
-            <div key={sim.id} className={`catalog-card ${sim.comingSoon ? 'locked' : ''}`}>
-              <div className="catalog-card-header">
-                <span className="catalog-icon">{sim.icon}</span>
-                <div className="catalog-badges">
-                  {sim.featured && <span className="badge-featured">Available</span>}
-                  {sim.comingSoon && <span className="badge-soon">Coming Soon</span>}
-                  {sim.tier === 'pro' && <span className="badge-pro">PRO</span>}
-                </div>
-              </div>
-              <div className="catalog-card-body">
-                <span className="catalog-category">{sim.category}</span>
-                <h3>{sim.title}</h3>
-                <p className="catalog-subtitle">{sim.subtitle}</p>
-                <p className="catalog-desc">{sim.description}</p>
-                <div className="catalog-skills">
-                  {sim.skills?.slice(0, 3).map(skill => <span key={skill} className="skill-tag">{skill}</span>)}
-                </div>
-              </div>
-              <div className="catalog-card-footer">
-                <div className="catalog-meta">
-                  <span>🎯 {sim.difficulty}</span>
-                  <span>⏱️ {sim.duration}</span>
-                  <span>📊 {sim.scenarios} scenarios</span>
-                </div>
-                <button 
-                  className="btn-primary btn-full"
-                  disabled={!sim.available}
-                  onClick={() => sim.available && startSimulation(sim.id)}
-                >
-                  {sim.comingSoon ? 'Coming Soon' : 'Start Simulation'}
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderPricing = () => (
-    <div className="pricing-page">
-      {renderNavbar()}
-      <div className="pricing-container">
-        <div className="pricing-header">
-          <h1>Simple, Transparent Pricing</h1>
-          <p>Choose the plan that fits your learning goals</p>
-          <div className="billing-toggle">
-            <button className={billingCycle === 'monthly' ? 'active' : ''} onClick={() => setBillingCycle('monthly')}>Monthly</button>
-            <button className={billingCycle === 'annual' ? 'active' : ''} onClick={() => setBillingCycle('annual')}>Annual (Save 17%)</button>
-          </div>
-        </div>
-        <div className="pricing-grid">
-          {PRICING_PLANS.filter(plan => !plan.hidden).map(plan => (
-            <div key={plan.id} className={`pricing-card ${plan.popular ? 'popular' : ''}`}>
-              {plan.popular && <div className="popular-badge">Most Popular</div>}
-              <h3>{plan.name}</h3>
-              <p className="plan-desc">{plan.description}</p>
-              <div className="plan-price">
-                <span className="price">${billingCycle === 'annual' ? Math.round(plan.priceAnnual / 12) : plan.price}</span>
-                <span className="period">/{plan.price === 0 ? 'forever' : 'month'}</span>
-              </div>
-              <ul className="plan-features">
-                {plan.features.map(f => <li key={f}>✓ {f}</li>)}
-              </ul>
-              <button 
-                className={`btn-full ${plan.popular ? 'btn-primary' : 'btn-secondary'}`}
-                onClick={() => plan.id !== 'free' && handleCheckout(plan.id)}
-                disabled={checkoutLoading === plan.id || plan.id === 'free'}
-              >
-                {checkoutLoading === plan.id ? 'Loading...' : plan.cta}
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
-  // ENHANCED SIMULATION RENDERING
-  const renderSimulation = () => {
-    if (simPhase === 'select') {
-      return (
-        <div className="sim-page">
-          {renderNavbar()}
-          <div className="sim-select-container">
-            <button className="back-link" onClick={() => setCurrentPage('catalog')}>← Back to Library</button>
-            <div className="sim-select-header">
-              <span className="sim-select-icon">{selectedSimulation?.icon}</span>
-              <h1>{selectedSimulation?.title}</h1>
-              <p>{selectedSimulation?.description}</p>
-            </div>
-            <h3 className="scenarios-title">Choose Your Scenario</h3>
-            <div className="scenarios-grid">
-              {Object.values(APEX_SCENARIOS).map(scenario => (
-                <button key={scenario.id} className="scenario-card" onClick={() => selectScenario(scenario)}>
-                  <div className="scenario-icon">{scenario.icon}</div>
-                  <div className="scenario-info">
-                    <h3>{scenario.title}</h3>
-                    <p className="scenario-sub">{scenario.subtitle}</p>
-                    <p className="scenario-desc">{scenario.description}</p>
-                    {scenario.hasPrototyping && <span className="scenario-badge">🔬 Prototyping Available</span>}
-                    {scenario.hasUncertainty && <span className="scenario-badge">⚡ High Uncertainty</span>}
-                  </div>
-                  <div className="scenario-meta">
-                    <span className="difficulty" style={{color: scenario.difficultyColor}}>{scenario.difficulty}</span>
-                    <span>{scenario.initial.weeks} weeks</span>
-                    <span>Focus: {scenario.pedagogicalFocus}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    if (simPhase === 'brief') {
-      // Generate scenario-specific brief content
-      const getProjectBrief = () => {
-        const briefs = {
-          tech_startup: {
-            context: `You are a senior project manager at ${selectedScenario.company}, a fast-growing technology company specializing in cloud-based business solutions. The company has identified a significant market opportunity for a new SaaS platform that will compete with established players.`,
-            challenge: `Your CEO has tasked you with assembling and leading a product development team to deliver this platform. Market analysis suggests that competitors are working on similar solutions, putting pressure on you and your team to deliver a high-quality product that can capture market share.`,
-            deliverables: [
-              { level: 1, name: 'Core Platform', desc: 'Basic user management, authentication, and data storage', tasks: 3 },
-              { level: 2, name: 'Standard Features', desc: 'Dashboard, reporting, and API integrations', tasks: 4 },
-              { level: 3, name: 'Advanced Features', desc: 'Analytics, automation, and multi-tenant support', tasks: 3 },
-              { level: 4, name: 'Premium Features', desc: 'AI-powered insights and enterprise security', tasks: 2 }
-            ]
-          },
-          live_show: {
-            context: `You are the Executive Producer at ${selectedScenario.company}, a world-renowned live entertainment company. The company has greenlit an ambitious new touring show that combines acrobatics, music, and cutting-edge technology.`,
-            challenge: `Your artistic director has a bold vision for "${selectedScenario.projectName}" but the technical and creative demands are significant. You must manage a diverse team of performers, technicians, and designers while ensuring safety standards are met and the show is ready for its premiere.`,
-            deliverables: [
-              { level: 1, name: 'Foundation Acts', desc: 'Opening sequence and core ensemble performances', tasks: 2 },
-              { level: 2, name: 'Feature Acts', desc: 'Aerial sequences and specialty performances', tasks: 2 },
-              { level: 3, name: 'Technical Integration', desc: 'Lighting, sound, and projection mapping', tasks: 2 },
-              { level: 4, name: 'Grand Finale', desc: 'Climactic sequence with full cast integration', tasks: 2 }
-            ]
-          },
-          construction: {
-            context: `You are the Project Manager at ${selectedScenario.company}, a commercial construction company with a strong reputation for quality. The company has won the contract to build a new mixed-use development in a prime urban location.`,
-            challenge: `The "${selectedScenario.projectName}" project involves a 12-story building with retail, office, and residential spaces. You must navigate permitting, weather challenges, subcontractor coordination, and safety requirements while meeting stakeholder expectations.`,
-            deliverables: [
-              { level: 1, name: 'Foundation & Parking', desc: 'Underground parking and structural foundation', tasks: 3 },
-              { level: 2, name: 'Core Structure', desc: 'Floors 1-6 with retail and office space', tasks: 4 },
-              { level: 3, name: 'Upper Floors', desc: 'Floors 7-10 residential units', tasks: 3 },
-              { level: 4, name: 'Penthouse & Systems', desc: 'Floors 11-12 and building systems integration', tasks: 2 }
-            ]
-          },
-          rd_innovation: {
-            context: `You are the Lead Project Manager at ${selectedScenario.company}, a cutting-edge research and development laboratory. The company has secured funding to develop a breakthrough quantum sensing technology with applications in medical imaging and security.`,
-            challenge: `The "${selectedScenario.projectName}" project is highly innovative with significant technical uncertainty. Your team of scientists and engineers must push the boundaries of current technology while managing the risks inherent in R&D work. Prototyping will be essential to surface problems early.`,
-            deliverables: [
-              { level: 1, name: 'Proof of Concept', desc: 'Demonstrate basic quantum sensing capability', tasks: 2 },
-              { level: 2, name: 'Prototype Alpha', desc: 'Functional prototype with core features', tasks: 3 },
-              { level: 3, name: 'Prototype Beta', desc: 'Refined prototype with improved accuracy', tasks: 3 },
-              { level: 4, name: 'Production Ready', desc: 'Manufacturable design with documentation', tasks: 2 }
-            ]
-          }
-        };
-        return briefs[selectedScenario.id] || briefs.tech_startup;
-      };
-
-      const brief = getProjectBrief();
-      const totalTasks = brief.deliverables.reduce((sum, d) => sum + d.tasks, 0);
-
-      return (
-        <div className="sim-page">
-          {renderNavbar()}
-          <div className="brief-container hbp-style">
-            <button className="back-link" onClick={() => { setSimPhase('select'); setBriefTab('brief'); }}>← Back to Scenarios</button>
-            
-            <div className="brief-header">
-              <div className="brief-icon">{selectedScenario.icon}</div>
-              <div>
-                <h1>{selectedScenario.projectName}</h1>
-                <p className="brief-company">{selectedScenario.company}</p>
-              </div>
-            </div>
-
-            {/* HBP-Style Tabs */}
-            <div className="brief-tabs">
-              <button 
-                className={`brief-tab ${briefTab === 'brief' ? 'active' : ''}`}
-                onClick={() => setBriefTab('brief')}
-              >
-                Project Brief
-              </button>
-              <button 
-                className={`brief-tab ${briefTab === 'objectives' ? 'active' : ''}`}
-                onClick={() => setBriefTab('objectives')}
-              >
-                Scenario Objectives
-              </button>
-              <button 
-                className={`brief-tab ${briefTab === 'managing' ? 'active' : ''}`}
-                onClick={() => setBriefTab('managing')}
-              >
-                Managing Your Project
-              </button>
-            </div>
-
-            <div className="brief-tab-content">
-              {/* Project Brief Tab */}
-              {briefTab === 'brief' && (
-                <div className="tab-panel">
-                  <h2>Project Brief: <span className="highlight">{selectedScenario.title}</span></h2>
-                  
-                  <p className="brief-paragraph">{brief.context}</p>
-                  <p className="brief-paragraph">{brief.challenge}</p>
-
-                  <h3>Project Deliverables</h3>
-                  <p>Your project consists of {selectedScenario.initial.scope} {selectedScenario.deliverable} organized into progressive levels. Each level builds on the previous, allowing you to adjust scope mid-course if desired.</p>
-                  
-                  <div className="deliverables-list">
-                    {brief.deliverables.map((d, i) => (
-                      <div key={i} className="deliverable-item">
-                        <div className="deliverable-icon">📋</div>
-                        <div className="deliverable-content">
-                          <strong>LEVEL {d.level}: {d.name.toUpperCase()}</strong>
-                          <p>{d.desc}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Scenario Objectives Tab */}
-              {briefTab === 'objectives' && (
-                <div className="tab-panel">
-                  <h2>Scenario Objectives: <span className="highlight">{selectedScenario.title}</span></h2>
-                  
-                  <p className="brief-paragraph">
-                    Management expects you to deliver this project meeting the targets below. 
-                    You will be evaluated on your ability to balance scope, schedule, budget, quality, and team wellbeing. 
-                    Meeting all targets demonstrates strong project management capability.
-                  </p>
-
-                  <div className="objectives-section">
-                    <h3>Specific Objectives</h3>
-
-                    <div className="objective-block">
-                      <h4>Target Scope: <span className="highlight">{selectedScenario.initial.scope} {selectedScenario.deliverable}</span></h4>
-                      <p>
-                        You will receive up to 200 points for delivering the full scope. 
-                        Partial completion will result in proportionally fewer points. 
-                        Exceeding scope expectations may earn bonus points but watch the budget.
-                      </p>
-                    </div>
-
-                    <div className="objective-block">
-                      <h4>Target Schedule: <span className="highlight">Week {selectedScenario.initial.weeks}</span></h4>
-                      <p>
-                        This schedule allows you to meet stakeholder expectations and market timing. 
-                        You will receive 200 points for meeting your schedule goal and lose 40 points for each week you exceed the deadline.
-                      </p>
-                    </div>
-
-                    <div className="objective-block">
-                      <h4>Target Budget: <span className="highlight">${(selectedScenario.initial.budget / 1000).toFixed(0)}K</span></h4>
-                      <p>
-                        This budget supports the project at planned staffing levels. 
-                        You will receive up to 200 points for staying within budget. 
-                        Coming in under budget will maximize your score.
-                      </p>
-                    </div>
-
-                    <div className="objective-block">
-                      <h4>Target Quality: <span className="highlight">{selectedScenario.initial.quality}%+</span></h4>
-                      <p>
-                        Deliver a high-quality product that meets stakeholder standards. 
-                        Quality is worth 200 points and can be improved through quality reviews and avoiding shortcuts.
-                      </p>
-                    </div>
-
-                    <div className="objective-block">
-                      <h4>Team Process: <span className="highlight">100 points</span></h4>
-                      <p>
-                        Maintain healthy team dynamics throughout the project. 
-                        This score reflects average morale, with bonuses for schedule consistency and prototype usage.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="scoring-summary">
-                    <h4>📊 Total Possible Score: 1000 points</h4>
-                    <div className="score-breakdown">
-                      <span>Scope: 200</span>
-                      <span>Schedule: 200</span>
-                      <span>Budget: 200</span>
-                      <span>Quality: 200</span>
-                      <span>Team Process: 100</span>
-                      <span>Bonuses: up to 100</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Managing Your Project Tab */}
-              {briefTab === 'managing' && (
-                <div className="tab-panel">
-                  <h2>Managing Your Project: <span className="highlight">{selectedScenario.title}</span></h2>
-                  
-                  <p className="brief-paragraph">
-                    Each week you will have opportunities to adjust project parameters and make decisions. 
-                    Understanding the causal relationships in your project will help you make better choices.
-                  </p>
-
-                  <div className="managing-section">
-                    <h3>1. The Causal Model</h3>
-                    <p>This simulation uses interconnected systems where your decisions have cascading effects:</p>
-                    
-                    <div className="causal-relationships">
-                      <div className="causal-item">
-                        <span className="causal-icon">😰</span>
-                        <div>
-                          <strong>Stress → Morale → Productivity</strong>
-                          <p>Unrealistic deadlines, overtime, and team changes increase stress. High stress lowers morale, which directly reduces your team's output.</p>
-                        </div>
-                      </div>
-                      <div className="causal-item">
-                        <span className="causal-icon">🧠</span>
-                        <div>
-                          <strong>Knowledge Building</strong>
-                          <p>Your team starts with limited project knowledge. Coaching meetings and experience reduce mistake rates over time. Losing team members causes knowledge loss.</p>
-                        </div>
-                      </div>
-                      <div className="causal-item">
-                        <span className="causal-icon">📅</span>
-                        <div>
-                          <strong>Schedule Consistency</strong>
-                          <p>Frequent deadline changes erode team trust. Each change after week 2 incurs morale and stress penalties. Consistency is rewarded with bonus points.</p>
-                        </div>
-                      </div>
-                      {selectedScenario.hasPrototyping && (
-                        <div className="causal-item">
-                          <span className="causal-icon">🔬</span>
-                          <div>
-                            <strong>Prototyping Value</strong>
-                            <p>Building prototypes early surfaces problems before they become expensive. Events that would cause major issues are mitigated by prior prototype work.</p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="managing-section">
-                    <h3>2. Weekly Actions</h3>
-                    <p>Each week you can take several actions to manage your project:</p>
-                    
-                    <div className="actions-grid">
-                      <div className="action-item">
-                        <strong>👥 Team Management</strong>
-                        <p>Hire or release team members. New hires increase capacity but cause temporary stress and knowledge dilution.</p>
-                      </div>
-                      <div className="action-item">
-                        <strong>📅 Schedule Adjustment</strong>
-                        <p>Extend your deadline if needed. Early adjustments are less costly than late ones.</p>
-                      </div>
-                      <div className="action-item">
-                        <strong>🎯 Meetings</strong>
-                        <p>Choose from coaching (builds knowledge), standups (reduces mistakes), or status reviews (stakeholder alignment).</p>
-                      </div>
-                      <div className="action-item">
-                        <strong>⭐ Quality Review</strong>
-                        <p>Invest time in improving deliverable quality. Costs budget but ensures better outcomes.</p>
-                      </div>
-                      <div className="action-item">
-                        <strong>⚡ Crunch Mode</strong>
-                        <p>Push the team to work overtime. Increases short-term output at the cost of stress and morale.</p>
-                      </div>
-                      {selectedScenario.hasPrototyping && (
-                        <div className="action-item">
-                          <strong>🔬 Build Prototype</strong>
-                          <p>Invest in early testing to reduce future risks. Costs time and budget but provides significant protection.</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="managing-section">
-                    <h3>3. Events & Decisions</h3>
-                    <p>
-                      Throughout the project, you'll encounter events triggered by project conditions—not random chance. 
-                      For example, high stress may cause team members to leave. Low quality triggers technical debt crises. 
-                      Your choices in these moments significantly impact project outcomes.
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="brief-actions">
-              <button className="btn-primary btn-lg" onClick={beginSimulation}>Begin Simulation →</button>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    if (simPhase === 'playing' && gameState) {
-      const scenario = selectedScenario;
-      const budgetRemaining = gameState.budget.total - gameState.budget.spent;
-      const budgetPercent = (budgetRemaining / gameState.budget.total) * 100;
-      const scopePercent = (gameState.scope.completed / gameState.scope.totalFeatures) * 100;
-      const weeksRemaining = gameState.schedule.deadline - gameState.week + 1;
-      
-      // Calculate effective productivity for display
-      const effectiveProductivity = calculateProductivityFromMorale(gameState.team.productivity, gameState.team.morale);
-      
-      return (
-        <div className="sim-playing">
-          {renderNavbar()}
-          <div className="game-header">
-            <div className="game-title">
-              <div className="game-icon">{scenario.icon}</div>
-              <div>
-                <h2>{scenario.projectName}</h2>
-                <span>{scenario.company}</span>
-              </div>
-            </div>
-            <div className="week-badge">Week {gameState.week} / {gameState.totalWeeks}</div>
-          </div>
-
-          {/* Floating background shapes */}
-          <div className="floating-shapes">
-            <div className="shape shape-1"></div>
-            <div className="shape shape-2"></div>
-            <div className="shape shape-3"></div>
-          </div>
-
-          {/* Gantt Chart Mascot - reacts to project health */}
-          <GanttMascot mood={
-            (budgetPercent < 20 || weeksRemaining <= 1 || gameState.team.stress > 80) ? 'stressed' :
-            (budgetPercent < 40 || weeksRemaining <= 3 || gameState.team.stress > 60) ? 'concerned' :
-            (scopePercent >= 90 && gameState.scope.quality >= 80) ? 'success' : 'normal'
-          } />
-
-          {/* ENHANCED DASHBOARD with circular gauges */}
-          <div className="game-dashboard">
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${Math.max(0, budgetPercent) * 2.51} 251`,
-                      stroke: budgetPercent > 30 ? '#10b981' : '#ef4444'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">💰</span>
-                  <span className="gauge-value">${(budgetRemaining / 1000).toFixed(0)}K</span>
-                </div>
-              </div>
-              <span className="metric-label">Budget</span>
-              <div className={`status-glow ${budgetPercent > 50 ? 'good' : budgetPercent > 30 ? 'warn' : 'bad'}`}></div>
-            </div>
-
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${(weeksRemaining / gameState.totalWeeks) * 100 * 2.51} 251`,
-                      stroke: weeksRemaining > 3 ? '#10b981' : weeksRemaining > 1 ? '#f59e0b' : '#ef4444'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">📅</span>
-                  <span className="gauge-value">{Math.max(0, weeksRemaining)}</span>
-                </div>
-              </div>
-              <span className="metric-label">Weeks Left</span>
-              <div className={`status-glow ${weeksRemaining > 3 ? 'good' : weeksRemaining > 1 ? 'warn' : 'bad'}`}></div>
-            </div>
-
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${scopePercent * 2.51} 251`,
-                      stroke: '#6366f1'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">📦</span>
-                  <span className="gauge-value">{Math.round(scopePercent)}%</span>
-                </div>
-              </div>
-              <span className="metric-label">Scope</span>
-              <div className={`status-glow ${scopePercent > 80 ? 'good' : scopePercent > 50 ? 'warn' : 'neutral'}`}></div>
-            </div>
-
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${gameState.scope.quality * 2.51} 251`,
-                      stroke: gameState.scope.quality > 70 ? '#10b981' : '#f59e0b'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">⭐</span>
-                  <span className="gauge-value">{Math.round(gameState.scope.quality)}%</span>
-                </div>
-              </div>
-              <span className="metric-label">Quality</span>
-              <div className={`status-glow ${gameState.scope.quality > 80 ? 'good' : gameState.scope.quality > 60 ? 'warn' : 'bad'}`}></div>
-            </div>
-
-            <div className="metric-card">
-              <div className="gauge-container mini">
-                <div className="team-display">
-                  <span className="gauge-icon large">👥</span>
-                  <span className="gauge-value large">{gameState.team.size}</span>
-                </div>
-              </div>
-              <span className="metric-label">Team Size</span>
-            </div>
-
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${gameState.team.morale * 2.51} 251`,
-                      stroke: gameState.team.morale > 60 ? '#10b981' : gameState.team.morale > 40 ? '#f59e0b' : '#ef4444'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">😊</span>
-                  <span className="gauge-value">{Math.round(gameState.team.morale)}%</span>
-                </div>
-              </div>
-              <span className="metric-label">Morale</span>
-              <div className={`status-glow ${gameState.team.morale > 70 ? 'good' : gameState.team.morale > 40 ? 'warn' : 'bad'}`}></div>
-            </div>
-
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill stress" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${gameState.team.stress * 2.51} 251`,
-                      stroke: gameState.team.stress < 40 ? '#10b981' : gameState.team.stress < 60 ? '#f59e0b' : '#ef4444'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">😰</span>
-                  <span className="gauge-value">{Math.round(gameState.team.stress)}%</span>
-                </div>
-              </div>
-              <span className="metric-label">Stress</span>
-              <div className={`status-glow ${gameState.team.stress < 30 ? 'good' : gameState.team.stress < 60 ? 'warn' : 'bad'}`}></div>
-            </div>
-
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${gameState.team.knowledge * 2.51} 251`,
-                      stroke: '#8b5cf6'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">🧠</span>
-                  <span className="gauge-value">{Math.round(gameState.team.knowledge)}%</span>
-                </div>
-              </div>
-              <span className="metric-label">Knowledge</span>
-              <div className="status-glow neutral"></div>
-            </div>
-
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${effectiveProductivity * 100 * 2.51} 251`,
-                      stroke: '#06b6d4'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">⚡</span>
-                  <span className="gauge-value">{Math.round(effectiveProductivity * 100)}%</span>
-                </div>
-              </div>
-              <span className="metric-label">Productivity</span>
-              <div className={`status-glow ${effectiveProductivity > 0.9 ? 'good' : 'neutral'}`}></div>
-            </div>
-
-            {scenario.hasPrototyping && (
-              <div className="metric-card proto-card">
-                <div className="gauge-container mini">
-                  <div className="proto-display">
-                    <span className="gauge-icon large">🔬</span>
-                    <span className="gauge-value large">{gameState.prototypesBuilt}/{gameState.maxPrototypes}</span>
-                  </div>
-                </div>
-                <span className="metric-label">Prototypes</span>
-                {gameState.prototypesBuilt > 0 && <div className="status-glow good"></div>}
-              </div>
-            )}
-          </div>
-
-          <div className="game-actions">
-            <h3>📋 Weekly Actions</h3>
-            
-            {/* Team Management */}
-            <div className="action-section">
-              <h4>👥 Team Management</h4>
-              <div className="action-row">
-                <button className="action-btn" onClick={() => handleAction({ type: 'fire' })} disabled={gameState.team.size <= 2}>
-                  − Fire
-                </button>
-                <span className="action-label">{gameState.team.size} members</span>
-                <button className="action-btn" onClick={() => handleAction({ type: 'hire', cost: scenario.weeklyCostPerPerson * 2 })}>
-                  + Hire (${(scenario.weeklyCostPerPerson * 2 / 1000).toFixed(0)}K)
-                </button>
-              </div>
-            </div>
-            
-            {/* NEW: Meeting Types (replacing boost morale) */}
-            <div className="action-section">
-              <h4>📅 Meetings This Week</h4>
-              <div className="meeting-options">
-                {Object.values(MEETING_TYPES).map(meeting => (
-                  <button 
-                    key={meeting.id}
-                    className={`meeting-btn ${gameState.meetings[meeting.id] ? 'active' : ''}`}
-                    onClick={() => handleAction({ type: `meeting_${meeting.id}` })}
-                    disabled={gameState.meetings[meeting.id]}
-                  >
-                    <span className="meeting-icon">{meeting.icon}</span>
-                    <span className="meeting-name">{meeting.name}</span>
-                    <span className="meeting-desc">{meeting.description}</span>
-                    {gameState.meetings[meeting.id] && <span className="meeting-done">✓ Done</span>}
-                  </button>
-                ))}
-              </div>
-            </div>
-            
-            {/* Quick Actions */}
-            <div className="action-section">
-              <h4>⚡ Quick Actions</h4>
-              <div className="quick-actions">
-                <button className="quick-btn" onClick={() => handleAction({ type: 'quality_review', cost: 10000 })}>
-                  🔍 Quality Review ($10K)
-                </button>
-                <button className="quick-btn crunch" onClick={() => handleAction({ type: 'crunch', cost: 15000 })}>
-                  🔥 Crunch Mode ($15K, -morale, +stress)
-                </button>
-                {scenario.hasPrototyping && gameState.prototypesBuilt < gameState.maxPrototypes && (
-                  <button className="quick-btn proto" onClick={() => handleAction({ type: 'build_prototype' })}>
-                    🔬 Build Prototype (${(PROTOTYPE_COST[scenario.id].budget / 1000).toFixed(0)}K)
-                  </button>
-                )}
-                <button className="quick-btn schedule" onClick={() => handleAction({ type: 'extend_deadline' })}>
-                  📅 Extend Deadline +1 week {gameState.scheduleChanges > 0 && '(penalty)'}
-                </button>
-              </div>
-            </div>
-            
-            {/* Schedule change warning */}
-            {gameState.scheduleChanges > 1 && (
-              <div className="warning-banner">
-                ⚠️ Schedule changed {gameState.scheduleChanges} times. Team morale affected by uncertainty.
-              </div>
-            )}
-            
-            <button className="btn-primary btn-advance" onClick={advanceWeek}>
-              Advance to Week {gameState.week + 1} →
-            </button>
-          </div>
-
-          {/* Event Modal with CSS Animation */}
-          {gameState.gamePhase === 'event' && gameState.currentEvent && (
-            <div className="event-overlay">
-              <div className="event-modal">
-                <div className="alert-bell">🔔</div>
-                <span className="event-icon">{gameState.currentEvent.icon}</span>
-                <h2>{gameState.currentEvent.title}</h2>
-                <p>{gameState.currentEvent.description}</p>
-                <div className="event-options">
-                  {gameState.currentEvent.options.map(option => (
-                    <button key={option.id} className="event-option" onClick={() => handleEventChoice(option)}>
-                      {option.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Paywall Modal for Free Users */}
-          {showPaywall && (
-            <div className="event-overlay">
-              <div className="event-modal paywall-modal">
-                <span className="event-icon">🔒</span>
-                <h2>You're Doing Great!</h2>
-                <p>
-                  You've completed Week {FREE_TRIAL_WEEKS} of the simulation. 
-                  Your project is {Math.round((gameState.scope.completed / gameState.scope.totalFeatures) * 100)}% complete 
-                  and the team is counting on you!
-                </p>
-                <p className="paywall-hook">
-                  <strong>Upgrade to Professional</strong> to continue your journey and see how your decisions 
-                  play out. Will you deliver on time? Will the stakeholders be happy?
-                </p>
-                <div className="paywall-price">
-                  <span className="price-tag">$19</span>
-                  <span className="price-period">/month</span>
-                </div>
-                <div className="paywall-features">
-                  <div>✓ Unlimited simulation plays</div>
-                  <div>✓ All scenarios unlocked</div>
-                  <div>✓ Detailed analytics</div>
-                  <div>✓ Certificates of completion</div>
-                </div>
-                <div className="paywall-actions">
-                  <button className="btn-primary paywall-upgrade" onClick={() => { setShowPaywall(false); setCurrentPage('pricing'); }}>
-                    Upgrade Now →
-                  </button>
-                  <button className="btn-secondary paywall-later" onClick={() => { setShowPaywall(false); setSimPhase('select'); setGameState(null); }}>
-                    Maybe Later
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      );
-    }
-
-    if (simPhase === 'ended' && gameState) {
-      const finalScore = calculateScore(gameState);
-      const grade = getGrade(finalScore);
-      const budgetOnTarget = gameState.budget.spent <= gameState.budget.total;
-      const scheduleOnTarget = gameState.week <= gameState.schedule.deadline;
-      const scopeComplete = gameState.scope.completed >= gameState.scope.totalFeatures * 0.95;
-      const qualityGood = gameState.scope.quality >= 75;
-      const isGreatScore = grade.startsWith('A') || grade === 'B+';
-      const isPoorScore = grade === 'F' || grade === 'D';
-      
-      return (
-        <div className="sim-ended">
-          {/* CSS Confetti animation for great scores */}
-          {isGreatScore && <Confetti />}
-          
-          <div className="end-card">
-            {/* CSS Animated icon based on performance */}
-            <div className="end-animation">
-              {isGreatScore ? (
-                <SuccessAnimation />
-              ) : isPoorScore ? (
-                <SadAnimation />
-              ) : (
-                <span className="end-icon">{grade === 'B' ? '🎉' : '💪'}</span>
-              )}
-            </div>
-            
-            <h1>Simulation Complete!</h1>
-            <p>{selectedScenario.projectName}</p>
-            
-            <div className="score-display">
-              <span className="grade" style={{color: grade.startsWith('A') ? '#10b981' : grade.startsWith('B') ? '#6366f1' : grade === 'C' ? '#f59e0b' : '#ef4444'}}>{grade}</span>
-              <span className="score">{finalScore} / 1000 points</span>
-            </div>
-
-            <div className="results">
-              <div className={`result ${budgetOnTarget ? 'pass' : 'fail'}`}>
-                <span>{budgetOnTarget ? '✓' : '✗'}</span> Budget: ${(gameState.budget.spent / 1000).toFixed(0)}K / ${(gameState.budget.total / 1000).toFixed(0)}K
-              </div>
-              <div className={`result ${scheduleOnTarget ? 'pass' : 'fail'}`}>
-                <span>{scheduleOnTarget ? '✓' : '✗'}</span> Schedule: Week {gameState.week} / {gameState.schedule.deadline}
-              </div>
-              <div className={`result ${scopeComplete ? 'pass' : 'fail'}`}>
-                <span>{scopeComplete ? '✓' : '✗'}</span> Scope: {Math.round((gameState.scope.completed / gameState.scope.totalFeatures) * 100)}% complete
-              </div>
-              <div className={`result ${qualityGood ? 'pass' : 'fail'}`}>
-                <span>{qualityGood ? '✓' : '✗'}</span> Quality: {Math.round(gameState.scope.quality)}%
-              </div>
-              <div className="result pass">
-                <span>📊</span> Team Process: {Math.round(gameState.moraleHistory.reduce((a, b) => a + b, 0) / gameState.moraleHistory.length)}% avg morale
-              </div>
-              {gameState.scheduleChanges <= 1 && (
-                <div className="result pass">
-                  <span>🎯</span> Consistency Bonus: +{gameState.scheduleChanges <= 1 ? 50 : 25} pts
-                </div>
-              )}
-              {gameState.prototypesBuilt > 0 && (
-                <div className="result pass">
-                  <span>🔬</span> Prototype Bonus: +{gameState.prototypesBuilt * 25} pts
-                </div>
-              )}
-            </div>
-
-            <div className="end-actions">
-              <button className="btn-primary" onClick={beginSimulation}>Play Again</button>
-              <button className="btn-secondary" onClick={() => { setSimPhase('select'); setGameState(null); }}>Try Different Scenario</button>
-              <button className="btn-secondary" onClick={() => setCurrentPage('dashboard')}>Back to Dashboard</button>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    return null;
-  };
-
-  // ============================================
-  // STYLES
-  // ============================================
-
   return (
     <div className="app">
       <style>{`
@@ -3648,6 +4043,8 @@ export default function BizSimHub() {
         .user-avatar { width: 32px; height: 32px; background: var(--accent-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.9rem; }
         .user-name { font-size: 0.9rem; color: var(--text-secondary); }
         .nav-link-small { background: none; border: none; color: var(--text-muted); font-size: 0.85rem; }
+        .lang-toggle { background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-secondary); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .lang-toggle:hover { border-color: var(--accent-primary); color: var(--text-primary); background: var(--bg-card); }
         
         /* Buttons */
         .btn-primary { background: var(--accent-primary); border: none; color: white; padding: 0.75rem 1.5rem; border-radius: 10px; font-weight: 500; font-size: 0.95rem; transition: all 0.2s; }
@@ -6220,10 +6617,12 @@ export default function BizSimHub() {
       {currentPage === 'landing' && renderLanding()}
       {currentPage === 'auth' && renderAuth()}
       {currentPage === 'dashboard' && renderDashboard()}
-      {currentPage === 'catalog' && renderCatalog()}
+      {currentPage === 'catalog' && renderSimulations()}
       {currentPage === 'pricing' && renderPricing()}
       {currentPage === 'simulation' && renderSimulation()}
       {currentPage === 'admin' && renderAdminDashboard()}
     </div>
   );
 }
+
+export default App;
