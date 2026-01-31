@@ -1152,18 +1152,41 @@ export default function BizSimHub() {
       setCurrentPage('dashboard');
       showToast('Welcome to BizSimHub! 🎉', 'success');
       
-      // HubSpot: Track registration conversion
-      if (window._hsq) {
-        window._hsq.push(['identify', { email: email }]);
-        window._hsq.push(['trackCustomBehavioralEvent', {
-          name: 'pe_registration_complete',
-          properties: { 
-            source: new URLSearchParams(window.location.search).get('utm_source') || 'direct',
-            medium: new URLSearchParams(window.location.search).get('utm_medium') || 'organic',
-            campaign: new URLSearchParams(window.location.search).get('utm_campaign') || 'none'
-          }
-        }]);
+      // HubSpot: Create contact via Forms API
+      const HUBSPOT_PORTAL_ID = '342933870';
+      const HUBSPOT_FORM_GUID = '2bc1e72b-901a-45dd-9ea6-ea442fd0a125';
+      
+      const hubspotData = {
+        fields: [
+          { name: 'email', value: email },
+          { name: 'firstname', value: name.split(' ')[0] },
+          { name: 'lastname', value: name.split(' ').slice(1).join(' ') || '' }
+        ],
+        context: {
+          pageUri: window.location.href,
+          pageName: 'Registration'
+        }
+      };
+      
+      // Add UTM parameters if present
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('utm_source')) {
+        hubspotData.fields.push({ name: 'utm_source', value: params.get('utm_source') });
       }
+      if (params.get('utm_medium')) {
+        hubspotData.fields.push({ name: 'utm_medium', value: params.get('utm_medium') });
+      }
+      if (params.get('utm_campaign')) {
+        hubspotData.fields.push({ name: 'utm_campaign', value: params.get('utm_campaign') });
+      }
+      
+      // Submit to HubSpot (fire and forget - don't block registration)
+      fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_GUID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(hubspotData)
+      }).catch(err => console.log('HubSpot tracking:', err));
+      
     } catch (e) {
       setAuthError(e.message);
     } finally {
