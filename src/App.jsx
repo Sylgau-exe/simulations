@@ -1094,6 +1094,20 @@ export default function BizSimHub() {
     // Check for success redirect from Stripe
     if (params.get('session_id')) {
       showToast('🎉 Payment successful! Your subscription is now active.', 'success');
+      
+      // HubSpot: Track payment conversion
+      if (window._hsq) {
+        window._hsq.push(['trackCustomBehavioralEvent', {
+          name: 'pe_payment_complete',
+          properties: { 
+            session_id: params.get('session_id'),
+            source: params.get('utm_source') || 'direct',
+            medium: params.get('utm_medium') || 'organic',
+            campaign: params.get('utm_campaign') || 'none'
+          }
+        }]);
+      }
+      
       window.history.replaceState({}, '', window.location.pathname);
     }
   }, []);
@@ -1137,6 +1151,19 @@ export default function BizSimHub() {
       setCurrentUser(data.user);
       setCurrentPage('dashboard');
       showToast('Welcome to BizSimHub! 🎉', 'success');
+      
+      // HubSpot: Track registration conversion
+      if (window._hsq) {
+        window._hsq.push(['identify', { email: email }]);
+        window._hsq.push(['trackCustomBehavioralEvent', {
+          name: 'pe_registration_complete',
+          properties: { 
+            source: new URLSearchParams(window.location.search).get('utm_source') || 'direct',
+            medium: new URLSearchParams(window.location.search).get('utm_medium') || 'organic',
+            campaign: new URLSearchParams(window.location.search).get('utm_campaign') || 'none'
+          }
+        }]);
+      }
     } catch (e) {
       setAuthError(e.message);
     } finally {
@@ -1158,6 +1185,18 @@ export default function BizSimHub() {
       setCurrentPage('auth');
       setAuthMode('signup');
       return;
+    }
+    
+    // HubSpot: Track checkout initiation
+    if (window._hsq) {
+      window._hsq.push(['trackCustomBehavioralEvent', {
+        name: 'pe_checkout_started',
+        properties: { 
+          plan: planId,
+          billing_cycle: billingCycle,
+          email: currentUser.email
+        }
+      }]);
     }
     
     setCheckoutLoading(planId);
