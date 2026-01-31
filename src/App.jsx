@@ -387,11 +387,29 @@ const TRANSLATIONS = {
   // GAME UI
   // ============================================
   game: {
+    // Briefing tabs
+    projectBrief: { en: 'Project Brief', fr: 'Dossier du projet' },
+    scenarioObjectives: { en: 'Scenario Objectives', fr: 'Objectifs du scénario' },
+    managingYourProject: { en: 'Managing Your Project', fr: 'Gérer votre projet' },
+    // Navigation
+    backToLibrary: { en: 'Back to Library', fr: 'Retour à la bibliothèque' },
+    backToScenarios: { en: 'Back to Scenarios', fr: 'Retour aux scénarios' },
+    chooseScenario: { en: 'Choose Your Scenario', fr: 'Choisissez votre scénario' },
+    beginSimulation: { en: 'Begin Simulation', fr: 'Commencer la simulation' },
+    // Scenario badges
+    prototypingAvailable: { en: 'Prototyping Available', fr: 'Prototypage disponible' },
+    highUncertainty: { en: 'High Uncertainty', fr: 'Haute incertitude' },
+    focus: { en: 'Focus', fr: 'Focus' },
+    // Time
     week: { en: 'Week', fr: 'Semaine' },
+    weeks: { en: 'weeks', fr: 'semaines' },
     of: { en: 'of', fr: 'de' },
-    budget: { en: 'Budget', fr: 'Budget' },
     weeksLeft: { en: 'Weeks Left', fr: 'Semaines restantes' },
+    deadline: { en: 'Deadline', fr: 'Échéance' },
+    // Metrics
+    budget: { en: 'Budget', fr: 'Budget' },
     scope: { en: 'Scope', fr: 'Périmètre' },
+    schedule: { en: 'Schedule', fr: 'Calendrier' },
     quality: { en: 'Quality', fr: 'Qualité' },
     teamSize: { en: 'Team Size', fr: 'Taille de l\'équipe' },
     morale: { en: 'Morale', fr: 'Moral' },
@@ -400,16 +418,26 @@ const TRANSLATIONS = {
     productivity: { en: 'Productivity', fr: 'Productivité' },
     prototypes: { en: 'Prototypes', fr: 'Prototypes' },
     members: { en: 'members', fr: 'membres' },
+    // Project info
     projectDeliverables: { en: 'Project Deliverables', fr: 'Livrables du projet' },
     specificObjectives: { en: 'Specific Objectives', fr: 'Objectifs spécifiques' },
     knowledgeBuilding: { en: 'Knowledge Building', fr: 'Développement des connaissances' },
     scheduleConsistency: { en: 'Schedule Consistency', fr: 'Cohérence du calendrier' },
     prototypingValue: { en: 'Prototyping Value', fr: 'Valeur du prototypage' },
     tasks: { en: 'tasks', fr: 'tâches' },
+    // Weekly actions
+    weeklyActions: { en: 'Weekly Actions', fr: 'Actions hebdomadaires' },
+    advanceToWeek: { en: 'Advance to Week', fr: 'Passer à la semaine' },
     // Team Management
     teamManagement: { en: 'Team Management', fr: 'Gestion de l\'équipe' },
     fire: { en: 'Fire', fr: 'Licencier' },
     hire: { en: 'Hire', fr: 'Embaucher' },
+    // Schedule
+    scheduleAdjustment: { en: 'Schedule Adjustment', fr: 'Ajustement du calendrier' },
+    weekExtension: { en: 'Week Extension', fr: 'Semaine d\'extension' },
+    weeksExtension: { en: 'Weeks Extension', fr: 'Semaines d\'extension' },
+    // Meetings
+    meetings: { en: 'Meetings', fr: 'Réunions' },
     // Quick Actions
     quickActions: { en: 'Quick Actions', fr: 'Actions rapides' },
     qualityReview: { en: 'Quality Review', fr: 'Revue de qualité' },
@@ -418,7 +446,6 @@ const TRANSLATIONS = {
     buildPrototype: { en: 'Build Prototype', fr: 'Construire un prototype' },
     extendDeadline: { en: 'Extend Deadline +1 week', fr: 'Prolonger le délai +1 semaine' },
     penalty: { en: 'penalty', fr: 'pénalité' },
-    advanceToWeek: { en: 'Advance to Week', fr: 'Passer à la semaine' },
     scheduleWarning: { en: 'Schedule changed {count} times. Team morale affected by uncertainty.', fr: 'Calendrier modifié {count} fois. Le moral de l\'équipe est affecté par l\'incertitude.' },
   },
 
