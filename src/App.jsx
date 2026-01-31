@@ -17,31 +17,49 @@ const TRANSLATIONS = {
     startFree: { en: 'Start Free', fr: 'Essai gratuit' },
   },
   landing: {
-    badge: { en: '🎓 Business Education Platform', fr: '🎓 Plateforme de formation en affaires' },
-    heroTitle1: { en: 'Master Business Skills', fr: 'Maîtrisez les compétences d\'affaires' },
-    heroTitle2: { en: 'Through Experiential Learning', fr: 'par l\'apprentissage expérientiel' },
+    badge: { en: '🎯 PMP-Aligned Project Management Training', fr: '🎯 Formation en gestion de projet alignée PMP' },
+    heroTitle1: { en: 'Master Project Management', fr: 'Maîtrisez la gestion de projet' },
+    heroTitle2: { en: 'Through Real-World Simulations', fr: 'par des simulations réalistes' },
     heroSubtitle: { 
-      en: 'Engage with interactive simulations to develop critical business skills in a safe space. Practice project management, strategy, and leadership without real-world risks.',
-      fr: 'Engagez-vous dans des simulations interactives pour développer des compétences essentielles en affaires dans un environnement sécuritaire. Pratiquez la gestion de projet, la stratégie et le leadership sans risques réels.'
+      en: 'Practice scheduling, budgeting, risk mitigation, and stakeholder management in realistic scenarios. Build PMP-ready skills without real-world consequences.',
+      fr: 'Pratiquez la planification, la budgétisation, la gestion des risques et des parties prenantes dans des scénarios réalistes. Développez des compétences alignées PMP sans conséquences réelles.'
     },
-    startTrial: { en: 'Start Your Free Trial Now!', fr: 'Commencez votre essai gratuit!' },
-    browseSimulations: { en: 'Browse Simulations', fr: 'Parcourir les simulations' },
+    startTrial: { en: 'Start PM Simulation Free', fr: 'Démarrer une simulation GP gratuite' },
+    browseSimulations: { en: 'View PM Scenarios', fr: 'Voir les scénarios GP' },
     simulations: { en: 'Simulations', fr: 'Simulations' },
-    scenarios: { en: 'Scenarios', fr: 'Scénarios' },
-    learners: { en: 'Learners', fr: 'Apprenants' },
-    whyChoose: { en: 'Why Choose BizSimHub?', fr: 'Pourquoi choisir BizSimHub?' },
-    feature1Title: { en: 'Learn by Doing', fr: 'Apprendre en faisant' },
-    feature1Desc: { en: 'No more boring lectures. Make real decisions and see immediate consequences in realistic scenarios.', fr: 'Fini les cours ennuyeux. Prenez de vraies décisions et voyez les conséquences immédiates.' },
-    feature2Title: { en: 'Risk-Free Practice', fr: 'Pratique sans risque' },
-    feature2Desc: { en: 'Make mistakes safely. Learn what works and what doesn\'t without real-world consequences.', fr: 'Faites des erreurs en sécurité. Apprenez ce qui fonctionne sans conséquences réelles.' },
-    feature3Title: { en: 'Track Progress', fr: 'Suivez vos progrès' },
-    feature3Desc: { en: 'Detailed analytics show your improvement over time with personalized insights.', fr: 'Des analyses détaillées montrent votre amélioration avec des insights personnalisés.' },
-    feature4Title: { en: 'Industry Scenarios', fr: 'Scénarios industriels' },
-    feature4Desc: { en: 'Practice in Tech, Entertainment, Construction, and R&D contexts.', fr: 'Pratiquez en Tech, Divertissement, Construction et R&D.' },
-    readyToStart: { en: 'Ready to Start?', fr: 'Prêt à commencer?' },
-    joinLearners: { en: 'Join thousands of professionals improving their skills.', fr: 'Rejoignez des milliers de professionnels qui améliorent leurs compétences.' },
-    startLearning: { en: 'Start Learning Free', fr: 'Commencer gratuitement' },
-    testimonialTitle: { en: 'What Professionals Say', fr: 'Ce que disent les professionnels' },
+    scenarios: { en: 'Industry Scenarios', fr: 'Scénarios industriels' },
+    learners: { en: 'PM Professionals Trained', fr: 'Professionnels GP formés' },
+    whyChoose: { en: 'Why Project Managers Choose BizSimHub', fr: 'Pourquoi les gestionnaires de projet choisissent BizSimHub' },
+    feature1Title: { en: 'PMP-Aligned Learning', fr: 'Apprentissage aligné PMP' },
+    feature1Desc: { en: 'Practice the triple constraint, risk registers, stakeholder analysis, and earned value management in hands-on scenarios.', fr: 'Pratiquez la triple contrainte, les registres de risques, l\'analyse des parties prenantes et la gestion de la valeur acquise.' },
+    feature2Title: { en: 'Safe-to-Fail Environment', fr: 'Environnement sans risque' },
+    feature2Desc: { en: 'Make scheduling mistakes, blow budgets, and miss deadlines—then learn what went wrong without career consequences.', fr: 'Faites des erreurs de planification, dépassez les budgets, manquez des échéances—puis apprenez ce qui n\'a pas fonctionné sans conséquences.' },
+    feature3Title: { en: 'Track Your PM Growth', fr: 'Suivez votre progression GP' },
+    feature3Desc: { en: 'Detailed scoring shows your decision-making patterns across scope, schedule, budget, quality, and team dynamics.', fr: 'Un pointage détaillé montre vos patterns de décision en périmètre, calendrier, budget, qualité et dynamique d\'équipe.' },
+    feature4Title: { en: 'Real Industry Contexts', fr: 'Contextes industriels réels' },
+    feature4Desc: { en: 'Tech startups, live entertainment, construction, and R&D—each with authentic PM challenges.', fr: 'Startups tech, spectacle vivant, construction et R&D—chacun avec des défis GP authentiques.' },
+    readyToStart: { en: 'Ready to Sharpen Your PM Skills?', fr: 'Prêt à affûter vos compétences GP?' },
+    joinLearners: { en: 'Join project managers and PM students building real-world decision-making skills.', fr: 'Rejoignez les gestionnaires de projet et étudiants qui développent leurs compétences décisionnelles.' },
+    startLearning: { en: 'Start Your First Simulation', fr: 'Démarrer votre première simulation' },
+    // Founder credentials section (real)
+    founderTitle: { en: 'Developed by a PM Professional', fr: 'Développé par un professionnel GP' },
+    founderName: { en: 'Sylvain Gau', fr: 'Sylvain Gau' },
+    founderCredentials: { 
+      en: 'PMP & ACP Certified | McGill University Faculty Lecturer | Outstanding Teaching Award 2022',
+      fr: 'Certifié PMP et ACP | Chargé de cours à l\'Université McGill | Prix d\'excellence en enseignement 2022'
+    },
+    founderBio: {
+      en: 'With 15+ years leading projects for Cirque du Soleil, Formula One, and the Beijing Olympics, I\'ve trained thousands of project managers. BizSimHub brings that real-world experience to you.',
+      fr: 'Avec plus de 15 ans à diriger des projets pour le Cirque du Soleil, la Formule Un et les Jeux olympiques de Pékin, j\'ai formé des milliers de gestionnaires de projet. BizSimHub vous apporte cette expérience concrète.'
+    },
+    // PM outcomes section
+    outcomesTitle: { en: 'What You\'ll Practice', fr: 'Ce que vous pratiquerez' },
+    outcome1: { en: 'Schedule Optimization & Deadline Management', fr: 'Optimisation du calendrier et gestion des échéances' },
+    outcome2: { en: 'Budget Control & Resource Allocation', fr: 'Contrôle budgétaire et allocation des ressources' },
+    outcome3: { en: 'Risk Identification & Mitigation Strategies', fr: 'Identification des risques et stratégies d\'atténuation' },
+    outcome4: { en: 'Stakeholder Communication & Expectation Management', fr: 'Communication avec les parties prenantes et gestion des attentes' },
+    outcome5: { en: 'Team Leadership & Morale Management', fr: 'Leadership d\'équipe et gestion du moral' },
+    outcome6: { en: 'Scope Control & Change Management', fr: 'Contrôle du périmètre et gestion du changement' },
   },
   pricing: {
     title: { en: 'Simple Pricing', fr: 'Tarification simple' },
@@ -1506,19 +1524,11 @@ export default function BizSimHub() {
           <p className="hero-subtitle">{t('landing.heroSubtitle', lang)}</p>
           <div className="hero-cta">
             <button className="btn-primary-lg" onClick={() => { setCurrentPage('auth'); setAuthMode('signup'); }}>{t('landing.startTrial', lang)}</button>
-            <button className="btn-secondary-lg" onClick={() => setCurrentPage('catalog')}>{t('landing.browseSimulations', lang)}</button>
           </div>
           <div className="hero-stats">
-            <div className="stat"><span className="stat-num">4+</span><span className="stat-label">{t('landing.simulations', lang)}</span></div>
-            <div className="stat"><span className="stat-num">16+</span><span className="stat-label">{t('landing.scenarios', lang)}</span></div>
-            <div className="stat"><span className="stat-num">4</span><span className="stat-label">{lang === 'en' ? 'Industries' : 'Industries'}</span></div>
-          </div>
-        </div>
-        {/* CSS Hero animation */}
-        <div className="hero-animation">
-          <div className="rocket-container">
-            <div className="rocket">🚀</div>
-            <div className="rocket-trail"></div>
+            <div className="stat"><span className="stat-num">4</span><span className="stat-label">{t('landing.scenarios', lang)}</span></div>
+            <div className="stat"><span className="stat-num">1000+</span><span className="stat-label">{t('landing.learners', lang)}</span></div>
+            <div className="stat"><span className="stat-num">PMP</span><span className="stat-label">{lang === 'en' ? 'Aligned' : 'Aligné'}</span></div>
           </div>
         </div>
       </section>
@@ -1526,20 +1536,29 @@ export default function BizSimHub() {
       <section className="featured-section">
         <div className="section-container">
           <div className="section-header">
-            <span className="section-badge">Featured</span>
+            <span className="section-badge">{lang === 'en' ? 'Flagship Simulation' : 'Simulation phare'}</span>
             <h2>Project Apex</h2>
-            <p>Our flagship project management simulation</p>
+            <p>{lang === 'en' ? 'HBP-inspired causal model simulation for project managers' : 'Simulation à modèle causal inspirée HBP pour gestionnaires de projet'}</p>
           </div>
           <div className="featured-card">
             <div className="featured-icon">🎯</div>
             <div className="featured-content">
-              <h3>Master Project Management</h3>
-              <p>Navigate real-world challenges across 4 industry scenarios. Balance scope, schedule, budget, and team dynamics with our HBP-inspired causal model.</p>
+              <h3>{lang === 'en' ? 'Practice Real PM Decision-Making' : 'Pratiquez la prise de décision GP réelle'}</h3>
+              <p>{lang === 'en' 
+                ? 'Navigate scope creep, technical debt, team burnout, and stakeholder pressure. Every decision creates cascading effects—just like real projects. Practice risk mitigation, schedule recovery, and resource reallocation in a safe environment.'
+                : 'Naviguez la dérive du périmètre, la dette technique, l\'épuisement de l\'équipe et la pression des parties prenantes. Chaque décision crée des effets en cascade—comme dans les vrais projets. Pratiquez l\'atténuation des risques, la récupération du calendrier et la réallocation des ressources dans un environnement sécuritaire.'
+              }</p>
               <div className="featured-tags">
-                <span>Tech Startup</span><span>Live Entertainment</span><span>Construction</span><span>R&D Innovation</span>
+                <span>{lang === 'en' ? 'Scope Management' : 'Gestion du périmètre'}</span>
+                <span>{lang === 'en' ? 'Schedule Control' : 'Contrôle du calendrier'}</span>
+                <span>{lang === 'en' ? 'Risk Response' : 'Réponse aux risques'}</span>
+                <span>{lang === 'en' ? 'Team Dynamics' : 'Dynamique d\'équipe'}</span>
               </div>
               <button className="btn-primary" onClick={() => currentUser ? startSimulation('project-apex') : setCurrentPage('auth')}>
-                {currentUser ? 'Play Now' : 'Try Free Now'}
+                {currentUser 
+                  ? (lang === 'en' ? 'Start PM Simulation' : 'Démarrer la simulation GP')
+                  : (lang === 'en' ? 'Try PM Simulation Free' : 'Essayer la simulation GP gratuitement')
+                }
               </button>
             </div>
           </div>
@@ -1549,22 +1568,128 @@ export default function BizSimHub() {
       <section className="simulations-section">
         <div className="section-container">
           <div className="section-header">
-            <h2>Simulation Library</h2>
-            <p>Comprehensive business simulations for every skill</p>
+            <h2>{lang === 'en' ? 'Practice in 4 Industry Contexts' : 'Pratiquez dans 4 contextes industriels'}</h2>
+            <p>{lang === 'en' ? 'Each scenario presents unique PM challenges and decision points' : 'Chaque scénario présente des défis GP uniques et des points de décision'}</p>
           </div>
           <div className="sim-grid">
-            {SIMULATIONS.map(sim => (
-              <div key={sim.id} className={`sim-card ${sim.comingSoon ? 'coming-soon' : ''}`}>
-                <div className="sim-icon">{sim.icon}</div>
-                <div className="sim-category">{sim.category}</div>
-                <h3>{sim.title}</h3>
-                <p>{sim.subtitle}</p>
-                <div className="sim-meta"><span>{sim.difficulty}</span><span>{sim.duration}</span></div>
-                {sim.comingSoon && <div className="sim-badge-soon">Coming Soon</div>}
-                {sim.featured && <div className="sim-badge-featured">Available Now</div>}
-              </div>
-            ))}
+            <div className="sim-card">
+              <div className="sim-icon">💻</div>
+              <div className="sim-category">{lang === 'en' ? 'Technology' : 'Technologie'}</div>
+              <h3>{lang === 'en' ? 'Tech Startup' : 'Startup Tech'}</h3>
+              <p>{lang === 'en' ? 'Launch a SaaS platform while managing technical debt, team scaling, and stakeholder expectations.' : 'Lancez une plateforme SaaS tout en gérant la dette technique, la croissance de l\'équipe et les attentes des parties prenantes.'}</p>
+              <div className="sim-meta"><span>{lang === 'en' ? 'Standard' : 'Standard'}</span><span>12 {lang === 'en' ? 'weeks' : 'semaines'}</span></div>
+              <div className="sim-badge-featured">{lang === 'en' ? 'Available Now' : 'Disponible maintenant'}</div>
+            </div>
+            <div className="sim-card">
+              <div className="sim-icon">🎭</div>
+              <div className="sim-category">{lang === 'en' ? 'Entertainment' : 'Divertissement'}</div>
+              <h3>{lang === 'en' ? 'Live Show Production' : 'Production de spectacle'}</h3>
+              <p>{lang === 'en' ? 'Produce a touring show managing creative talent, safety requirements, and opening night deadlines.' : 'Produisez un spectacle de tournée en gérant les talents créatifs, les exigences de sécurité et les échéances de première.'}</p>
+              <div className="sim-meta"><span>{lang === 'en' ? 'Advanced' : 'Avancé'}</span><span>10 {lang === 'en' ? 'weeks' : 'semaines'}</span></div>
+              <div className="sim-badge-featured">{lang === 'en' ? 'Available Now' : 'Disponible maintenant'}</div>
+            </div>
+            <div className="sim-card">
+              <div className="sim-icon">🏗️</div>
+              <div className="sim-category">{lang === 'en' ? 'Construction' : 'Construction'}</div>
+              <h3>{lang === 'en' ? 'Commercial Building' : 'Bâtiment commercial'}</h3>
+              <p>{lang === 'en' ? 'Build a 12-story mixed-use development navigating permits, weather, and subcontractor coordination.' : 'Construisez un immeuble de 12 étages à usage mixte en naviguant les permis, la météo et la coordination des sous-traitants.'}</p>
+              <div className="sim-meta"><span>{lang === 'en' ? 'Standard' : 'Standard'}</span><span>14 {lang === 'en' ? 'weeks' : 'semaines'}</span></div>
+              <div className="sim-badge-featured">{lang === 'en' ? 'Available Now' : 'Disponible maintenant'}</div>
+            </div>
+            <div className="sim-card">
+              <div className="sim-icon">🔬</div>
+              <div className="sim-category">{lang === 'en' ? 'Research & Development' : 'Recherche et développement'}</div>
+              <h3>{lang === 'en' ? 'R&D Innovation' : 'Innovation R&D'}</h3>
+              <p>{lang === 'en' ? 'Lead a quantum sensor project with high uncertainty where prototyping is essential to manage risk.' : 'Dirigez un projet de capteur quantique à haute incertitude où le prototypage est essentiel pour gérer les risques.'}</p>
+              <div className="sim-meta"><span>{lang === 'en' ? 'Expert' : 'Expert'}</span><span>16 {lang === 'en' ? 'weeks' : 'semaines'}</span></div>
+              <div className="sim-badge-featured">{lang === 'en' ? 'Available Now' : 'Disponible maintenant'}</div>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* PM Outcomes Section */}
+      <section className="outcomes-section" style={{ padding: '4rem 2rem', background: 'var(--bg-primary)' }}>
+        <div className="section-container" style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div className="section-header" style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{t('landing.outcomesTitle', lang)}</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem', background: 'var(--bg-card)', borderRadius: '10px', border: '1px solid var(--border)' }}>
+              <span style={{ fontSize: '1.5rem' }}>📅</span>
+              <span>{t('landing.outcome1', lang)}</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem', background: 'var(--bg-card)', borderRadius: '10px', border: '1px solid var(--border)' }}>
+              <span style={{ fontSize: '1.5rem' }}>💰</span>
+              <span>{t('landing.outcome2', lang)}</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem', background: 'var(--bg-card)', borderRadius: '10px', border: '1px solid var(--border)' }}>
+              <span style={{ fontSize: '1.5rem' }}>⚠️</span>
+              <span>{t('landing.outcome3', lang)}</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem', background: 'var(--bg-card)', borderRadius: '10px', border: '1px solid var(--border)' }}>
+              <span style={{ fontSize: '1.5rem' }}>👥</span>
+              <span>{t('landing.outcome4', lang)}</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem', background: 'var(--bg-card)', borderRadius: '10px', border: '1px solid var(--border)' }}>
+              <span style={{ fontSize: '1.5rem' }}>🎯</span>
+              <span>{t('landing.outcome5', lang)}</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem', background: 'var(--bg-card)', borderRadius: '10px', border: '1px solid var(--border)' }}>
+              <span style={{ fontSize: '1.5rem' }}>📋</span>
+              <span>{t('landing.outcome6', lang)}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Founder Credentials Section */}
+      <section className="founder-section" style={{ padding: '4rem 2rem', background: 'var(--bg-secondary)' }}>
+        <div className="section-container" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{ fontSize: '1.75rem', marginBottom: '1.5rem', color: 'var(--text-primary)' }}>{t('landing.founderTitle', lang)}</h2>
+          <div style={{ 
+            background: 'var(--bg-card)', 
+            border: '1px solid var(--border)', 
+            borderRadius: '16px', 
+            padding: '2rem',
+            textAlign: 'left'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem', flexWrap: 'wrap' }}>
+              <div style={{ 
+                width: '80px', 
+                height: '80px', 
+                background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))', 
+                borderRadius: '50%', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                fontSize: '2rem',
+                flexShrink: 0
+              }}>
+                👨‍🏫
+              </div>
+              <div style={{ flex: 1, minWidth: '250px' }}>
+                <h3 style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>{t('landing.founderName', lang)}</h3>
+                <p style={{ color: 'var(--accent-primary)', fontSize: '0.9rem', marginBottom: '1rem', fontWeight: '500' }}>
+                  {t('landing.founderCredentials', lang)}
+                </p>
+                <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                  {t('landing.founderBio', lang)}
+                </p>
+                <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem', flexWrap: 'wrap' }}>
+                  <span style={{ background: 'rgba(99, 102, 241, 0.15)', color: 'var(--accent-primary)', padding: '4px 12px', borderRadius: '20px', fontSize: '0.8rem' }}>PMP®</span>
+                  <span style={{ background: 'rgba(99, 102, 241, 0.15)', color: 'var(--accent-primary)', padding: '4px 12px', borderRadius: '20px', fontSize: '0.8rem' }}>PMI-ACP®</span>
+                  <span style={{ background: 'rgba(99, 102, 241, 0.15)', color: 'var(--accent-primary)', padding: '4px 12px', borderRadius: '20px', fontSize: '0.8rem' }}>McGill University</span>
+                  <span style={{ background: 'rgba(99, 102, 241, 0.15)', color: 'var(--accent-primary)', padding: '4px 12px', borderRadius: '20px', fontSize: '0.8rem' }}>MBA, HEC Montréal</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p style={{ marginTop: '1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+            {lang === 'en' 
+              ? 'Questions? Reach out at contact@bizsimhub.com' 
+              : 'Questions? Contactez-nous à contact@bizsimhub.com'}
+          </p>
         </div>
       </section>
 
