@@ -4209,6 +4209,99 @@ export default function BizSimHub() {
               </div>
             </div>
             
+            {/* Mission Recap - Original Objectives vs Results */}
+            <div className="mission-recap">
+              <h3>🎯 Mission Recap</h3>
+              <p className="mission-intro">Here's how you performed against the original project brief:</p>
+              
+              <div className="objectives-grid">
+                <div className="objective-card">
+                  <div className="objective-header">
+                    <span className="objective-icon">📦</span>
+                    <span className="objective-name">Scope</span>
+                  </div>
+                  <div className="objective-target">
+                    <span className="target-label">Target:</span>
+                    <span className="target-value">Deliver {gameState.scope.totalFeatures} features</span>
+                  </div>
+                  <div className="objective-result">
+                    <span className="result-label">Actual:</span>
+                    <span className={`result-value ${scopeComplete ? 'good' : 'bad'}`}>
+                      {gameState.scope.completed} features ({scopeScore}%)
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="objective-card">
+                  <div className="objective-header">
+                    <span className="objective-icon">📅</span>
+                    <span className="objective-name">Schedule</span>
+                  </div>
+                  <div className="objective-target">
+                    <span className="target-label">Target:</span>
+                    <span className="target-value">Complete in {gameState.totalWeeks} weeks</span>
+                  </div>
+                  <div className="objective-result">
+                    <span className="result-label">Actual:</span>
+                    <span className={`result-value ${scheduleOnTarget ? 'good' : 'bad'}`}>
+                      {scheduleOnTarget ? `On time (Week ${gameState.week})` : `${Math.abs(gameState.totalWeeks - gameState.week + (gameState.scheduleChanges || 0))} weeks over`}
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="objective-card">
+                  <div className="objective-header">
+                    <span className="objective-icon">💰</span>
+                    <span className="objective-name">Budget</span>
+                  </div>
+                  <div className="objective-target">
+                    <span className="target-label">Target:</span>
+                    <span className="target-value">Stay under ${(gameState.budget.total / 1000).toFixed(0)}K</span>
+                  </div>
+                  <div className="objective-result">
+                    <span className="result-label">Actual:</span>
+                    <span className={`result-value ${budgetOnTarget ? 'good' : 'bad'}`}>
+                      ${(gameState.budget.spent / 1000).toFixed(0)}K spent ({budgetOnTarget ? `${Math.round(100 - (gameState.budget.spent / gameState.budget.total) * 100)}% under` : 'Over budget'})
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="objective-card">
+                  <div className="objective-header">
+                    <span className="objective-icon">⭐</span>
+                    <span className="objective-name">Quality</span>
+                  </div>
+                  <div className="objective-target">
+                    <span className="target-label">Target:</span>
+                    <span className="target-value">Maintain 70%+ quality</span>
+                  </div>
+                  <div className="objective-result">
+                    <span className="result-label">Actual:</span>
+                    <span className={`result-value ${qualityGood ? 'good' : 'bad'}`}>
+                      {qualityScore}% quality ({qualityGood ? 'Met standard' : 'Below standard'})
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="objective-card">
+                  <div className="objective-header">
+                    <span className="objective-icon">👥</span>
+                    <span className="objective-name">Team</span>
+                  </div>
+                  <div className="objective-target">
+                    <span className="target-label">Target:</span>
+                    <span className="target-value">Keep morale above 50%</span>
+                  </div>
+                  <div className="objective-result">
+                    <span className="result-label">Actual:</span>
+                    <span className={`result-value ${teamScore >= 50 ? 'good' : 'bad'}`}>
+                      {teamScore}% morale ({teamScore >= 50 ? 'Team is happy' : 'Team burned out'})
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
             {/* Score Breakdown Cards */}
             <div className="score-breakdown">
               <h3>📊 Score Breakdown</h3>
@@ -4275,6 +4368,78 @@ export default function BizSimHub() {
               </div>
             </div>
             
+            {/* Performance Analysis */}
+            <div className="analysis-section">
+              <h3>📝 Performance Analysis</h3>
+              
+              {/* What Went Well */}
+              <div className="analysis-card good">
+                <div className="analysis-header">
+                  <span className="analysis-icon">✅</span>
+                  <span className="analysis-title">What Went Well</span>
+                </div>
+                <ul className="analysis-list">
+                  {budgetOnTarget && <li>Excellent budget management - stayed within financial constraints</li>}
+                  {qualityGood && <li>Maintained high quality standards throughout the project</li>}
+                  {scheduleOnTarget && <li>Delivered on schedule - strong time management skills</li>}
+                  {scopeComplete && <li>Completed all required scope - nothing left behind</li>}
+                  {teamScore >= 60 && <li>Kept team morale healthy - good leadership</li>}
+                  {gameState.scheduleChanges <= 1 && <li>Minimal schedule changes - provided stability to the team</li>}
+                  {gameState.prototypesBuilt > 0 && <li>Used prototyping to reduce uncertainty - smart risk management</li>}
+                  {!budgetOnTarget && !qualityGood && !scheduleOnTarget && !scopeComplete && teamScore < 60 && (
+                    <li>You completed the simulation - every experience is a learning opportunity!</li>
+                  )}
+                </ul>
+              </div>
+              
+              {/* Areas for Improvement */}
+              <div className="analysis-card improve">
+                <div className="analysis-header">
+                  <span className="analysis-icon">💡</span>
+                  <span className="analysis-title">Areas for Improvement</span>
+                </div>
+                <ul className="analysis-list">
+                  {!budgetOnTarget && <li><strong>Budget:</strong> Consider more careful resource allocation. Track spending weekly and cut non-essential costs early.</li>}
+                  {!scheduleOnTarget && <li><strong>Schedule:</strong> Try adding buffer time for unknowns. Use the Extend Deadline feature strategically before it's too late.</li>}
+                  {!scopeComplete && <li><strong>Scope:</strong> Prioritize critical features first. Consider crunch mode or hiring when behind, but watch morale.</li>}
+                  {!qualityGood && <li><strong>Quality:</strong> Schedule regular Quality Reviews. Avoid excessive crunch which degrades quality.</li>}
+                  {teamScore < 60 && <li><strong>Team:</strong> Hold regular Team Building and 1-on-1 meetings. Avoid back-to-back crunch periods.</li>}
+                  {gameState.scheduleChanges > 2 && <li><strong>Planning:</strong> Too many schedule changes hurt team confidence. Try to set realistic deadlines upfront.</li>}
+                  {budgetOnTarget && qualityGood && scheduleOnTarget && scopeComplete && teamScore >= 60 && (
+                    <li>Outstanding performance! Try a harder scenario to challenge yourself further.</li>
+                  )}
+                </ul>
+              </div>
+              
+              {/* PM Tips */}
+              <div className="analysis-card tips">
+                <div className="analysis-header">
+                  <span className="analysis-icon">🎓</span>
+                  <span className="analysis-title">PM Pro Tips</span>
+                </div>
+                <ul className="analysis-list">
+                  {!scheduleOnTarget && !budgetOnTarget && (
+                    <li><strong>Iron Triangle:</strong> When scope is fixed, you can only trade time for money. Consider which constraint matters most to stakeholders.</li>
+                  )}
+                  {teamScore < 50 && (
+                    <li><strong>Sustainable Pace:</strong> Crunch mode provides short-term gains but long-term pain. A burned-out team delivers poor quality.</li>
+                  )}
+                  {gameState.prototypesBuilt === 0 && selectedScenario?.hasPrototyping && (
+                    <li><strong>Risk Reduction:</strong> Prototyping helps surface problems early when they're cheap to fix. Consider it for uncertain projects.</li>
+                  )}
+                  {!qualityGood && scopeComplete && (
+                    <li><strong>Technical Debt:</strong> Rushing to complete features without quality leads to rework. Sometimes less scope at higher quality is better.</li>
+                  )}
+                  <li><strong>Key Insight:</strong> {
+                    grade.startsWith('A') ? "You've mastered the basics! Focus on optimizing team happiness while maintaining performance." :
+                    grade.startsWith('B') ? "Good foundation! Work on balancing the triple constraint - time, cost, and scope." :
+                    grade === 'C' ? "You're learning! Try to identify problems earlier and take corrective action sooner." :
+                    "Every PM has tough projects. Review what went wrong and try a different approach next time."
+                  }</li>
+                </ul>
+              </div>
+            </div>
+            
             {/* Achievements */}
             <div className="achievements-section">
               <h3>🏅 Achievements</h3>
@@ -4306,6 +4471,23 @@ export default function BizSimHub() {
               </button>
               <button className="btn-secondary-lg" onClick={() => setCurrentPage('dashboard')}>
                 📊 Back to Dashboard
+              </button>
+            </div>
+            
+            {/* Print/Save Actions */}
+            <div className="results-secondary-actions">
+              <button className="btn-print" onClick={() => window.print()}>
+                🖨️ Print Report
+              </button>
+              <button className="btn-print" onClick={() => {
+                const text = `BizSimHub Results - ${selectedScenario.projectName}
+Grade: ${grade} | Score: ${finalScore}/1000
+Scope: ${scopeScore}% | Schedule: ${scheduleOnTarget ? 'On Time' : 'Late'} | Budget: ${budgetOnTarget ? 'On Target' : 'Over'}
+Quality: ${qualityScore}% | Team Morale: ${teamScore}%`;
+                navigator.clipboard.writeText(text);
+                alert('Results copied to clipboard!');
+              }}>
+                📋 Copy Summary
               </button>
             </div>
           </div>
@@ -6895,6 +7077,81 @@ export default function BizSimHub() {
           margin-top: 0.5rem;
         }
         
+        /* Mission Recap */
+        .mission-recap {
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
+          border: 1px solid rgba(99, 102, 241, 0.15);
+          border-radius: 20px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+        }
+        .mission-recap h3 {
+          font-size: 1rem;
+          color: #9ca3af;
+          margin-bottom: 0.5rem;
+        }
+        .mission-intro {
+          font-size: 0.85rem;
+          color: #6b7280;
+          margin-bottom: 1.25rem;
+        }
+        .objectives-grid {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 0.75rem;
+        }
+        @media (max-width: 800px) {
+          .objectives-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 500px) {
+          .objectives-grid { grid-template-columns: 1fr; }
+        }
+        .objective-card {
+          background: linear-gradient(135deg, #252540 0%, #1e1e32 100%);
+          border: 1px solid #3a3a50;
+          border-radius: 12px;
+          padding: 1rem;
+        }
+        .objective-header {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          margin-bottom: 0.75rem;
+          padding-bottom: 0.5rem;
+          border-bottom: 1px solid #3a3a50;
+        }
+        .objective-icon { font-size: 1rem; }
+        .objective-name {
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: #ffffff;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+        .objective-target, .objective-result {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+          margin-bottom: 0.5rem;
+        }
+        .objective-result { margin-bottom: 0; }
+        .target-label, .result-label {
+          font-size: 0.65rem;
+          color: #6b7280;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+        .target-value {
+          font-size: 0.8rem;
+          color: #9ca3af;
+        }
+        .result-value {
+          font-size: 0.85rem;
+          font-weight: 600;
+        }
+        .result-value.good { color: #10b981; }
+        .result-value.bad { color: #ef4444; }
+        
         /* Score Breakdown */
         .score-breakdown {
           background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
@@ -6958,6 +7215,73 @@ export default function BizSimHub() {
         .breakdown-status {
           font-size: 0.7rem;
           color: #6b7280;
+        }
+        
+        /* Performance Analysis */
+        .analysis-section {
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
+          border: 1px solid rgba(99, 102, 241, 0.15);
+          border-radius: 20px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+        }
+        .analysis-section h3 {
+          font-size: 1rem;
+          color: #9ca3af;
+          margin-bottom: 1.25rem;
+        }
+        .analysis-card {
+          background: linear-gradient(135deg, #252540 0%, #1e1e32 100%);
+          border-radius: 12px;
+          padding: 1rem;
+          margin-bottom: 1rem;
+          border-left: 4px solid #3a3a50;
+        }
+        .analysis-card:last-child { margin-bottom: 0; }
+        .analysis-card.good { border-left-color: #10b981; background: rgba(16, 185, 129, 0.05); }
+        .analysis-card.improve { border-left-color: #f59e0b; background: rgba(245, 158, 11, 0.05); }
+        .analysis-card.tips { border-left-color: #6366f1; background: rgba(99, 102, 241, 0.05); }
+        .analysis-header {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin-bottom: 0.75rem;
+        }
+        .analysis-icon { font-size: 1.1rem; }
+        .analysis-title {
+          font-size: 0.9rem;
+          font-weight: 600;
+          color: #ffffff;
+        }
+        .analysis-card.good .analysis-title { color: #10b981; }
+        .analysis-card.improve .analysis-title { color: #f59e0b; }
+        .analysis-card.tips .analysis-title { color: #8b5cf6; }
+        .analysis-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+        .analysis-list li {
+          font-size: 0.85rem;
+          color: #d1d5db;
+          line-height: 1.6;
+          padding: 0.5rem 0;
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+          padding-left: 1.25rem;
+          position: relative;
+        }
+        .analysis-list li:last-child { border-bottom: none; }
+        .analysis-list li::before {
+          content: '•';
+          position: absolute;
+          left: 0;
+          color: #6b7280;
+        }
+        .analysis-card.good .analysis-list li::before { color: #10b981; }
+        .analysis-card.improve .analysis-list li::before { color: #f59e0b; }
+        .analysis-card.tips .analysis-list li::before { color: #8b5cf6; }
+        .analysis-list li strong {
+          color: #ffffff;
         }
         
         /* Achievements */
@@ -7072,6 +7396,194 @@ export default function BizSimHub() {
         .btn-secondary-lg:hover {
           border-color: #6366f1;
           background: linear-gradient(135deg, #2a2a50 0%, #252545 100%);
+        }
+        
+        /* Secondary Actions (Print/Share) */
+        .results-secondary-actions {
+          display: flex;
+          gap: 1rem;
+          justify-content: center;
+          margin-top: 1rem;
+        }
+        .btn-print {
+          padding: 0.75rem 1.5rem;
+          background: transparent;
+          border: 1px solid #3a3a50;
+          border-radius: 8px;
+          color: #9ca3af;
+          font-size: 0.85rem;
+          cursor: pointer;
+          transition: all 0.3s;
+        }
+        .btn-print:hover {
+          border-color: #6366f1;
+          color: #ffffff;
+          background: rgba(99, 102, 241, 0.1);
+        }
+        
+        /* Print Styles */
+        @media print {
+          body {
+            background: white !important;
+            color: black !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          .app {
+            background: white !important;
+          }
+          .sim-end {
+            background: white !important;
+            padding: 0 !important;
+          }
+          .floating-shapes, 
+          .navbar,
+          .results-actions,
+          .results-secondary-actions,
+          .btn-print,
+          .btn-primary-lg,
+          .btn-secondary-lg {
+            display: none !important;
+          }
+          .results-container {
+            max-width: 100% !important;
+            padding: 0 !important;
+          }
+          .results-header {
+            margin-bottom: 1rem !important;
+          }
+          .results-header h1 {
+            color: #1a1a2e !important;
+            font-size: 1.5rem !important;
+          }
+          .results-subtitle {
+            color: #666 !important;
+          }
+          .grade-display {
+            background: #f3f4f6 !important;
+            border: 2px solid #e5e7eb !important;
+            padding: 1rem 2rem !important;
+          }
+          .main-grade {
+            font-size: 3rem !important;
+          }
+          .grade-label {
+            color: #666 !important;
+          }
+          .mission-recap,
+          .score-breakdown,
+          .analysis-section,
+          .achievements-section {
+            background: #f9fafb !important;
+            border: 1px solid #e5e7eb !important;
+            page-break-inside: avoid;
+            margin-bottom: 1rem !important;
+            padding: 1rem !important;
+          }
+          .mission-recap h3,
+          .score-breakdown h3,
+          .analysis-section h3,
+          .achievements-section h3 {
+            color: #374151 !important;
+            font-size: 0.9rem !important;
+          }
+          .mission-intro,
+          .section-intro {
+            color: #6b7280 !important;
+          }
+          .objectives-grid,
+          .breakdown-grid {
+            gap: 0.5rem !important;
+          }
+          .objective-card,
+          .breakdown-card {
+            background: white !important;
+            border: 1px solid #e5e7eb !important;
+            padding: 0.75rem !important;
+          }
+          .objective-name,
+          .breakdown-title {
+            color: #374151 !important;
+          }
+          .target-value {
+            color: #6b7280 !important;
+          }
+          .result-value.good {
+            color: #059669 !important;
+          }
+          .result-value.bad {
+            color: #dc2626 !important;
+          }
+          .breakdown-value {
+            font-size: 1.25rem !important;
+          }
+          .breakdown-bar {
+            background: #e5e7eb !important;
+          }
+          .analysis-card {
+            background: white !important;
+            border: 1px solid #e5e7eb !important;
+            page-break-inside: avoid;
+          }
+          .analysis-card.good {
+            border-left: 4px solid #059669 !important;
+          }
+          .analysis-card.improve {
+            border-left: 4px solid #d97706 !important;
+          }
+          .analysis-card.tips {
+            border-left: 4px solid #4f46e5 !important;
+          }
+          .analysis-title {
+            color: #374151 !important;
+          }
+          .analysis-card.good .analysis-title { color: #059669 !important; }
+          .analysis-card.improve .analysis-title { color: #d97706 !important; }
+          .analysis-card.tips .analysis-title { color: #4f46e5 !important; }
+          .analysis-list li {
+            color: #374151 !important;
+            border-bottom-color: #e5e7eb !important;
+          }
+          .analysis-list li strong {
+            color: #111827 !important;
+          }
+          .final-score-card {
+            background: #4f46e5 !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            page-break-inside: avoid;
+          }
+          .achievement-badge {
+            background: white !important;
+            border: 1px solid #e5e7eb !important;
+          }
+          .achievement-badge.locked {
+            opacity: 0.5 !important;
+          }
+          
+          /* Add print header */
+          .results-container::before {
+            content: "BizSimHub - Performance Report";
+            display: block;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9ca3af;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+          }
+          
+          /* Add print footer */
+          .results-container::after {
+            content: "Generated by BizSimHub.com - PM Training Simulations";
+            display: block;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #9ca3af;
+            margin-top: 1rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid #e5e7eb;
+          }
         }
         
         /* Legacy end-card (keep for fallback) */
