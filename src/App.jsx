@@ -3817,6 +3817,24 @@ export default function BizSimHub() {
               
               {/* Right Panel */}
               <div className="info-panel">
+                {/* Risk Radar Visualization - TOP for visibility */}
+                <div className="radar-card">
+                  <h4>📡 Risk Radar</h4>
+                  <RiskRadar risks={{
+                    budget: Math.min(100, budgetPercent + 20),
+                    schedule: Math.min(100, (weeksRemaining / gameState.totalWeeks) * 100 + 20),
+                    scope: Math.min(100, scopePercent + 10),
+                    quality: gameState.scope.quality,
+                    team: gameState.team.morale,
+                    stakeholder: Math.min(100, (gameState.scope.quality + gameState.team.morale) / 2)
+                  }} />
+                  <div className="radar-legend">
+                    <span className="legend-item good">● Safe</span>
+                    <span className="legend-item warn">● Watch</span>
+                    <span className="legend-item bad">● Risk</span>
+                  </div>
+                </div>
+                
                 {/* Active Event or Status */}
                 {hasCriticalEvent ? (
                   <div className="alert-card critical">
@@ -3907,24 +3925,6 @@ export default function BizSimHub() {
                     </div>
                   </>
                 )}
-                
-                {/* Risk Radar Visualization */}
-                <div className="radar-card">
-                  <h4>📡 Risk Radar</h4>
-                  <RiskRadar risks={{
-                    budget: Math.min(100, budgetPercent + 20),
-                    schedule: Math.min(100, (weeksRemaining / gameState.totalWeeks) * 100 + 20),
-                    scope: Math.min(100, scopePercent + 10),
-                    quality: gameState.scope.quality,
-                    team: gameState.team.morale,
-                    stakeholder: Math.min(100, (gameState.scope.quality + gameState.team.morale) / 2)
-                  }} />
-                  <div className="radar-legend">
-                    <span className="legend-item good">● Safe</span>
-                    <span className="legend-item warn">● Watch</span>
-                    <span className="legend-item bad">● Risk</span>
-                  </div>
-                </div>
                 
                 {/* Active Risks */}
                 <div className="risks-card">
