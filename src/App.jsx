@@ -3022,34 +3022,101 @@ export default function BizSimHub() {
   const renderSimulation = () => {
     if (simPhase === 'select') {
       return (
-        <div className="sim-page">
+        <div className="sim-select-page">
           {renderNavbar()}
+          
+          {/* Background shapes */}
+          <div className="floating-shapes">
+            <div className="shape shape-1"></div>
+            <div className="shape shape-2"></div>
+            <div className="shape shape-3"></div>
+          </div>
+          
           <div className="sim-select-container">
             <button className="back-link" onClick={() => setCurrentPage('catalog')}>← {lang === 'en' ? 'Back to Library' : 'Retour à la bibliothèque'}</button>
+            
+            {/* Main Title */}
             <div className="sim-select-header">
-              <span className="sim-select-icon">{selectedSimulation?.icon}</span>
-              <h1>{selectedSimulation?.title}</h1>
-              <p>{selectedSimulation?.description}</p>
+              <h1>{lang === 'en' ? 'Choose Your Industry' : 'Choisissez votre industrie'}</h1>
+              <p>{lang === 'en' ? 'Each scenario offers unique PM challenges and learning opportunities' : 'Chaque scénario offre des défis uniques et des opportunités d\'apprentissage'}</p>
             </div>
-            <h3 className="scenarios-title">{lang === 'en' ? 'Choose Your Scenario' : 'Choisissez votre scénario'}</h3>
-            <div className="scenarios-grid">
-              {Object.values(APEX_SCENARIOS).map(scenario => (
-                <button key={scenario.id} className="scenario-card" onClick={() => selectScenario(scenario)}>
-                  <div className="scenario-icon">{scenario.icon}</div>
-                  <div className="scenario-info">
-                    <h3>{scenario.title}</h3>
-                    <p className="scenario-sub">{scenario.subtitle}</p>
-                    <p className="scenario-desc">{scenario.description}</p>
-                    {scenario.hasPrototyping && <span className="scenario-badge">🔬 {lang === 'en' ? 'Prototyping Available' : 'Prototypage disponible'}</span>}
-                    {scenario.hasUncertainty && <span className="scenario-badge">⚡ {lang === 'en' ? 'High Uncertainty' : 'Haute incertitude'}</span>}
+            
+            {/* Industry Cards Grid */}
+            <div className="industry-cards-grid">
+              {Object.values(APEX_SCENARIOS).map(scenario => {
+                const gradientColors = {
+                  tech_startup: { from: '#3b82f6', to: '#60a5fa' },
+                  live_show: { from: '#ec4899', to: '#f472b6' },
+                  construction: { from: '#f59e0b', to: '#fbbf24' },
+                  rd_innovation: { from: '#10b981', to: '#34d399' }
+                };
+                const colors = gradientColors[scenario.id] || gradientColors.tech_startup;
+                
+                return (
+                  <div key={scenario.id} className="industry-card">
+                    {/* Gradient Header */}
+                    <div className="industry-card-header" style={{ background: `linear-gradient(135deg, ${colors.from} 0%, ${colors.to} 100%)` }}>
+                      <span className="industry-icon">{scenario.icon}</span>
+                    </div>
+                    
+                    {/* Card Body */}
+                    <div className="industry-card-body">
+                      <h3>{scenario.title}</h3>
+                      <p className="industry-subtitle" style={{ color: colors.from }}>{scenario.subtitle}</p>
+                      
+                      <div className="industry-challenge">
+                        <span className="challenge-label">{lang === 'en' ? 'Challenge:' : 'Défi:'}</span>
+                        <p>{scenario.description}</p>
+                      </div>
+                      
+                      {/* Meta Info */}
+                      <div className="industry-meta">
+                        <span>📅 {scenario.initial.weeks} {lang === 'en' ? 'weeks' : 'semaines'}</span>
+                        <span>💰 ${(scenario.initial.budget / 1000000).toFixed(1)}M</span>
+                      </div>
+                      <div className="industry-meta">
+                        <span>👥 {scenario.initial.teamSize} {lang === 'en' ? 'team members' : 'membres'}</span>
+                      </div>
+                      
+                      {/* Difficulty Badge */}
+                      <div className="industry-badge" style={{ backgroundColor: `${colors.from}20`, color: colors.from }}>
+                        {scenario.difficulty}
+                      </div>
+                    </div>
+                    
+                    {/* Card Footer */}
+                    <div className="industry-card-footer">
+                      <button 
+                        className="industry-start-btn" 
+                        style={{ background: `linear-gradient(135deg, ${colors.from} 0%, ${colors.to} 100%)` }}
+                        onClick={() => selectScenario(scenario)}
+                      >
+                        {lang === 'en' ? 'Start Simulation →' : 'Démarrer →'}
+                      </button>
+                    </div>
                   </div>
-                  <div className="scenario-meta">
-                    <span className="difficulty" style={{color: scenario.difficultyColor}}>{scenario.difficulty}</span>
-                    <span>{scenario.initial.weeks} {lang === 'en' ? 'weeks' : 'semaines'}</span>
-                    <span>{lang === 'en' ? 'Focus' : 'Focus'}: {scenario.pedagogicalFocus}</span>
-                  </div>
-                </button>
-              ))}
+                );
+              })}
+            </div>
+            
+            {/* Bottom Info */}
+            <div className="sim-select-footer">
+              <p>🎓 {lang === 'en' ? 'All scenarios are PMP/PMBOK aligned for certification preparation' : 'Tous les scénarios sont alignés PMP/PMBOK pour la préparation à la certification'}</p>
+              
+              <div className="sim-stats-bar">
+                <div className="sim-stat">
+                  <span className="sim-stat-num">4</span>
+                  <span className="sim-stat-label">{lang === 'en' ? 'Industries' : 'Industries'}</span>
+                </div>
+                <div className="sim-stat">
+                  <span className="sim-stat-num">1000+</span>
+                  <span className="sim-stat-label">{lang === 'en' ? 'PMs Trained' : 'PMs formés'}</span>
+                </div>
+                <div className="sim-stat">
+                  <span className="sim-stat-num purple">PMP</span>
+                  <span className="sim-stat-label">{lang === 'en' ? 'Aligned' : 'Aligné'}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -3397,326 +3464,311 @@ export default function BizSimHub() {
       const scenario = selectedScenario;
       const budgetRemaining = gameState.budget.total - gameState.budget.spent;
       const budgetPercent = (budgetRemaining / gameState.budget.total) * 100;
+      const budgetSpentPercent = 100 - budgetPercent;
       const scopePercent = (gameState.scope.completed / gameState.scope.totalFeatures) * 100;
       const weeksRemaining = gameState.schedule.deadline - gameState.week + 1;
+      const schedulePercent = ((gameState.week - 1) / gameState.totalWeeks) * 100;
       
       // Calculate effective productivity for display
       const effectiveProductivity = calculateProductivityFromMorale(gameState.team.productivity, gameState.team.morale);
       
+      // Determine if there's a critical situation
+      const hasCriticalEvent = gameState.gamePhase === 'event' && gameState.currentEvent;
+      const isScheduleBehind = weeksRemaining <= 2;
+      const isBudgetLow = budgetPercent < 25;
+      
       return (
         <div className="sim-playing">
           {renderNavbar()}
-          <div className="game-header">
-            <div className="game-title">
-              <div className="game-icon">{scenario.icon}</div>
-              <div>
-                <h2>{scenario.projectName}</h2>
-                <span>{scenario.company}</span>
-              </div>
-            </div>
-            <div className="week-badge">Week {gameState.week} / {gameState.totalWeeks}</div>
-          </div>
-
+          
           {/* Floating background shapes */}
           <div className="floating-shapes">
             <div className="shape shape-1"></div>
             <div className="shape shape-2"></div>
             <div className="shape shape-3"></div>
           </div>
-
-          {/* Gantt Chart Mascot - reacts to project health */}
-          <GanttMascot mood={
-            (budgetPercent < 20 || weeksRemaining <= 1 || gameState.team.stress > 80) ? 'stressed' :
-            (budgetPercent < 40 || weeksRemaining <= 3 || gameState.team.stress > 60) ? 'concerned' :
-            (scopePercent >= 90 && gameState.scope.quality >= 80) ? 'success' : 'normal'
-          } />
-
-          {/* ENHANCED DASHBOARD with circular gauges */}
-          <div className="game-dashboard">
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${Math.max(0, budgetPercent) * 2.51} 251`,
-                      stroke: budgetPercent > 30 ? '#10b981' : '#ef4444'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">💰</span>
-                  <span className="gauge-value">${(budgetRemaining / 1000).toFixed(0)}K</span>
+          
+          <div className="game-container">
+            {/* Header */}
+            <div className="game-header">
+              <div className="game-title">
+                <div className="game-icon">{scenario.icon}</div>
+                <div>
+                  <h2>{scenario.projectName}</h2>
+                  <span>{scenario.company}</span>
                 </div>
               </div>
-              <span className="metric-label">Budget</span>
-              <div className={`status-glow ${budgetPercent > 50 ? 'good' : budgetPercent > 30 ? 'warn' : 'bad'}`}></div>
+              <div className="week-badge">Week {gameState.week} of {gameState.totalWeeks}</div>
             </div>
-
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${(weeksRemaining / gameState.totalWeeks) * 100 * 2.51} 251`,
-                      stroke: weeksRemaining > 3 ? '#10b981' : weeksRemaining > 1 ? '#f59e0b' : '#ef4444'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">📅</span>
-                  <span className="gauge-value">{Math.max(0, weeksRemaining)}</span>
+            
+            {/* Stats Cards Row */}
+            <div className="stats-row">
+              {/* Budget Card */}
+              <div className="stat-card">
+                <div className="stat-card-header">
+                  <span className="stat-icon">💰</span>
+                  <span className="stat-title">BUDGET</span>
+                </div>
+                <div className="stat-value">${(budgetRemaining / 1000).toFixed(0)}K</div>
+                <div className={`stat-status ${budgetPercent > 30 ? 'good' : budgetPercent > 15 ? 'warn' : 'bad'}`}>
+                  {budgetPercent > 30 ? '▼' : '▲'} {Math.round(budgetPercent)}% remaining
+                </div>
+                <div className="stat-progress-bar">
+                  <div className="stat-progress-fill" style={{ width: `${budgetSpentPercent}%`, background: budgetPercent > 30 ? '#f59e0b' : '#ef4444' }}></div>
                 </div>
               </div>
-              <span className="metric-label">Weeks Left</span>
-              <div className={`status-glow ${weeksRemaining > 3 ? 'good' : weeksRemaining > 1 ? 'warn' : 'bad'}`}></div>
-            </div>
-
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${scopePercent * 2.51} 251`,
-                      stroke: '#6366f1'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">📦</span>
-                  <span className="gauge-value">{Math.round(scopePercent)}%</span>
+              
+              {/* Schedule Card */}
+              <div className="stat-card">
+                <div className="stat-card-header">
+                  <span className="stat-icon">📅</span>
+                  <span className="stat-title">SCHEDULE</span>
+                </div>
+                <div className="stat-value">{Math.round(schedulePercent)}%</div>
+                <div className={`stat-status ${weeksRemaining > 3 ? 'good' : weeksRemaining > 1 ? 'warn' : 'bad'}`}>
+                  {isScheduleBehind ? '⚠' : '✓'} {weeksRemaining} weeks left
+                </div>
+                <div className="stat-progress-bar">
+                  <div className="stat-progress-fill" style={{ width: `${schedulePercent}%`, background: '#3b82f6' }}></div>
                 </div>
               </div>
-              <span className="metric-label">Scope</span>
-              <div className={`status-glow ${scopePercent > 80 ? 'good' : scopePercent > 50 ? 'warn' : 'neutral'}`}></div>
-            </div>
-
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${gameState.scope.quality * 2.51} 251`,
-                      stroke: gameState.scope.quality > 70 ? '#10b981' : '#f59e0b'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">⭐</span>
-                  <span className="gauge-value">{Math.round(gameState.scope.quality)}%</span>
+              
+              {/* Team Morale Card */}
+              <div className="stat-card">
+                <div className="stat-card-header">
+                  <span className="stat-icon">👥</span>
+                  <span className="stat-title">TEAM MORALE</span>
+                </div>
+                <div className="stat-value">{Math.round(gameState.team.morale)}%</div>
+                <div className={`stat-status ${gameState.team.morale > 60 ? 'good' : gameState.team.morale > 40 ? 'warn' : 'bad'}`}>
+                  {gameState.team.morale > 60 ? '↑' : '↓'} {gameState.team.size} team members
+                </div>
+                <div className="stat-progress-bar">
+                  <div className="stat-progress-fill" style={{ width: `${gameState.team.morale}%`, background: gameState.team.morale > 60 ? '#10b981' : '#f59e0b' }}></div>
                 </div>
               </div>
-              <span className="metric-label">Quality</span>
-              <div className={`status-glow ${gameState.scope.quality > 80 ? 'good' : gameState.scope.quality > 60 ? 'warn' : 'bad'}`}></div>
-            </div>
-
-            <div className="metric-card">
-              <div className="gauge-container mini">
-                <div className="team-display">
-                  <span className="gauge-icon large">👥</span>
-                  <span className="gauge-value large">{gameState.team.size}</span>
+              
+              {/* Quality Card */}
+              <div className="stat-card">
+                <div className="stat-card-header">
+                  <span className="stat-icon">⭐</span>
+                  <span className="stat-title">QUALITY SCORE</span>
+                </div>
+                <div className="stat-value">{gameState.scope.quality >= 90 ? 'A' : gameState.scope.quality >= 80 ? 'B+' : gameState.scope.quality >= 70 ? 'B' : gameState.scope.quality >= 60 ? 'C' : 'D'}</div>
+                <div className="stat-status neutral">({Math.round(gameState.scope.quality)}/100)</div>
+                <div className="stat-progress-bar">
+                  <div className="stat-progress-fill" style={{ width: `${gameState.scope.quality}%`, background: '#8b5cf6' }}></div>
                 </div>
               </div>
-              <span className="metric-label">Team Size</span>
             </div>
-
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${gameState.team.morale * 2.51} 251`,
-                      stroke: gameState.team.morale > 60 ? '#10b981' : gameState.team.morale > 40 ? '#f59e0b' : '#ef4444'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">😊</span>
-                  <span className="gauge-value">{Math.round(gameState.team.morale)}%</span>
-                </div>
-              </div>
-              <span className="metric-label">Morale</span>
-              <div className={`status-glow ${gameState.team.morale > 70 ? 'good' : gameState.team.morale > 40 ? 'warn' : 'bad'}`}></div>
-            </div>
-
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill stress" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${gameState.team.stress * 2.51} 251`,
-                      stroke: gameState.team.stress < 40 ? '#10b981' : gameState.team.stress < 60 ? '#f59e0b' : '#ef4444'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">😰</span>
-                  <span className="gauge-value">{Math.round(gameState.team.stress)}%</span>
-                </div>
-              </div>
-              <span className="metric-label">Stress</span>
-              <div className={`status-glow ${gameState.team.stress < 30 ? 'good' : gameState.team.stress < 60 ? 'warn' : 'bad'}`}></div>
-            </div>
-
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${gameState.team.knowledge * 2.51} 251`,
-                      stroke: '#8b5cf6'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">🧠</span>
-                  <span className="gauge-value">{Math.round(gameState.team.knowledge)}%</span>
-                </div>
-              </div>
-              <span className="metric-label">Knowledge</span>
-              <div className="status-glow neutral"></div>
-            </div>
-
-            <div className="metric-card">
-              <div className="gauge-container">
-                <svg className="gauge" viewBox="0 0 100 100">
-                  <circle className="gauge-bg" cx="50" cy="50" r="40" />
-                  <circle 
-                    className="gauge-fill" 
-                    cx="50" cy="50" r="40" 
-                    style={{
-                      strokeDasharray: `${effectiveProductivity * 100 * 2.51} 251`,
-                      stroke: '#06b6d4'
-                    }}
-                  />
-                </svg>
-                <div className="gauge-content">
-                  <span className="gauge-icon">⚡</span>
-                  <span className="gauge-value">{Math.round(effectiveProductivity * 100)}%</span>
-                </div>
-              </div>
-              <span className="metric-label">Productivity</span>
-              <div className={`status-glow ${effectiveProductivity > 0.9 ? 'good' : 'neutral'}`}></div>
-            </div>
-
-            {scenario.hasPrototyping && (
-              <div className="metric-card proto-card">
-                <div className="gauge-container mini">
-                  <div className="proto-display">
-                    <span className="gauge-icon large">🔬</span>
-                    <span className="gauge-value large">{gameState.prototypesBuilt}/{gameState.maxPrototypes}</span>
+            
+            {/* Main Content Area */}
+            <div className="game-main">
+              {/* Left Panel - Weekly Decisions */}
+              <div className="decisions-panel">
+                <h3>📋 This Week's Decisions</h3>
+                
+                {/* Team Management */}
+                <div className="decision-card">
+                  <div className="decision-header">
+                    <span className="decision-title">Team Management</span>
+                  </div>
+                  <p className="decision-desc">Adjust your team size based on workload</p>
+                  <div className="decision-actions">
+                    <button className="decision-btn" onClick={() => handleAction({ type: 'fire' })} disabled={gameState.team.size <= 2}>
+                      − Remove
+                    </button>
+                    <span className="team-count">{gameState.team.size}</span>
+                    <button className="decision-btn" onClick={() => handleAction({ type: 'hire', cost: scenario.weeklyCostPerPerson * 2 })}>
+                      + Hire
+                    </button>
                   </div>
                 </div>
-                <span className="metric-label">Prototypes</span>
-                {gameState.prototypesBuilt > 0 && <div className="status-glow good"></div>}
+                
+                {/* Quick Actions */}
+                <div className="decision-card">
+                  <div className="decision-header">
+                    <span className="decision-title">Resource Allocation</span>
+                  </div>
+                  <div className="quick-action-grid">
+                    <button className="quick-action-btn quality" onClick={() => handleAction({ type: 'quality_review', cost: 10000 })}>
+                      <span>🔍</span>
+                      <span>Quality Review</span>
+                    </button>
+                    <button className="quick-action-btn crunch" onClick={() => handleAction({ type: 'crunch', cost: 15000 })}>
+                      <span>🔥</span>
+                      <span>Crunch Mode</span>
+                    </button>
+                    {scenario.hasPrototyping && gameState.prototypesBuilt < gameState.maxPrototypes && (
+                      <button className="quick-action-btn proto" onClick={() => handleAction({ type: 'build_prototype' })}>
+                        <span>🔬</span>
+                        <span>Prototype</span>
+                      </button>
+                    )}
+                    <button className="quick-action-btn schedule" onClick={() => handleAction({ type: 'extend_deadline' })}>
+                      <span>📅</span>
+                      <span>Extend +1wk</span>
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Meetings */}
+                <div className="decision-card">
+                  <div className="decision-header">
+                    <span className="decision-title">Meetings This Week</span>
+                  </div>
+                  <div className="meetings-grid">
+                    {Object.values(MEETING_TYPES).map(meeting => (
+                      <button 
+                        key={meeting.id}
+                        className={`meeting-chip ${gameState.meetings[meeting.id] ? 'done' : ''}`}
+                        onClick={() => handleAction({ type: `meeting_${meeting.id}` })}
+                        disabled={gameState.meetings[meeting.id]}
+                      >
+                        {meeting.icon} {meeting.name}
+                        {gameState.meetings[meeting.id] && ' ✓'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Advance Button */}
+                <button className="btn-primary btn-advance" onClick={advanceWeek}>
+                  Advance to Week {gameState.week + 1} →
+                </button>
               </div>
-            )}
-          </div>
-
-          <div className="game-actions">
-            <h3>📋 Weekly Actions</h3>
-            
-            {/* Team Management */}
-            <div className="action-section">
-              <h4>👥 Team Management</h4>
-              <div className="action-row">
-                <button className="action-btn" onClick={() => handleAction({ type: 'fire' })} disabled={gameState.team.size <= 2}>
-                  − Fire
-                </button>
-                <span className="action-label">{gameState.team.size} members</span>
-                <button className="action-btn" onClick={() => handleAction({ type: 'hire', cost: scenario.weeklyCostPerPerson * 2 })}>
-                  + Hire (${(scenario.weeklyCostPerPerson * 2 / 1000).toFixed(0)}K)
-                </button>
+              
+              {/* Right Panel */}
+              <div className="info-panel">
+                {/* Active Event or Status */}
+                {hasCriticalEvent ? (
+                  <div className="alert-card critical">
+                    <div className="alert-header">🚨 CRITICAL EVENT</div>
+                    <h4>{gameState.currentEvent.title}</h4>
+                    <p>{gameState.currentEvent.description}</p>
+                    <button className="alert-respond-btn" onClick={() => {}}>
+                      Respond Now
+                    </button>
+                  </div>
+                ) : (
+                  <div className="status-card">
+                    <h4>📊 Project Status</h4>
+                    <div className="status-items">
+                      <div className="status-item">
+                        <span>Scope Complete</span>
+                        <span className="status-value">{Math.round(scopePercent)}%</span>
+                      </div>
+                      <div className="status-item">
+                        <span>Team Stress</span>
+                        <span className={`status-value ${gameState.team.stress > 60 ? 'bad' : ''}`}>{Math.round(gameState.team.stress)}%</span>
+                      </div>
+                      <div className="status-item">
+                        <span>Knowledge</span>
+                        <span className="status-value">{Math.round(gameState.team.knowledge)}%</span>
+                      </div>
+                      <div className="status-item">
+                        <span>Productivity</span>
+                        <span className="status-value">{Math.round(effectiveProductivity * 100)}%</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Team Display */}
+                <div className="team-panel">
+                  <h4>👥 Team Status</h4>
+                  <div className="team-bubbles">
+                    <div className="team-bubble dev">
+                      <span>DEV</span>
+                      <small>{Math.ceil(gameState.team.size * 0.5)}</small>
+                    </div>
+                    <div className="team-bubble qa">
+                      <span>QA</span>
+                      <small>{Math.ceil(gameState.team.size * 0.2)}</small>
+                    </div>
+                    <div className="team-bubble pm">
+                      <span>PM</span>
+                      <small>You!</small>
+                    </div>
+                    <div className="team-bubble other">
+                      <span>OPS</span>
+                      <small>{Math.ceil(gameState.team.size * 0.3)}</small>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             
-            {/* NEW: Meeting Types (replacing boost morale) */}
-            <div className="action-section">
-              <h4>📅 Meetings This Week</h4>
-              <div className="meeting-options">
-                {Object.values(MEETING_TYPES).map(meeting => (
-                  <button 
-                    key={meeting.id}
-                    className={`meeting-btn ${gameState.meetings[meeting.id] ? 'active' : ''}`}
-                    onClick={() => handleAction({ type: `meeting_${meeting.id}` })}
-                    disabled={gameState.meetings[meeting.id]}
-                  >
-                    <span className="meeting-icon">{meeting.icon}</span>
-                    <span className="meeting-name">{meeting.name}</span>
-                    <span className="meeting-desc">{meeting.description}</span>
-                    {gameState.meetings[meeting.id] && <span className="meeting-done">✓ Done</span>}
-                  </button>
+            {/* Timeline */}
+            <div className="timeline-panel">
+              <h4>📈 Project Timeline</h4>
+              <div className="timeline-bar">
+                <div className="timeline-progress" style={{ width: `${schedulePercent}%` }}></div>
+                <div className="timeline-marker current" style={{ left: `${schedulePercent}%` }}></div>
+              </div>
+              <div className="timeline-weeks">
+                {Array.from({ length: gameState.totalWeeks }, (_, i) => (
+                  <span key={i} className={`week-mark ${i + 1 === gameState.week ? 'current' : i + 1 < gameState.week ? 'past' : ''}`}>
+                    W{i + 1}
+                  </span>
                 ))}
               </div>
             </div>
-            
-            {/* Quick Actions */}
-            <div className="action-section">
-              <h4>⚡ Quick Actions</h4>
-              <div className="quick-actions">
-                <button className="quick-btn" onClick={() => handleAction({ type: 'quality_review', cost: 10000 })}>
-                  🔍 Quality Review ($10K)
-                </button>
-                <button className="quick-btn crunch" onClick={() => handleAction({ type: 'crunch', cost: 15000 })}>
-                  🔥 Crunch Mode ($15K, -morale, +stress)
-                </button>
-                {scenario.hasPrototyping && gameState.prototypesBuilt < gameState.maxPrototypes && (
-                  <button className="quick-btn proto" onClick={() => handleAction({ type: 'build_prototype' })}>
-                    🔬 Build Prototype (${(PROTOTYPE_COST[scenario.id].budget / 1000).toFixed(0)}K)
-                  </button>
-                )}
-                <button className="quick-btn schedule" onClick={() => handleAction({ type: 'extend_deadline' })}>
-                  📅 Extend Deadline +1 week {gameState.scheduleChanges > 0 && '(penalty)'}
-                </button>
-              </div>
-            </div>
-            
-            {/* Schedule change warning */}
-            {gameState.scheduleChanges > 1 && (
-              <div className="warning-banner">
-                ⚠️ Schedule changed {gameState.scheduleChanges} times. Team morale affected by uncertainty.
-              </div>
-            )}
-            
-            <button className="btn-primary btn-advance" onClick={advanceWeek}>
-              Advance to Week {gameState.week + 1} →
-            </button>
           </div>
 
           {/* Event Modal with CSS Animation */}
           {gameState.gamePhase === 'event' && gameState.currentEvent && (
             <div className="event-overlay">
-              <div className="event-modal">
-                <div className="alert-bell">🔔</div>
-                <span className="event-icon">{gameState.currentEvent.icon}</span>
-                <h2>{gameState.currentEvent.title}</h2>
-                <p>{gameState.currentEvent.description}</p>
-                <div className="event-options">
-                  {gameState.currentEvent.options.map(option => (
-                    <button key={option.id} className="event-option" onClick={() => handleEventChoice(option)}>
-                      {option.label}
-                    </button>
-                  ))}
+              <div className="event-modal enhanced">
+                <div className="event-modal-header critical">
+                  <span className="event-type">⚠️ CRITICAL EVENT</span>
+                  <h2>{gameState.currentEvent.title}</h2>
+                </div>
+                
+                <div className="event-modal-body">
+                  <div className="event-description">
+                    <p>{gameState.currentEvent.description}</p>
+                  </div>
+                  
+                  {/* Impact Analysis */}
+                  <div className="impact-analysis">
+                    <h5>📊 Potential Impact:</h5>
+                    <div className="impact-cards">
+                      <div className="impact-card">
+                        <span className="impact-label">Budget</span>
+                        <span className="impact-value warn">Variable</span>
+                      </div>
+                      <div className="impact-card">
+                        <span className="impact-label">Schedule</span>
+                        <span className="impact-value warn">At Risk</span>
+                      </div>
+                      <div className="impact-card">
+                        <span className="impact-label">Team</span>
+                        <span className="impact-value">Depends</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Decision Options */}
+                  <div className="event-options-grid">
+                    {gameState.currentEvent.options.map((option, idx) => {
+                      const colors = ['#10b981', '#f59e0b', '#ef4444', '#6366f1'];
+                      return (
+                        <button 
+                          key={option.id} 
+                          className="event-option-card" 
+                          onClick={() => handleEventChoice(option)}
+                          style={{ borderColor: colors[idx % 4] }}
+                        >
+                          <span className="option-label" style={{ color: colors[idx % 4] }}>{option.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                
+                <div className="event-footer">
+                  <span>⏱️ Choose wisely - every decision has consequences!</span>
                 </div>
               </div>
             </div>
@@ -3762,6 +3814,7 @@ export default function BizSimHub() {
       );
     }
 
+
     if (simPhase === 'ended' && gameState) {
       const finalScore = calculateScore(gameState);
       const grade = getGrade(finalScore);
@@ -3772,63 +3825,157 @@ export default function BizSimHub() {
       const isGreatScore = grade.startsWith('A') || grade === 'B+';
       const isPoorScore = grade === 'F' || grade === 'D';
       
+      // Calculate individual scores for breakdown
+      const scopeScore = Math.round((gameState.scope.completed / gameState.scope.totalFeatures) * 100);
+      const scheduleScore = scheduleOnTarget ? 100 - ((gameState.week - gameState.schedule.deadline) * 10) : Math.max(50, 100 - (gameState.week - gameState.schedule.deadline) * 15);
+      const budgetScore = Math.round(budgetOnTarget ? 100 - ((gameState.budget.spent / gameState.budget.total - 0.8) * 50) : Math.max(40, 100 - ((gameState.budget.spent / gameState.budget.total - 1) * 100)));
+      const qualityScore = Math.round(gameState.scope.quality);
+      const teamScore = Math.round(gameState.moraleHistory.reduce((a, b) => a + b, 0) / gameState.moraleHistory.length);
+      
+      // Achievements
+      const achievements = [
+        { id: 'budget', name: 'Budget Master', icon: '💰', desc: 'Under budget', unlocked: budgetOnTarget && gameState.budget.spent < gameState.budget.total * 0.9 },
+        { id: 'stakeholder', name: 'Stakeholder Pro', icon: '🤝', desc: 'High satisfaction', unlocked: qualityGood && scheduleOnTarget },
+        { id: 'scope', name: 'Scope Guardian', icon: '🎯', desc: '100% scope', unlocked: scopeComplete },
+        { id: 'crisis', name: 'Crisis Handler', icon: '🚨', desc: 'Managed events', unlocked: gameState.eventHistory?.length >= 2 },
+        { id: 'perfect', name: 'Perfect Score', icon: '⭐', desc: 'All green', unlocked: budgetOnTarget && scheduleOnTarget && scopeComplete && qualityGood },
+        { id: 'speed', name: 'Speed Demon', icon: '⚡', desc: 'Early finish', unlocked: gameState.week < gameState.schedule.deadline - 1 },
+      ];
+      
       return (
         <div className="sim-ended">
           {/* CSS Confetti animation for great scores */}
           {isGreatScore && <Confetti />}
           
-          <div className="end-card">
-            {/* CSS Animated icon based on performance */}
-            <div className="end-animation">
-              {isGreatScore ? (
-                <SuccessAnimation />
-              ) : isPoorScore ? (
-                <SadAnimation />
-              ) : (
-                <span className="end-icon">{grade === 'B' ? '🎉' : '💪'}</span>
-              )}
+          {/* Floating shapes */}
+          <div className="floating-shapes">
+            <div className="shape shape-1"></div>
+            <div className="shape shape-2"></div>
+            <div className="shape shape-3"></div>
+          </div>
+          
+          <div className="results-container">
+            {/* Header */}
+            <div className="results-header">
+              <div className="results-animation">
+                {isGreatScore ? (
+                  <SuccessAnimation />
+                ) : isPoorScore ? (
+                  <SadAnimation />
+                ) : (
+                  <div className="trophy-icon">🏆</div>
+                )}
+              </div>
+              <h1>Simulation Complete!</h1>
+              <p className="results-subtitle">{selectedScenario.projectName} • {selectedScenario.company}</p>
+              
+              {/* Main Grade */}
+              <div className="grade-display">
+                <span className="main-grade" style={{
+                  color: grade.startsWith('A') ? '#10b981' : grade.startsWith('B') ? '#6366f1' : grade === 'C' ? '#f59e0b' : '#ef4444'
+                }}>{grade}</span>
+                <span className="grade-label">Overall Grade</span>
+              </div>
             </div>
             
-            <h1>Simulation Complete!</h1>
-            <p>{selectedScenario.projectName}</p>
+            {/* Score Breakdown Cards */}
+            <div className="score-breakdown">
+              <h3>📊 Score Breakdown</h3>
+              <div className="breakdown-grid">
+                <div className="breakdown-card">
+                  <div className="breakdown-header">
+                    <span className="breakdown-icon">📦</span>
+                    <span className="breakdown-title">Scope</span>
+                  </div>
+                  <div className="breakdown-value">{scopeScore}%</div>
+                  <div className="breakdown-bar">
+                    <div className="breakdown-fill" style={{ width: `${scopeScore}%`, background: scopeScore >= 80 ? '#10b981' : '#f59e0b' }}></div>
+                  </div>
+                  <span className="breakdown-status">{scopeComplete ? 'Excellent' : 'Partial'}</span>
+                </div>
+                
+                <div className="breakdown-card">
+                  <div className="breakdown-header">
+                    <span className="breakdown-icon">📅</span>
+                    <span className="breakdown-title">Schedule</span>
+                  </div>
+                  <div className="breakdown-value">{Math.min(100, Math.max(0, scheduleScore))}%</div>
+                  <div className="breakdown-bar">
+                    <div className="breakdown-fill" style={{ width: `${Math.min(100, Math.max(0, scheduleScore))}%`, background: scheduleOnTarget ? '#10b981' : '#ef4444' }}></div>
+                  </div>
+                  <span className="breakdown-status">{scheduleOnTarget ? 'On Time' : `${gameState.week - gameState.schedule.deadline} days late`}</span>
+                </div>
+                
+                <div className="breakdown-card">
+                  <div className="breakdown-header">
+                    <span className="breakdown-icon">💰</span>
+                    <span className="breakdown-title">Budget</span>
+                  </div>
+                  <div className="breakdown-value">{Math.min(100, Math.max(0, budgetScore))}%</div>
+                  <div className="breakdown-bar">
+                    <div className="breakdown-fill" style={{ width: `${Math.min(100, Math.max(0, budgetScore))}%`, background: budgetOnTarget ? '#10b981' : '#ef4444' }}></div>
+                  </div>
+                  <span className="breakdown-status">{budgetOnTarget ? `${Math.round((1 - gameState.budget.spent / gameState.budget.total) * 100)}% under` : 'Over budget'}</span>
+                </div>
+                
+                <div className="breakdown-card">
+                  <div className="breakdown-header">
+                    <span className="breakdown-icon">⭐</span>
+                    <span className="breakdown-title">Quality</span>
+                  </div>
+                  <div className="breakdown-value">{qualityScore}%</div>
+                  <div className="breakdown-bar">
+                    <div className="breakdown-fill" style={{ width: `${qualityScore}%`, background: qualityGood ? '#10b981' : '#f59e0b' }}></div>
+                  </div>
+                  <span className="breakdown-status">{qualityGood ? 'Very Good' : 'Needs Work'}</span>
+                </div>
+                
+                <div className="breakdown-card">
+                  <div className="breakdown-header">
+                    <span className="breakdown-icon">👥</span>
+                    <span className="breakdown-title">Team</span>
+                  </div>
+                  <div className="breakdown-value">{teamScore}%</div>
+                  <div className="breakdown-bar">
+                    <div className="breakdown-fill" style={{ width: `${teamScore}%`, background: teamScore >= 60 ? '#10b981' : '#f59e0b' }}></div>
+                  </div>
+                  <span className="breakdown-status">{teamScore >= 60 ? 'Good morale' : 'Low morale'}</span>
+                </div>
+              </div>
+            </div>
             
-            <div className="score-display">
-              <span className="grade" style={{color: grade.startsWith('A') ? '#10b981' : grade.startsWith('B') ? '#6366f1' : grade === 'C' ? '#f59e0b' : '#ef4444'}}>{grade}</span>
-              <span className="score">{finalScore} / 1000 points</span>
+            {/* Achievements */}
+            <div className="achievements-section">
+              <h3>🏅 Achievements</h3>
+              <div className="achievements-grid">
+                {achievements.map(achievement => (
+                  <div key={achievement.id} className={`achievement-badge ${achievement.unlocked ? 'unlocked' : 'locked'}`}>
+                    <span className="achievement-icon">{achievement.icon}</span>
+                    <span className="achievement-name">{achievement.name}</span>
+                    {!achievement.unlocked && <span className="lock-icon">🔒</span>}
+                  </div>
+                ))}
+              </div>
             </div>
-
-            <div className="results">
-              <div className={`result ${budgetOnTarget ? 'pass' : 'fail'}`}>
-                <span>{budgetOnTarget ? '✓' : '✗'}</span> Budget: ${(gameState.budget.spent / 1000).toFixed(0)}K / ${(gameState.budget.total / 1000).toFixed(0)}K
-              </div>
-              <div className={`result ${scheduleOnTarget ? 'pass' : 'fail'}`}>
-                <span>{scheduleOnTarget ? '✓' : '✗'}</span> Schedule: Week {gameState.week} / {gameState.schedule.deadline}
-              </div>
-              <div className={`result ${scopeComplete ? 'pass' : 'fail'}`}>
-                <span>{scopeComplete ? '✓' : '✗'}</span> Scope: {Math.round((gameState.scope.completed / gameState.scope.totalFeatures) * 100)}% complete
-              </div>
-              <div className={`result ${qualityGood ? 'pass' : 'fail'}`}>
-                <span>{qualityGood ? '✓' : '✗'}</span> Quality: {Math.round(gameState.scope.quality)}%
-              </div>
-              <div className="result pass">
-                <span>📊</span> Team Process: {Math.round(gameState.moraleHistory.reduce((a, b) => a + b, 0) / gameState.moraleHistory.length)}% avg morale
-              </div>
-              {gameState.scheduleChanges <= 1 && (
-                <div className="result pass">
-                  <span>🎯</span> Consistency Bonus: +{gameState.scheduleChanges <= 1 ? 50 : 25} pts
-                </div>
-              )}
-              {gameState.prototypesBuilt > 0 && (
-                <div className="result pass">
-                  <span>🔬</span> Prototype Bonus: +{gameState.prototypesBuilt * 25} pts
-                </div>
-              )}
+            
+            {/* Final Score */}
+            <div className="final-score-card">
+              <span className="final-label">Final Score</span>
+              <span className="final-value">{finalScore}</span>
+              <span className="final-max">/ 1000 points</span>
             </div>
-
-            <div className="end-actions">
-              <button className="btn-primary" onClick={beginSimulation}>Play Again</button>
-              <button className="btn-secondary" onClick={() => { setSimPhase('select'); setGameState(null); }}>Try Different Scenario</button>
-              <button className="btn-secondary" onClick={() => setCurrentPage('dashboard')}>Back to Dashboard</button>
+            
+            {/* Actions */}
+            <div className="results-actions">
+              <button className="btn-primary-lg" onClick={beginSimulation}>
+                🔄 Play Again
+              </button>
+              <button className="btn-secondary-lg" onClick={() => { setSimPhase('select'); setGameState(null); }}>
+                🎮 Try New Industry
+              </button>
+              <button className="btn-secondary-lg" onClick={() => setCurrentPage('dashboard')}>
+                📊 Back to Dashboard
+              </button>
             </div>
           </div>
         </div>
@@ -4245,6 +4392,185 @@ export default function BizSimHub() {
         .sim-page .nav-link:hover { color: #1e293b; }
         .sim-page .user-name { color: #475569; }
         
+        /* NEW: Industry Selection Page - Dark Theme */
+        .sim-select-page {
+          min-height: 100vh;
+          padding-top: 65px;
+          background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #0f0f1a 100%);
+          color: #ffffff;
+          position: relative;
+          overflow: hidden;
+        }
+        .sim-select-page .navbar { background: rgba(20, 20, 40, 0.95); border-bottom: 1px solid rgba(99, 102, 241, 0.2); }
+        .sim-select-page .nav-link { color: #9ca3af; }
+        .sim-select-page .nav-link:hover { color: #ffffff; }
+        .sim-select-page .user-name { color: #9ca3af; }
+        .sim-select-page .logo-text { color: #ffffff; }
+        .sim-select-page .back-link { color: #8b5cf6; }
+        
+        .sim-select-page .sim-select-container { max-width: 1300px; margin: 0 auto; padding: 2rem; position: relative; z-index: 1; }
+        
+        .sim-select-page .sim-select-header { text-align: center; margin-bottom: 2.5rem; }
+        .sim-select-page .sim-select-header h1 { font-size: 2.5rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem; }
+        .sim-select-page .sim-select-header p { color: #9ca3af; font-size: 1.1rem; }
+        
+        /* Industry Cards Grid */
+        .industry-cards-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.5rem;
+          margin-bottom: 3rem;
+        }
+        @media (max-width: 1200px) {
+          .industry-cards-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 700px) {
+          .industry-cards-grid { grid-template-columns: 1fr; }
+        }
+        
+        /* Industry Card */
+        .industry-card {
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
+          border: 1px solid rgba(99, 102, 241, 0.15);
+          border-radius: 20px;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          transition: all 0.4s ease;
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        .industry-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 50px rgba(99, 102, 241, 0.2);
+          border-color: rgba(99, 102, 241, 0.4);
+        }
+        
+        /* Card Header with Gradient */
+        .industry-card-header {
+          height: 120px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+        }
+        .industry-icon {
+          font-size: 3.5rem;
+          filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        }
+        
+        /* Card Body */
+        .industry-card-body {
+          padding: 1.25rem;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+        .industry-card-body h3 {
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: #ffffff;
+          margin-bottom: 0.25rem;
+        }
+        .industry-subtitle {
+          font-size: 0.9rem;
+          font-weight: 500;
+          margin-bottom: 1rem;
+        }
+        .industry-challenge {
+          margin-bottom: 1rem;
+          flex: 1;
+        }
+        .challenge-label {
+          font-size: 0.8rem;
+          color: #9ca3af;
+          display: block;
+          margin-bottom: 0.25rem;
+        }
+        .industry-challenge p {
+          font-size: 0.85rem;
+          color: #d1d5db;
+          line-height: 1.5;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        
+        /* Meta Info */
+        .industry-meta {
+          display: flex;
+          gap: 1rem;
+          font-size: 0.8rem;
+          color: #6b7280;
+          margin-bottom: 0.5rem;
+        }
+        
+        /* Difficulty Badge */
+        .industry-badge {
+          display: inline-block;
+          padding: 0.35rem 0.75rem;
+          border-radius: 20px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          margin-top: 0.75rem;
+          width: fit-content;
+        }
+        
+        /* Card Footer */
+        .industry-card-footer {
+          padding: 1rem 1.25rem 1.25rem;
+        }
+        .industry-start-btn {
+          width: 100%;
+          padding: 0.85rem 1.5rem;
+          border: none;
+          border-radius: 10px;
+          color: #ffffff;
+          font-size: 0.95rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .industry-start-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+        
+        /* Footer Info */
+        .sim-select-footer {
+          text-align: center;
+        }
+        .sim-select-footer > p {
+          color: #9ca3af;
+          font-size: 0.95rem;
+          margin-bottom: 1.5rem;
+        }
+        .sim-stats-bar {
+          display: inline-flex;
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
+          border: 1px solid rgba(99, 102, 241, 0.15);
+          border-radius: 16px;
+          padding: 1rem 2.5rem;
+          gap: 3rem;
+        }
+        .sim-stat {
+          text-align: center;
+        }
+        .sim-stat-num {
+          display: block;
+          font-size: 1.75rem;
+          font-weight: 700;
+          color: #ffffff;
+        }
+        .sim-stat-num.purple {
+          color: #8b5cf6;
+        }
+        .sim-stat-label {
+          font-size: 0.8rem;
+          color: #9ca3af;
+        }
+        
         .sim-select-container, .brief-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
         .back-link { background: none; border: none; color: #4f46e5; font-family: inherit; font-size: 0.95rem; cursor: pointer; margin-bottom: 2rem; padding: 0; font-weight: 500; }
         .sim-select-header { text-align: center; margin-bottom: 3rem; }
@@ -4602,7 +4928,16 @@ export default function BizSimHub() {
           66% { transform: translate(-30px, 30px) scale(0.95); }
         }
 
-        .game-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-top: 50px; position: relative; z-index: 1; }
+        /* NEW GAME CONTAINER */
+        .game-container {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding-top: 60px;
+          position: relative;
+          z-index: 1;
+        }
+        
+        .game-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; position: relative; z-index: 1; }
         .game-title { display: flex; align-items: center; gap: 1rem; }
         .game-icon { 
           font-size: 2rem; 
@@ -4628,14 +4963,444 @@ export default function BizSimHub() {
           50% { box-shadow: 0 4px 30px rgba(99, 102, 241, 0.6); }
         }
         
-        /* Circular Gauge Dashboard */
-        .game-dashboard { 
-          display: grid; 
-          grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); 
-          gap: 0.75rem; 
-          margin-bottom: 1.5rem; 
+        /* STATS ROW - Horizontal Cards */
+        .stats-row {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1rem;
+          margin-bottom: 1.5rem;
+        }
+        @media (max-width: 900px) {
+          .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        .stat-card {
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
+          border: 1px solid rgba(99, 102, 241, 0.15);
+          border-radius: 16px;
+          padding: 1.25rem;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+          transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 30px rgba(99, 102, 241, 0.2);
+          border-color: rgba(99, 102, 241, 0.3);
+        }
+        .stat-card-header {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin-bottom: 0.5rem;
+        }
+        .stat-icon { font-size: 1.2rem; }
+        .stat-title {
+          font-size: 0.7rem;
+          font-weight: 600;
+          color: #9ca3af;
+          letter-spacing: 0.1em;
+        }
+        .stat-value {
+          font-size: 2rem;
+          font-weight: 800;
+          color: #ffffff;
+          line-height: 1.1;
+          margin-bottom: 0.25rem;
+        }
+        .stat-status {
+          font-size: 0.8rem;
+          margin-bottom: 0.75rem;
+        }
+        .stat-status.good { color: #10b981; }
+        .stat-status.warn { color: #f59e0b; }
+        .stat-status.bad { color: #ef4444; }
+        .stat-status.neutral { color: #9ca3af; }
+        .stat-progress-bar {
+          height: 6px;
+          background: #2a2a40;
+          border-radius: 3px;
+          overflow: hidden;
+        }
+        .stat-progress-fill {
+          height: 100%;
+          border-radius: 3px;
+          transition: width 0.5s ease;
+        }
+        
+        /* MAIN CONTENT - Two Column */
+        .game-main {
+          display: grid;
+          grid-template-columns: 1fr 320px;
+          gap: 1.5rem;
+          margin-bottom: 1.5rem;
+        }
+        @media (max-width: 900px) {
+          .game-main { grid-template-columns: 1fr; }
+        }
+        
+        /* DECISIONS PANEL */
+        .decisions-panel {
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
+          border: 1px solid rgba(99, 102, 241, 0.15);
+          border-radius: 20px;
+          padding: 1.5rem;
+          box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
+        .decisions-panel h3 {
+          font-size: 1.1rem;
+          color: #8b5cf6;
+          margin-bottom: 1.25rem;
+        }
+        
+        .decision-card {
+          background: linear-gradient(135deg, #252540 0%, #1e1e32 100%);
+          border: 1px solid #3a3a50;
+          border-radius: 12px;
+          padding: 1rem;
+          margin-bottom: 1rem;
+        }
+        .decision-header {
+          margin-bottom: 0.5rem;
+        }
+        .decision-title {
+          font-size: 0.9rem;
+          font-weight: 600;
+          color: #ffffff;
+        }
+        .decision-desc {
+          font-size: 0.8rem;
+          color: #9ca3af;
+          margin-bottom: 0.75rem;
+        }
+        .decision-actions {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          justify-content: center;
+        }
+        .decision-btn {
+          padding: 0.5rem 1rem;
+          background: linear-gradient(135deg, #3a3a55 0%, #2a2a45 100%);
+          border: 1px solid #4a4a60;
+          border-radius: 8px;
+          color: #ffffff;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .decision-btn:hover:not(:disabled) {
+          background: linear-gradient(135deg, #4a4a65 0%, #3a3a55 100%);
+          border-color: #6366f1;
+        }
+        .decision-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .team-count {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #ffffff;
+          min-width: 50px;
+          text-align: center;
+        }
+        
+        /* QUICK ACTIONS GRID */
+        .quick-action-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.5rem;
+        }
+        .quick-action-btn {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.25rem;
+          padding: 0.75rem;
+          border-radius: 10px;
+          border: 1px solid #3a3a50;
+          background: #1e1e32;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .quick-action-btn span:first-child { font-size: 1.25rem; }
+        .quick-action-btn span:last-child { font-size: 0.75rem; color: #9ca3af; }
+        .quick-action-btn.quality { border-color: rgba(16, 185, 129, 0.3); }
+        .quick-action-btn.quality:hover { background: rgba(16, 185, 129, 0.15); border-color: #10b981; }
+        .quick-action-btn.crunch { border-color: rgba(239, 68, 68, 0.3); }
+        .quick-action-btn.crunch:hover { background: rgba(239, 68, 68, 0.15); border-color: #ef4444; }
+        .quick-action-btn.proto { border-color: rgba(139, 92, 246, 0.3); }
+        .quick-action-btn.proto:hover { background: rgba(139, 92, 246, 0.15); border-color: #8b5cf6; }
+        .quick-action-btn.schedule { border-color: rgba(245, 158, 11, 0.3); }
+        .quick-action-btn.schedule:hover { background: rgba(245, 158, 11, 0.15); border-color: #f59e0b; }
+        
+        /* MEETINGS GRID */
+        .meetings-grid {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+        .meeting-chip {
+          padding: 0.5rem 0.75rem;
+          background: #252540;
+          border: 1px solid #3a3a50;
+          border-radius: 20px;
+          color: #d1d5db;
+          font-size: 0.8rem;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .meeting-chip:hover:not(:disabled) {
+          background: #2a2a50;
+          border-color: #6366f1;
+        }
+        .meeting-chip.done {
+          background: rgba(16, 185, 129, 0.2);
+          border-color: #10b981;
+          color: #10b981;
+        }
+        .meeting-chip:disabled { opacity: 0.6; cursor: default; }
+        
+        /* INFO PANEL */
+        .info-panel {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+        .status-card, .team-panel, .alert-card {
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
+          border: 1px solid rgba(99, 102, 241, 0.15);
+          border-radius: 16px;
+          padding: 1.25rem;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .status-card h4, .team-panel h4 { font-size: 0.9rem; color: #9ca3af; margin-bottom: 1rem; }
+        .status-items {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+        .status-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.5rem 0;
+          border-bottom: 1px solid #2a2a40;
+        }
+        .status-item:last-child { border-bottom: none; }
+        .status-item span { font-size: 0.85rem; color: #9ca3af; }
+        .status-value { font-weight: 600; color: #ffffff !important; }
+        .status-value.bad { color: #ef4444 !important; }
+        
+        /* TEAM BUBBLES */
+        .team-bubbles {
+          display: flex;
+          justify-content: space-around;
+          gap: 0.5rem;
+        }
+        .team-bubble {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          font-weight: 600;
+          font-size: 0.75rem;
+        }
+        .team-bubble span { font-size: 0.7rem; }
+        .team-bubble small { font-size: 0.65rem; opacity: 0.8; }
+        .team-bubble.dev { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+        .team-bubble.qa { background: linear-gradient(135deg, #10b981, #34d399); }
+        .team-bubble.pm { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+        .team-bubble.other { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        
+        /* ALERT CARD */
+        .alert-card.critical {
+          background: linear-gradient(135deg, #3a1a1a 0%, #2a1515 100%);
+          border-color: rgba(239, 68, 68, 0.4);
+        }
+        .alert-header {
+          font-size: 0.75rem;
+          font-weight: 700;
+          color: #ef4444;
+          letter-spacing: 0.1em;
+          margin-bottom: 0.5rem;
+        }
+        .alert-card h4 { color: #ffffff; margin-bottom: 0.5rem; }
+        .alert-card p { font-size: 0.85rem; color: #d1d5db; margin-bottom: 1rem; }
+        .alert-respond-btn {
+          width: 100%;
+          padding: 0.75rem;
+          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+          border: none;
+          border-radius: 8px;
+          color: white;
+          font-weight: 600;
+          cursor: pointer;
+        }
+        
+        /* TIMELINE */
+        .timeline-panel {
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
+          border: 1px solid rgba(99, 102, 241, 0.15);
+          border-radius: 16px;
+          padding: 1.25rem;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .timeline-panel h4 { font-size: 0.9rem; color: #9ca3af; margin-bottom: 1rem; }
+        .timeline-bar {
+          height: 8px;
+          background: #2a2a40;
+          border-radius: 4px;
           position: relative;
-          z-index: 1;
+          margin-bottom: 0.75rem;
+        }
+        .timeline-progress {
+          height: 100%;
+          background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+          border-radius: 4px;
+          transition: width 0.5s ease;
+        }
+        .timeline-marker {
+          position: absolute;
+          top: -4px;
+          width: 16px;
+          height: 16px;
+          background: #ffffff;
+          border: 3px solid #8b5cf6;
+          border-radius: 50%;
+          transform: translateX(-50%);
+        }
+        .timeline-weeks {
+          display: flex;
+          justify-content: space-between;
+        }
+        .week-mark {
+          font-size: 0.65rem;
+          color: #6b7280;
+        }
+        .week-mark.past { color: #9ca3af; }
+        .week-mark.current { color: #8b5cf6; font-weight: 700; }
+        
+        /* ADVANCE BUTTON */
+        .btn-advance {
+          width: 100%;
+          margin-top: 1rem;
+          padding: 1rem;
+          font-size: 1rem;
+          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+          border: none;
+          color: white;
+          border-radius: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s;
+          box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        }
+        .btn-advance:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 25px rgba(99, 102, 241, 0.5);
+        }
+        
+        /* ENHANCED EVENT MODAL */
+        .event-modal.enhanced {
+          background: linear-gradient(135deg, #1a1a2e 0%, #252540 100%);
+          border: 1px solid rgba(239, 68, 68, 0.3);
+          border-radius: 24px;
+          padding: 0;
+          max-width: 600px;
+          overflow: hidden;
+          box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 60px rgba(239, 68, 68, 0.1);
+        }
+        .event-modal-header {
+          padding: 1.5rem 2rem;
+          text-align: center;
+        }
+        .event-modal-header.critical {
+          background: linear-gradient(135deg, #3a1a1a 0%, #2a1515 100%);
+          border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        .event-type {
+          font-size: 0.75rem;
+          font-weight: 700;
+          color: #ef4444;
+          letter-spacing: 0.15em;
+          display: block;
+          margin-bottom: 0.5rem;
+        }
+        .event-modal-header h2 {
+          font-size: 1.5rem;
+          color: #ffffff;
+          margin: 0;
+        }
+        .event-modal-body {
+          padding: 1.5rem 2rem;
+        }
+        .event-description p {
+          color: #d1d5db;
+          line-height: 1.7;
+          margin-bottom: 1.5rem;
+        }
+        .impact-analysis h5 {
+          font-size: 0.85rem;
+          color: #9ca3af;
+          margin-bottom: 0.75rem;
+        }
+        .impact-cards {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.75rem;
+          margin-bottom: 1.5rem;
+        }
+        .impact-card {
+          background: #252540;
+          border: 1px solid #3a3a50;
+          border-radius: 10px;
+          padding: 0.75rem;
+          text-align: center;
+        }
+        .impact-label {
+          display: block;
+          font-size: 0.7rem;
+          color: #9ca3af;
+          margin-bottom: 0.25rem;
+        }
+        .impact-value {
+          font-size: 0.9rem;
+          font-weight: 600;
+          color: #ffffff;
+        }
+        .impact-value.warn { color: #f59e0b; }
+        
+        .event-options-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.75rem;
+        }
+        .event-option-card {
+          padding: 1rem;
+          background: linear-gradient(135deg, #252540 0%, #1e1e32 100%);
+          border: 2px solid #3a3a50;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          text-align: left;
+        }
+        .event-option-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .option-label {
+          font-size: 0.9rem;
+          font-weight: 500;
+          display: block;
+        }
+        
+        .event-footer {
+          padding: 1rem 2rem;
+          background: #1a1a28;
+          text-align: center;
+          font-size: 0.8rem;
+          color: #9ca3af;
+        }
         }
         
         .metric-card {
@@ -5354,14 +6119,253 @@ export default function BizSimHub() {
         }
         
         /* End animation container */
-        .end-animation {
+        .end-animation, .results-animation {
           margin-bottom: 1rem;
           display: flex;
           justify-content: center;
           align-items: center;
-          min-height: 120px;
+          min-height: 100px;
+        }
+        .trophy-icon {
+          font-size: 4rem;
+          animation: bounce 1s ease infinite;
+        }
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
         }
         
+        /* NEW RESULTS CONTAINER */
+        .results-container {
+          max-width: 800px;
+          width: 100%;
+          padding: 2rem;
+          position: relative;
+          z-index: 10;
+          animation: slideUp 0.5s ease-out;
+        }
+        
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .results-header {
+          text-align: center;
+          margin-bottom: 2rem;
+        }
+        .results-header h1 {
+          font-size: 2rem;
+          color: #ffffff;
+          margin-bottom: 0.25rem;
+        }
+        .results-subtitle {
+          color: #9ca3af;
+          font-size: 1rem;
+          margin-bottom: 1.5rem;
+        }
+        
+        /* Grade Display */
+        .grade-display {
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
+          border: 1px solid rgba(99, 102, 241, 0.3);
+          border-radius: 20px;
+          padding: 1.5rem 3rem;
+          display: inline-block;
+        }
+        .main-grade {
+          font-size: 5rem;
+          font-weight: 800;
+          line-height: 1;
+          display: block;
+        }
+        .grade-label {
+          font-size: 0.85rem;
+          color: #9ca3af;
+          display: block;
+          margin-top: 0.5rem;
+        }
+        
+        /* Score Breakdown */
+        .score-breakdown {
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
+          border: 1px solid rgba(99, 102, 241, 0.15);
+          border-radius: 20px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+        }
+        .score-breakdown h3 {
+          font-size: 1rem;
+          color: #9ca3af;
+          margin-bottom: 1.25rem;
+        }
+        .breakdown-grid {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 1rem;
+        }
+        @media (max-width: 700px) {
+          .breakdown-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        .breakdown-card {
+          background: linear-gradient(135deg, #252540 0%, #1e1e32 100%);
+          border: 1px solid #3a3a50;
+          border-radius: 12px;
+          padding: 1rem;
+          text-align: center;
+        }
+        .breakdown-header {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.4rem;
+          margin-bottom: 0.5rem;
+        }
+        .breakdown-icon { font-size: 1rem; }
+        .breakdown-title {
+          font-size: 0.75rem;
+          color: #9ca3af;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+        .breakdown-value {
+          font-size: 1.75rem;
+          font-weight: 700;
+          color: #ffffff;
+          margin-bottom: 0.5rem;
+        }
+        .breakdown-bar {
+          height: 4px;
+          background: #2a2a40;
+          border-radius: 2px;
+          margin-bottom: 0.5rem;
+        }
+        .breakdown-fill {
+          height: 100%;
+          border-radius: 2px;
+          transition: width 0.5s ease;
+        }
+        .breakdown-status {
+          font-size: 0.7rem;
+          color: #6b7280;
+        }
+        
+        /* Achievements */
+        .achievements-section {
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
+          border: 1px solid rgba(99, 102, 241, 0.15);
+          border-radius: 20px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+        }
+        .achievements-section h3 {
+          font-size: 1rem;
+          color: #9ca3af;
+          margin-bottom: 1rem;
+        }
+        .achievements-grid {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.75rem;
+          justify-content: center;
+        }
+        .achievement-badge {
+          background: linear-gradient(135deg, #252540 0%, #1e1e32 100%);
+          border: 1px solid #3a3a50;
+          border-radius: 10px;
+          padding: 0.75rem 1rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          position: relative;
+        }
+        .achievement-badge.unlocked {
+          border-color: #10b981;
+          background: rgba(16, 185, 129, 0.1);
+        }
+        .achievement-badge.locked {
+          opacity: 0.5;
+        }
+        .achievement-icon { font-size: 1.25rem; }
+        .achievement-name {
+          font-size: 0.8rem;
+          font-weight: 500;
+          color: #d1d5db;
+        }
+        .lock-icon {
+          font-size: 0.7rem;
+          position: absolute;
+          top: -4px;
+          right: -4px;
+        }
+        
+        /* Final Score Card */
+        .final-score-card {
+          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+          border-radius: 16px;
+          padding: 1.25rem;
+          text-align: center;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 4px 30px rgba(99, 102, 241, 0.4);
+        }
+        .final-label {
+          font-size: 0.75rem;
+          color: rgba(255,255,255,0.8);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          display: block;
+        }
+        .final-value {
+          font-size: 3rem;
+          font-weight: 800;
+          color: #ffffff;
+        }
+        .final-max {
+          font-size: 1rem;
+          color: rgba(255,255,255,0.7);
+        }
+        
+        /* Results Actions */
+        .results-actions {
+          display: flex;
+          gap: 1rem;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+        .btn-primary-lg {
+          padding: 1rem 2rem;
+          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+          border: none;
+          border-radius: 12px;
+          color: white;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s;
+          box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        }
+        .btn-primary-lg:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 25px rgba(99, 102, 241, 0.5);
+        }
+        .btn-secondary-lg {
+          padding: 1rem 2rem;
+          background: linear-gradient(135deg, #252540 0%, #1e1e32 100%);
+          border: 1px solid #3a3a50;
+          border-radius: 12px;
+          color: #d1d5db;
+          font-size: 1rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s;
+        }
+        .btn-secondary-lg:hover {
+          border-color: #6366f1;
+          background: linear-gradient(135deg, #2a2a50 0%, #252545 100%);
+        }
+        
+        /* Legacy end-card (keep for fallback) */
         .end-card { 
           background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
           backdrop-filter: blur(10px);
@@ -5374,12 +6378,6 @@ export default function BizSimHub() {
           box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 80px rgba(99, 102, 241, 0.1);
           position: relative;
           z-index: 10;
-          animation: slideUp 0.5s ease-out;
-        }
-        
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
         }
         
         .end-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
