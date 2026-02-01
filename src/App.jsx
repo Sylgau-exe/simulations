@@ -2418,6 +2418,43 @@ export default function BizSimHub() {
     }
   };
 
+  // Delete user
+  const handleDeleteUser = async (userId, userName) => {
+    const confirmed = window.confirm(
+      lang === 'en' 
+        ? `Are you sure you want to delete "${userName}"? This action cannot be undone.`
+        : `Êtes-vous sûr de vouloir supprimer "${userName}"? Cette action est irréversible.`
+    );
+    
+    if (!confirmed) return;
+    
+    try {
+      const res = await fetch(`${API_BASE}/admin/delete-user`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${api.getToken()}`
+        },
+        body: JSON.stringify({ userId })
+      });
+      
+      const result = await res.json();
+      
+      if (res.ok && result.success) {
+        // Remove user from local state
+        setAdminData(prev => ({
+          ...prev,
+          users: prev.users.filter(u => u.id !== userId)
+        }));
+        showToast(lang === 'en' ? 'User deleted successfully' : 'Utilisateur supprimé', 'success');
+      } else {
+        showToast(result.error || 'Failed to delete user', 'error');
+      }
+    } catch (error) {
+      showToast('Failed to delete user', 'error');
+    }
+  };
+
   const renderAdminDashboard = () => {
     const filteredUsers = adminData.users.filter(u => 
       u.name?.toLowerCase().includes(adminSearch.toLowerCase()) ||
@@ -2706,7 +2743,7 @@ export default function BizSimHub() {
                                 >
                                   👑
                                 </button>
-                                <button className="action-btn danger" title="Delete">🗑</button>
+                                <button className="action-btn danger" title="Delete" onClick={() => handleDeleteUser(user.id, user.name)}>🗑</button>
                               </div>
                             </td>
                           </tr>
