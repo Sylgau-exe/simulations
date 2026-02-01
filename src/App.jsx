@@ -221,6 +221,119 @@ const GanttMascot = ({ mood = 'normal' }) => (
   </div>
 );
 
+// Risk Radar Component - Visual risk assessment
+const RiskRadar = ({ risks }) => {
+  const { budget, schedule, scope, quality, team, stakeholder } = risks;
+  
+  // Convert risk values (0-100) to radar coordinates
+  const centerX = 60, centerY = 60, radius = 45;
+  const angles = [0, 60, 120, 180, 240, 300].map(a => (a - 90) * Math.PI / 180);
+  const values = [budget, schedule, scope, quality, team, stakeholder];
+  
+  const points = values.map((v, i) => {
+    const r = (v / 100) * radius;
+    return `${centerX + r * Math.cos(angles[i])},${centerY + r * Math.sin(angles[i])}`;
+  }).join(' ');
+  
+  const labels = ['💰', '📅', '📦', '⭐', '👥', '🤝'];
+  
+  return (
+    <div className="risk-radar">
+      <svg viewBox="0 0 120 120">
+        {/* Background circles */}
+        {[0.25, 0.5, 0.75, 1].map((scale, i) => (
+          <circle
+            key={i}
+            cx={centerX}
+            cy={centerY}
+            r={radius * scale}
+            fill="none"
+            stroke="#2a2a40"
+            strokeWidth="1"
+          />
+        ))}
+        
+        {/* Axis lines */}
+        {angles.map((angle, i) => (
+          <line
+            key={i}
+            x1={centerX}
+            y1={centerY}
+            x2={centerX + radius * Math.cos(angle)}
+            y2={centerY + radius * Math.sin(angle)}
+            stroke="#2a2a40"
+            strokeWidth="1"
+          />
+        ))}
+        
+        {/* Risk area polygon */}
+        <polygon
+          points={points}
+          fill="rgba(99, 102, 241, 0.3)"
+          stroke="#6366f1"
+          strokeWidth="2"
+        />
+        
+        {/* Risk dots */}
+        {values.map((v, i) => {
+          const r = (v / 100) * radius;
+          const color = v > 70 ? '#10b981' : v > 40 ? '#f59e0b' : '#ef4444';
+          return (
+            <circle
+              key={i}
+              cx={centerX + r * Math.cos(angles[i])}
+              cy={centerY + r * Math.sin(angles[i])}
+              r="4"
+              fill={color}
+              stroke="#ffffff"
+              strokeWidth="1"
+            />
+          );
+        })}
+        
+        {/* Labels */}
+        {labels.map((label, i) => {
+          const r = radius + 12;
+          return (
+            <text
+              key={i}
+              x={centerX + r * Math.cos(angles[i])}
+              y={centerY + r * Math.sin(angles[i]) + 4}
+              textAnchor="middle"
+              fontSize="12"
+            >
+              {label}
+            </text>
+          );
+        })}
+      </svg>
+    </div>
+  );
+};
+
+// Weekly Summary Component
+const WeeklySummary = ({ week, events, decisions, lang }) => (
+  <div className="weekly-summary">
+    <div className="summary-header">
+      <span className="summary-week">Week {week} Summary</span>
+    </div>
+    <div className="summary-content">
+      {events > 0 && (
+        <div className="summary-item">
+          <span className="summary-icon">🚨</span>
+          <span>{events} event{events > 1 ? 's' : ''} handled</span>
+        </div>
+      )}
+      {decisions > 0 && (
+        <div className="summary-item">
+          <span className="summary-icon">✅</span>
+          <span>{decisions} decision{decisions > 1 ? 's' : ''} made</span>
+        </div>
+      )}
+    </div>
+  </div>
+);
+
 // ============================================
 // API CLIENT
 // ============================================
@@ -3585,6 +3698,43 @@ export default function BizSimHub() {
                   </div>
                 </div>
                 
+                {/* Resource Focus Sliders */}
+                <div className="decision-card">
+                  <div className="decision-header">
+                    <span className="decision-title">Weekly Focus</span>
+                    <span className="decision-badge">Strategy</span>
+                  </div>
+                  <p className="decision-desc">Where should the team concentrate this week?</p>
+                  
+                  <div className="focus-sliders">
+                    <div className="focus-row">
+                      <span className="focus-label">🚀 Speed</span>
+                      <div className="focus-bar">
+                        <div className="focus-fill speed" style={{ width: `${100 - gameState.scope.quality * 0.3}%` }}></div>
+                      </div>
+                      <span className="focus-value">{Math.round(100 - gameState.scope.quality * 0.3)}%</span>
+                    </div>
+                    <div className="focus-row">
+                      <span className="focus-label">⭐ Quality</span>
+                      <div className="focus-bar">
+                        <div className="focus-fill quality" style={{ width: `${gameState.scope.quality * 0.8}%` }}></div>
+                      </div>
+                      <span className="focus-value">{Math.round(gameState.scope.quality * 0.8)}%</span>
+                    </div>
+                    <div className="focus-row">
+                      <span className="focus-label">💡 Innovation</span>
+                      <div className="focus-bar">
+                        <div className="focus-fill innovation" style={{ width: `${gameState.team.knowledge * 0.6}%` }}></div>
+                      </div>
+                      <span className="focus-value">{Math.round(gameState.team.knowledge * 0.6)}%</span>
+                    </div>
+                  </div>
+                  
+                  <div className="focus-tip">
+                    💡 Tip: Balance speed and quality based on project phase
+                  </div>
+                </div>
+                
                 {/* Quick Actions */}
                 <div className="decision-card">
                   <div className="decision-header">
@@ -3632,6 +3782,33 @@ export default function BizSimHub() {
                   </div>
                 </div>
                 
+                {/* Weekly Progress Summary */}
+                <div className="progress-summary">
+                  <div className="progress-header">
+                    <span>📋 Week {gameState.week} Progress</span>
+                  </div>
+                  <div className="progress-stats">
+                    <div className="progress-stat">
+                      <span className="progress-label">Tasks Done</span>
+                      <span className="progress-value">{Math.round(scopePercent)}%</span>
+                    </div>
+                    <div className="progress-stat">
+                      <span className="progress-label">Meetings</span>
+                      <span className="progress-value">{Object.values(gameState.meetings).filter(Boolean).length}/{Object.keys(MEETING_TYPES).length}</span>
+                    </div>
+                    <div className="progress-stat">
+                      <span className="progress-label">Actions</span>
+                      <span className="progress-value">{(gameState.weeklyActions || 0)}</span>
+                    </div>
+                  </div>
+                  <div className="progress-tip">
+                    {gameState.team.morale < 50 ? '💡 Consider team building to boost morale' :
+                     budgetPercent < 30 ? '💡 Watch your spending this week' :
+                     weeksRemaining <= 3 ? '💡 Focus on completing critical tasks' :
+                     '💡 Good progress! Keep it up!'}
+                  </div>
+                </div>
+                
                 {/* Advance Button */}
                 <button className="btn-primary btn-advance" onClick={advanceWeek}>
                   Advance to Week {gameState.week + 1} →
@@ -3651,48 +3828,169 @@ export default function BizSimHub() {
                     </button>
                   </div>
                 ) : (
-                  <div className="status-card">
-                    <h4>📊 Project Status</h4>
-                    <div className="status-items">
-                      <div className="status-item">
-                        <span>Scope Complete</span>
-                        <span className="status-value">{Math.round(scopePercent)}%</span>
+                  <>
+                    {/* Live Metrics */}
+                    <div className="metrics-card">
+                      <h4>📊 Live Metrics</h4>
+                      <div className="metric-row">
+                        <span className="metric-name">Budget Used</span>
+                        <span className="metric-bar-container">
+                          <span className="metric-bar" style={{ width: `${budgetSpentPercent}%`, background: budgetPercent > 30 ? '#f59e0b' : '#ef4444' }}></span>
+                        </span>
+                        <span className="metric-pct">{Math.round(budgetSpentPercent)}%</span>
                       </div>
-                      <div className="status-item">
-                        <span>Team Stress</span>
-                        <span className={`status-value ${gameState.team.stress > 60 ? 'bad' : ''}`}>{Math.round(gameState.team.stress)}%</span>
+                      <div className="metric-row">
+                        <span className="metric-name">Timeline</span>
+                        <span className="metric-bar-container">
+                          <span className="metric-bar" style={{ width: `${schedulePercent}%`, background: '#3b82f6' }}></span>
+                        </span>
+                        <span className="metric-pct">{Math.round(schedulePercent)}%</span>
                       </div>
-                      <div className="status-item">
-                        <span>Knowledge</span>
-                        <span className="status-value">{Math.round(gameState.team.knowledge)}%</span>
+                      <div className="metric-row">
+                        <span className="metric-name">Team Morale</span>
+                        <span className="metric-bar-container">
+                          <span className="metric-bar" style={{ width: `${gameState.team.morale}%`, background: gameState.team.morale > 60 ? '#10b981' : '#f59e0b' }}></span>
+                        </span>
+                        <span className={`metric-pct ${gameState.team.morale < 50 ? 'bad' : ''}`}>{Math.round(gameState.team.morale)}%</span>
                       </div>
-                      <div className="status-item">
-                        <span>Productivity</span>
-                        <span className="status-value">{Math.round(effectiveProductivity * 100)}%</span>
+                      <div className="metric-row">
+                        <span className="metric-name">Quality</span>
+                        <span className="metric-bar-container">
+                          <span className="metric-bar" style={{ width: `${gameState.scope.quality}%`, background: '#8b5cf6' }}></span>
+                        </span>
+                        <span className="metric-pct">{gameState.scope.quality >= 80 ? 'B+' : gameState.scope.quality >= 70 ? 'B' : 'C'}</span>
                       </div>
                     </div>
-                  </div>
+                    
+                    {/* Stakeholder Messages */}
+                    <div className="stakeholder-card">
+                      <h4>💬 Stakeholder Updates</h4>
+                      <div className="message-list">
+                        {gameState.team.morale < 60 && (
+                          <div className="message urgent">
+                            <span className="msg-icon">👥</span>
+                            <div className="msg-content">
+                              <span className="msg-from">Team Lead</span>
+                              <span className="msg-text">Team morale is low. Consider a team building activity.</span>
+                            </div>
+                            <span className="msg-badge urgent">!</span>
+                          </div>
+                        )}
+                        {budgetPercent < 30 && (
+                          <div className="message warning">
+                            <span className="msg-icon">💰</span>
+                            <div className="msg-content">
+                              <span className="msg-from">Finance</span>
+                              <span className="msg-text">Budget running low. Review spending priorities.</span>
+                            </div>
+                          </div>
+                        )}
+                        {weeksRemaining <= 3 && (
+                          <div className="message info">
+                            <span className="msg-icon">📅</span>
+                            <div className="msg-content">
+                              <span className="msg-from">Sponsor</span>
+                              <span className="msg-text">Deadline approaching. Status update requested.</span>
+                            </div>
+                          </div>
+                        )}
+                        {gameState.team.morale >= 60 && budgetPercent >= 30 && weeksRemaining > 3 && (
+                          <div className="message success">
+                            <span className="msg-icon">✅</span>
+                            <div className="msg-content">
+                              <span className="msg-from">PMO</span>
+                              <span className="msg-text">Project on track. Keep up the good work!</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </>
                 )}
                 
-                {/* Team Display */}
-                <div className="team-panel">
-                  <h4>👥 Team Status</h4>
-                  <div className="team-bubbles">
-                    <div className="team-bubble dev">
-                      <span>DEV</span>
-                      <small>{Math.ceil(gameState.team.size * 0.5)}</small>
+                {/* Risk Radar Visualization */}
+                <div className="radar-card">
+                  <h4>📡 Risk Radar</h4>
+                  <RiskRadar risks={{
+                    budget: Math.min(100, budgetPercent + 20),
+                    schedule: Math.min(100, (weeksRemaining / gameState.totalWeeks) * 100 + 20),
+                    scope: Math.min(100, scopePercent + 10),
+                    quality: gameState.scope.quality,
+                    team: gameState.team.morale,
+                    stakeholder: Math.min(100, (gameState.scope.quality + gameState.team.morale) / 2)
+                  }} />
+                  <div className="radar-legend">
+                    <span className="legend-item good">● Safe</span>
+                    <span className="legend-item warn">● Watch</span>
+                    <span className="legend-item bad">● Risk</span>
+                  </div>
+                </div>
+                
+                {/* Active Risks */}
+                <div className="risks-card">
+                  <h4>⚠️ Active Risks</h4>
+                  <div className="risk-list">
+                    {gameState.team.stress > 60 && (
+                      <div className="risk-item high">
+                        <span className="risk-level">HIGH</span>
+                        <span className="risk-text">Team burnout risk</span>
+                      </div>
+                    )}
+                    {budgetPercent < 20 && (
+                      <div className="risk-item high">
+                        <span className="risk-level">HIGH</span>
+                        <span className="risk-text">Budget overrun</span>
+                      </div>
+                    )}
+                    {weeksRemaining <= 2 && scopePercent < 80 && (
+                      <div className="risk-item high">
+                        <span className="risk-level">HIGH</span>
+                        <span className="risk-text">Schedule slip</span>
+                      </div>
+                    )}
+                    {gameState.scope.quality < 70 && (
+                      <div className="risk-item med">
+                        <span className="risk-level">MED</span>
+                        <span className="risk-text">Quality concerns</span>
+                      </div>
+                    )}
+                    {gameState.team.knowledge < 50 && (
+                      <div className="risk-item low">
+                        <span className="risk-level">LOW</span>
+                        <span className="risk-text">Knowledge gaps</span>
+                      </div>
+                    )}
+                    {gameState.team.stress <= 60 && budgetPercent >= 20 && (weeksRemaining > 2 || scopePercent >= 80) && gameState.scope.quality >= 70 && gameState.team.knowledge >= 50 && (
+                      <div className="risk-item none">
+                        <span className="risk-text">No critical risks identified</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                {/* Upcoming Milestones */}
+                <div className="milestones-card">
+                  <h4>🎯 Milestones</h4>
+                  <div className="milestone-list">
+                    <div className={`milestone-item ${gameState.week >= 3 ? 'complete' : gameState.week >= 2 ? 'current' : ''}`}>
+                      <span className="milestone-marker">{gameState.week >= 3 ? '✓' : ''}</span>
+                      <span className="milestone-name">Planning Complete</span>
+                      <span className="milestone-week">W3</span>
                     </div>
-                    <div className="team-bubble qa">
-                      <span>QA</span>
-                      <small>{Math.ceil(gameState.team.size * 0.2)}</small>
+                    <div className={`milestone-item ${gameState.week >= Math.floor(gameState.totalWeeks * 0.5) ? 'complete' : gameState.week >= Math.floor(gameState.totalWeeks * 0.4) ? 'current' : ''}`}>
+                      <span className="milestone-marker">{gameState.week >= Math.floor(gameState.totalWeeks * 0.5) ? '✓' : ''}</span>
+                      <span className="milestone-name">MVP Ready</span>
+                      <span className="milestone-week">W{Math.floor(gameState.totalWeeks * 0.5)}</span>
                     </div>
-                    <div className="team-bubble pm">
-                      <span>PM</span>
-                      <small>You!</small>
+                    <div className={`milestone-item ${gameState.week >= Math.floor(gameState.totalWeeks * 0.75) ? 'complete' : gameState.week >= Math.floor(gameState.totalWeeks * 0.65) ? 'current' : ''}`}>
+                      <span className="milestone-marker">{gameState.week >= Math.floor(gameState.totalWeeks * 0.75) ? '✓' : ''}</span>
+                      <span className="milestone-name">Beta Testing</span>
+                      <span className="milestone-week">W{Math.floor(gameState.totalWeeks * 0.75)}</span>
                     </div>
-                    <div className="team-bubble other">
-                      <span>OPS</span>
-                      <small>{Math.ceil(gameState.team.size * 0.3)}</small>
+                    <div className={`milestone-item ${gameState.week >= gameState.totalWeeks ? 'complete' : gameState.week >= gameState.totalWeeks - 1 ? 'current' : ''}`}>
+                      <span className="milestone-marker">{gameState.week >= gameState.totalWeeks ? '✓' : ''}</span>
+                      <span className="milestone-name">Launch</span>
+                      <span className="milestone-week">W{gameState.totalWeeks}</span>
                     </div>
                   </div>
                 </div>
@@ -3701,9 +3999,27 @@ export default function BizSimHub() {
             
             {/* Timeline */}
             <div className="timeline-panel">
-              <h4>📈 Project Timeline</h4>
+              <div className="timeline-header">
+                <h4>📈 Project Timeline</h4>
+                <span className="timeline-status">
+                  {weeksRemaining > 3 ? '🟢 On Track' : weeksRemaining > 1 ? '🟡 Approaching Deadline' : '🔴 Critical'}
+                </span>
+              </div>
               <div className="timeline-bar">
                 <div className="timeline-progress" style={{ width: `${schedulePercent}%` }}></div>
+                {/* Milestone markers */}
+                <div className="timeline-milestone" style={{ left: `${(3 / gameState.totalWeeks) * 100}%` }} title="Planning">
+                  <span className={gameState.week >= 3 ? 'done' : ''}>📋</span>
+                </div>
+                <div className="timeline-milestone" style={{ left: `${(Math.floor(gameState.totalWeeks * 0.5) / gameState.totalWeeks) * 100}%` }} title="MVP">
+                  <span className={gameState.week >= Math.floor(gameState.totalWeeks * 0.5) ? 'done' : ''}>🎯</span>
+                </div>
+                <div className="timeline-milestone" style={{ left: `${(Math.floor(gameState.totalWeeks * 0.75) / gameState.totalWeeks) * 100}%` }} title="Beta">
+                  <span className={gameState.week >= Math.floor(gameState.totalWeeks * 0.75) ? 'done' : ''}>🧪</span>
+                </div>
+                <div className="timeline-milestone deadline" style={{ left: '100%' }} title="Launch">
+                  <span>🚀</span>
+                </div>
                 <div className="timeline-marker current" style={{ left: `${schedulePercent}%` }}></div>
               </div>
               <div className="timeline-weeks">
@@ -3749,18 +4065,33 @@ export default function BizSimHub() {
                     </div>
                   </div>
                   
-                  {/* Decision Options */}
+                  {/* Decision Options with Consequence Preview */}
                   <div className="event-options-grid">
                     {gameState.currentEvent.options.map((option, idx) => {
                       const colors = ['#10b981', '#f59e0b', '#ef4444', '#6366f1'];
+                      const icons = ['✅', '⚠️', '🔥', '💡'];
+                      const riskLabels = ['Safe Choice', 'Moderate Risk', 'High Risk', 'Strategic'];
                       return (
                         <button 
                           key={option.id} 
-                          className="event-option-card" 
+                          className="event-option-card enhanced" 
                           onClick={() => handleEventChoice(option)}
                           style={{ borderColor: colors[idx % 4] }}
                         >
-                          <span className="option-label" style={{ color: colors[idx % 4] }}>{option.label}</span>
+                          <div className="option-header">
+                            <span className="option-icon">{icons[idx % 4]}</span>
+                            <span className="option-risk" style={{ color: colors[idx % 4] }}>{riskLabels[idx % 4]}</span>
+                          </div>
+                          <span className="option-label">{option.label}</span>
+                          <div className="option-consequences">
+                            {option.effects && (
+                              <>
+                                {option.effects.budget && <span className={option.effects.budget > 0 ? 'negative' : 'positive'}>💰 {option.effects.budget > 0 ? '-' : '+'}${Math.abs(option.effects.budget / 1000)}K</span>}
+                                {option.effects.morale && <span className={option.effects.morale < 0 ? 'negative' : 'positive'}>😊 {option.effects.morale > 0 ? '+' : ''}{option.effects.morale}%</span>}
+                                {option.effects.quality && <span className={option.effects.quality < 0 ? 'negative' : 'positive'}>⭐ {option.effects.quality > 0 ? '+' : ''}{option.effects.quality}%</span>}
+                              </>
+                            )}
+                          </div>
                         </button>
                       );
                     })}
@@ -5101,6 +5432,116 @@ export default function BizSimHub() {
           text-align: center;
         }
         
+        /* Decision Header with Badge */
+        .decision-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 0.5rem;
+        }
+        .decision-badge {
+          font-size: 0.65rem;
+          font-weight: 600;
+          padding: 0.2rem 0.5rem;
+          background: rgba(99, 102, 241, 0.2);
+          color: #8b5cf6;
+          border-radius: 4px;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+        
+        /* FOCUS SLIDERS */
+        .focus-sliders {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+          margin-bottom: 1rem;
+        }
+        .focus-row {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+        }
+        .focus-label {
+          font-size: 0.75rem;
+          color: #9ca3af;
+          width: 85px;
+          flex-shrink: 0;
+        }
+        .focus-bar {
+          flex: 1;
+          height: 8px;
+          background: #2a2a40;
+          border-radius: 4px;
+          overflow: hidden;
+        }
+        .focus-fill {
+          height: 100%;
+          border-radius: 4px;
+          transition: width 0.5s ease;
+        }
+        .focus-fill.speed { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .focus-fill.quality { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+        .focus-fill.innovation { background: linear-gradient(90deg, #10b981, #34d399); }
+        .focus-value {
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: #ffffff;
+          width: 35px;
+          text-align: right;
+        }
+        .focus-tip {
+          font-size: 0.7rem;
+          color: #6b7280;
+          padding: 0.5rem;
+          background: rgba(99, 102, 241, 0.1);
+          border-radius: 6px;
+          text-align: center;
+        }
+        
+        /* PROGRESS SUMMARY */
+        .progress-summary {
+          background: linear-gradient(135deg, #1a1a2e 0%, #252540 100%);
+          border: 1px solid rgba(99, 102, 241, 0.2);
+          border-radius: 12px;
+          padding: 1rem;
+          margin-bottom: 1rem;
+        }
+        .progress-header {
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: #8b5cf6;
+          margin-bottom: 0.75rem;
+        }
+        .progress-stats {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 0.75rem;
+        }
+        .progress-stat {
+          text-align: center;
+        }
+        .progress-label {
+          display: block;
+          font-size: 0.65rem;
+          color: #6b7280;
+          margin-bottom: 0.25rem;
+        }
+        .progress-value {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: #ffffff;
+        }
+        .progress-tip {
+          font-size: 0.7rem;
+          color: #9ca3af;
+          padding: 0.5rem;
+          background: rgba(139, 92, 246, 0.1);
+          border-radius: 6px;
+          text-align: center;
+          border-left: 3px solid #8b5cf6;
+        }
+        
         /* QUICK ACTIONS GRID */
         .quick-action-grid {
           display: grid;
@@ -5162,15 +5603,50 @@ export default function BizSimHub() {
           display: flex;
           flex-direction: column;
           gap: 1rem;
+          max-height: calc(100vh - 280px);
+          overflow-y: auto;
         }
-        .status-card, .team-panel, .alert-card {
+        .status-card, .team-panel, .alert-card, .metrics-card, .stakeholder-card, .risks-card, .milestones-card {
           background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
           border: 1px solid rgba(99, 102, 241, 0.15);
           border-radius: 16px;
           padding: 1.25rem;
           box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
-        .status-card h4, .team-panel h4 { font-size: 0.9rem; color: #9ca3af; margin-bottom: 1rem; }
+        .status-card h4, .team-panel h4, .metrics-card h4, .stakeholder-card h4, .risks-card h4, .milestones-card h4, .radar-card h4 { 
+          font-size: 0.9rem; 
+          color: #9ca3af; 
+          margin-bottom: 1rem; 
+        }
+        
+        /* RISK RADAR */
+        .radar-card {
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
+          border: 1px solid rgba(99, 102, 241, 0.15);
+          border-radius: 16px;
+          padding: 1rem;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .risk-radar {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 0.5rem;
+        }
+        .risk-radar svg {
+          width: 140px;
+          height: 140px;
+        }
+        .radar-legend {
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+          font-size: 0.7rem;
+        }
+        .legend-item { color: #9ca3af; }
+        .legend-item.good { color: #10b981; }
+        .legend-item.warn { color: #f59e0b; }
+        .legend-item.bad { color: #ef4444; }
+        
         .status-items {
           display: flex;
           flex-direction: column;
@@ -5187,6 +5663,174 @@ export default function BizSimHub() {
         .status-item span { font-size: 0.85rem; color: #9ca3af; }
         .status-value { font-weight: 600; color: #ffffff !important; }
         .status-value.bad { color: #ef4444 !important; }
+        
+        /* METRICS CARD */
+        .metric-row {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 0.75rem;
+        }
+        .metric-row:last-child { margin-bottom: 0; }
+        .metric-name {
+          font-size: 0.75rem;
+          color: #9ca3af;
+          width: 80px;
+          flex-shrink: 0;
+        }
+        .metric-bar-container {
+          flex: 1;
+          height: 6px;
+          background: #2a2a40;
+          border-radius: 3px;
+          overflow: hidden;
+        }
+        .metric-bar {
+          height: 100%;
+          border-radius: 3px;
+          transition: width 0.5s ease;
+        }
+        .metric-pct {
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: #ffffff;
+          width: 35px;
+          text-align: right;
+        }
+        .metric-pct.bad { color: #ef4444; }
+        
+        /* STAKEHOLDER MESSAGES */
+        .message-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+        .message {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.75rem;
+          padding: 0.75rem;
+          background: #252540;
+          border-radius: 10px;
+          border-left: 3px solid #3a3a50;
+          position: relative;
+        }
+        .message.urgent { border-left-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+        .message.warning { border-left-color: #f59e0b; background: rgba(245, 158, 11, 0.1); }
+        .message.info { border-left-color: #3b82f6; }
+        .message.success { border-left-color: #10b981; background: rgba(16, 185, 129, 0.1); }
+        .msg-icon { font-size: 1.25rem; }
+        .msg-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+        }
+        .msg-from {
+          font-size: 0.7rem;
+          font-weight: 600;
+          color: #9ca3af;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+        .msg-text {
+          font-size: 0.8rem;
+          color: #d1d5db;
+          line-height: 1.4;
+        }
+        .msg-badge {
+          position: absolute;
+          top: -4px;
+          right: -4px;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.7rem;
+          font-weight: 700;
+        }
+        .msg-badge.urgent { background: #ef4444; color: white; }
+        
+        /* RISKS CARD */
+        .risk-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        .risk-item {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.6rem 0.75rem;
+          background: #252540;
+          border-radius: 8px;
+        }
+        .risk-level {
+          font-size: 0.65rem;
+          font-weight: 700;
+          padding: 0.2rem 0.5rem;
+          border-radius: 4px;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+        .risk-item.high .risk-level { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .risk-item.med .risk-level { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .risk-item.low .risk-level { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        .risk-item.none { justify-content: center; }
+        .risk-item.none .risk-text { color: #10b981; font-style: italic; }
+        .risk-text {
+          font-size: 0.8rem;
+          color: #d1d5db;
+        }
+        
+        /* MILESTONES CARD */
+        .milestone-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        .milestone-item {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.6rem 0.75rem;
+          background: #252540;
+          border-radius: 8px;
+          opacity: 0.6;
+        }
+        .milestone-item.complete { opacity: 1; }
+        .milestone-item.current { 
+          opacity: 1; 
+          border: 1px solid #6366f1;
+          background: rgba(99, 102, 241, 0.1);
+        }
+        .milestone-marker {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #3a3a50;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.7rem;
+          color: #10b981;
+        }
+        .milestone-item.complete .milestone-marker { background: #10b981; }
+        .milestone-item.current .milestone-marker { background: #6366f1; border: 2px solid #8b5cf6; }
+        .milestone-name {
+          flex: 1;
+          font-size: 0.8rem;
+          color: #d1d5db;
+        }
+        .milestone-item.complete .milestone-name { color: #10b981; }
+        .milestone-week {
+          font-size: 0.7rem;
+          font-weight: 600;
+          color: #6b7280;
+        }
+        .milestone-item.current .milestone-week { color: #8b5cf6; }
         
         /* TEAM BUBBLES */
         .team-bubbles {
@@ -5245,29 +5889,61 @@ export default function BizSimHub() {
           padding: 1.25rem;
           box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
-        .timeline-panel h4 { font-size: 0.9rem; color: #9ca3af; margin-bottom: 1rem; }
+        .timeline-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1rem;
+        }
+        .timeline-panel h4 { font-size: 0.9rem; color: #9ca3af; margin: 0; }
+        .timeline-status {
+          font-size: 0.75rem;
+          font-weight: 500;
+          color: #d1d5db;
+        }
         .timeline-bar {
-          height: 8px;
+          height: 12px;
           background: #2a2a40;
-          border-radius: 4px;
+          border-radius: 6px;
           position: relative;
-          margin-bottom: 0.75rem;
+          margin-bottom: 1rem;
         }
         .timeline-progress {
           height: 100%;
           background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
-          border-radius: 4px;
+          border-radius: 6px;
           transition: width 0.5s ease;
+          box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
         }
         .timeline-marker {
           position: absolute;
           top: -4px;
-          width: 16px;
-          height: 16px;
+          width: 20px;
+          height: 20px;
           background: #ffffff;
           border: 3px solid #8b5cf6;
           border-radius: 50%;
           transform: translateX(-50%);
+          box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+          z-index: 10;
+        }
+        .timeline-milestone {
+          position: absolute;
+          top: -8px;
+          transform: translateX(-50%);
+          z-index: 5;
+        }
+        .timeline-milestone span {
+          font-size: 1rem;
+          opacity: 0.4;
+          transition: all 0.3s;
+        }
+        .timeline-milestone span.done {
+          opacity: 1;
+        }
+        .timeline-milestone.deadline span {
+          opacity: 1;
+          font-size: 1.1rem;
         }
         .timeline-weeks {
           display: flex;
@@ -5388,11 +6064,45 @@ export default function BizSimHub() {
           transform: translateY(-2px);
           box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
+        .event-option-card.enhanced {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        .option-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .option-icon {
+          font-size: 1.25rem;
+        }
+        .option-risk {
+          font-size: 0.65rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
         .option-label {
           font-size: 0.9rem;
           font-weight: 500;
           display: block;
+          color: #ffffff;
         }
+        .option-consequences {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-top: 0.25rem;
+        }
+        .option-consequences span {
+          font-size: 0.7rem;
+          padding: 0.2rem 0.4rem;
+          background: #2a2a40;
+          border-radius: 4px;
+        }
+        .option-consequences span.positive { color: #10b981; background: rgba(16, 185, 129, 0.15); }
+        .option-consequences span.negative { color: #ef4444; background: rgba(239, 68, 68, 0.15); }
         
         .event-footer {
           padding: 1rem 2rem;
@@ -5400,7 +6110,6 @@ export default function BizSimHub() {
           text-align: center;
           font-size: 0.8rem;
           color: #9ca3af;
-        }
         }
         
         .metric-card {
