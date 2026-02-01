@@ -3247,6 +3247,40 @@ export default function BizSimHub() {
                 };
                 const colors = gradientColors[scenario.id] || gradientColors.tech_startup;
                 
+                // French translations for scenarios
+                const scenarioTranslations = {
+                  tech_startup: {
+                    title: 'Startup Tech',
+                    subtitle: 'Lancement de produit logiciel',
+                    description: 'Vous êtes gestionnaire de projet chez Nexus Technologies. Livrez une nouvelle plateforme SaaS tout en gérant la dynamique d\'équipe et les défis techniques.'
+                  },
+                  live_show: {
+                    title: 'Spectacle vivant',
+                    subtitle: 'Production de spectacle en tournée',
+                    description: 'Producteur exécutif chez Stellar Productions. Lancez un spectacle de tournée ambitieux tout en gérant les talents créatifs et les exigences de sécurité.'
+                  },
+                  construction: {
+                    title: 'Construction',
+                    subtitle: 'Projet de bâtiment commercial',
+                    description: 'Gestionnaire de projet chez UrbanCore Construction. Construisez un immeuble de 12 étages à usage mixte tout en gérant les permis, les inspections et les sous-traitants.'
+                  },
+                  rd_innovation: {
+                    title: 'Innovation R&D',
+                    subtitle: 'Développement de nouvelle technologie',
+                    description: 'Dirigez un projet R&D de pointe avec une grande incertitude. Le prototypage est essentiel pour révéler les problèmes tôt.'
+                  }
+                };
+                
+                const tr = scenarioTranslations[scenario.id];
+                const title = lang === 'fr' && tr ? tr.title : scenario.title;
+                const subtitle = lang === 'fr' && tr ? tr.subtitle : scenario.subtitle;
+                const description = lang === 'fr' && tr ? tr.description : scenario.description;
+                const difficulty = lang === 'fr' ? 
+                  (scenario.difficulty === 'Standard' ? 'Standard' : 
+                   scenario.difficulty === 'Advanced' ? 'Avancé' : 
+                   scenario.difficulty === 'Expert' ? 'Expert' : scenario.difficulty) 
+                  : scenario.difficulty;
+                
                 return (
                   <div key={scenario.id} className="industry-card">
                     {/* Gradient Header */}
@@ -3256,12 +3290,12 @@ export default function BizSimHub() {
                     
                     {/* Card Body */}
                     <div className="industry-card-body">
-                      <h3>{scenario.title}</h3>
-                      <p className="industry-subtitle" style={{ color: colors.from }}>{scenario.subtitle}</p>
+                      <h3>{title}</h3>
+                      <p className="industry-subtitle" style={{ color: colors.from }}>{subtitle}</p>
                       
                       <div className="industry-challenge">
                         <span className="challenge-label">{lang === 'en' ? 'Challenge:' : 'Défi:'}</span>
-                        <p>{scenario.description}</p>
+                        <p>{description}</p>
                       </div>
                       
                       {/* Meta Info */}
@@ -3275,7 +3309,7 @@ export default function BizSimHub() {
                       
                       {/* Difficulty Badge */}
                       <div className="industry-badge" style={{ backgroundColor: `${colors.from}20`, color: colors.from }}>
-                        {scenario.difficulty}
+                        {difficulty}
                       </div>
                     </div>
                     
