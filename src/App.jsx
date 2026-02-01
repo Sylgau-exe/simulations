@@ -2311,6 +2311,8 @@ export default function BizSimHub() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [adminLoading, setAdminLoading] = useState(false);
   const [adminError, setAdminError] = useState(null);
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
+  const [newUserForm, setNewUserForm] = useState({ name: '', email: '', password: '', plan: 'free' });
   
   // Admin data state (fetched from API)
   const [adminData, setAdminData] = useState({
@@ -2481,6 +2483,54 @@ export default function BizSimHub() {
       }
     } catch (error) {
       showToast('Failed to delete user', 'error');
+    }
+  };
+
+  const handleAddUser = async (e) => {
+    e.preventDefault();
+    
+    if (!newUserForm.email || !newUserForm.name) {
+      showToast(lang === 'en' ? 'Name and email are required' : 'Nom et courriel requis', 'error');
+      return;
+    }
+    
+    try {
+      const res = await fetch(`${API_BASE}/admin/add-user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${api.getToken()}`
+        },
+        body: JSON.stringify(newUserForm)
+      });
+      
+      const result = await res.json();
+      
+      if (res.ok && result.success) {
+        // Add user to local state
+        setAdminData(prev => ({
+          ...prev,
+          users: [result.user, ...prev.users]
+        }));
+        
+        // Show success with temporary password if generated
+        if (result.temporaryPassword) {
+          showToast(`User created! Temp password: ${result.temporaryPassword}`, 'success');
+        } else {
+          showToast(lang === 'en' ? 'User created successfully' : 'Utilisateur créé', 'success');
+        }
+        
+        // Reset form and close modal
+        setNewUserForm({ name: '', email: '', password: '', plan: 'free' });
+        setShowAddUserModal(false);
+        
+        // Refresh user list
+        fetchAdminUsers();
+      } else {
+        showToast(result.error || 'Failed to create user', 'error');
+      }
+    } catch (error) {
+      showToast('Failed to create user', 'error');
     }
   };
 
@@ -2713,7 +2763,7 @@ export default function BizSimHub() {
                       <option>Inactive</option>
                       <option>Churned</option>
                     </select>
-                    <button className="admin-btn primary">+ Add User</button>
+                    <button className="admin-btn primary" onClick={() => setShowAddUserModal(true)}>+ Add User</button>
                   </div>
                 </div>
 
@@ -2854,6 +2904,67 @@ export default function BizSimHub() {
                         <button className="admin-btn">Send Email</button>
                         <button className="admin-btn danger">Suspend User</button>
                       </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Add User Modal */}
+                {showAddUserModal && (
+                  <div className="admin-modal-overlay" onClick={() => setShowAddUserModal(false)}>
+                    <div className="admin-modal" onClick={e => e.stopPropagation()}>
+                      <div className="modal-header">
+                        <h2>Add New User</h2>
+                        <button className="modal-close" onClick={() => setShowAddUserModal(false)}>×</button>
+                      </div>
+                      <form onSubmit={handleAddUser}>
+                        <div className="modal-body">
+                          <div className="form-group">
+                            <label>Name *</label>
+                            <input 
+                              type="text" 
+                              value={newUserForm.name}
+                              onChange={e => setNewUserForm(prev => ({ ...prev, name: e.target.value }))}
+                              placeholder="John Doe"
+                              required
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>Email *</label>
+                            <input 
+                              type="email" 
+                              value={newUserForm.email}
+                              onChange={e => setNewUserForm(prev => ({ ...prev, email: e.target.value }))}
+                              placeholder="john@example.com"
+                              required
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>Password (leave empty for auto-generated)</label>
+                            <input 
+                              type="text" 
+                              value={newUserForm.password}
+                              onChange={e => setNewUserForm(prev => ({ ...prev, password: e.target.value }))}
+                              placeholder="Auto-generate if blank"
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>Plan</label>
+                            <select 
+                              value={newUserForm.plan}
+                              onChange={e => setNewUserForm(prev => ({ ...prev, plan: e.target.value }))}
+                            >
+                              <option value="free">Free</option>
+                              <option value="pro">Pro ($19/mo)</option>
+                              <option value="pro_lifetime">Pro Lifetime ($149)</option>
+                              <option value="enterprise">Enterprise</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="modal-footer">
+                          <button type="button" className="admin-btn" onClick={() => setShowAddUserModal(false)}>Cancel</button>
+                          <button type="submit" className="admin-btn primary">Create User</button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 )}
@@ -5041,6 +5152,8 @@ Quality: ${qualityScore}% | Team Morale: ${teamScore}%`;
         .form-group label { display: block; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
         .form-group input { width: 100%; padding: 0.85rem 1rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); font-size: 1rem; }
         .form-group input:focus { outline: none; border-color: var(--accent-primary); }
+        .form-group select { width: 100%; padding: 0.85rem 1rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); font-size: 1rem; cursor: pointer; }
+        .form-group select:focus { outline: none; border-color: var(--accent-primary); }
         .auth-divider { text-align: center; margin: 1.5rem 0; color: var(--text-muted); font-size: 0.9rem; }
         .btn-google { width: 100%; padding: 0.85rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem; }
         .google-icon { font-weight: 700; font-size: 1.1rem; }
