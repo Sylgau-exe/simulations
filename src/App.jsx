@@ -1304,6 +1304,35 @@ export default function BizSimHub() {
         api.setToken(null);
         showToast('Authentication failed. Please try again.', 'error');
       });
+      
+      // Submit to HubSpot for new Google OAuth users
+      const isNewUser = params.get('newUser') === 'true';
+      const email = params.get('email');
+      const name = params.get('name') || '';
+      
+      if (isNewUser && email) {
+        const HUBSPOT_PORTAL_ID = '342933870';
+        const HUBSPOT_FORM_GUID = '2bc1e72b-901a-45dd-9ea6-ea442fd0a125';
+        
+        const hubspotData = {
+          fields: [
+            { name: 'email', value: email },
+            { name: 'firstname', value: name.split(' ')[0] || '' },
+            { name: 'lastname', value: name.split(' ').slice(1).join(' ') || '' }
+          ],
+          context: {
+            pageUri: window.location.href,
+            pageName: 'Google OAuth Registration'
+          }
+        };
+
+        fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_GUID}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(hubspotData)
+        }).catch(err => console.log('HubSpot tracking:', err));
+      }
+      
       window.history.replaceState({}, '', window.location.pathname);
     }
     

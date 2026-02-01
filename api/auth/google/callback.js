@@ -73,43 +73,17 @@ export default async function handler(req, res) {
     // Log Google OAuth activity
     console.log('Google OAuth:', isNewUser ? 'NEW USER' : 'EXISTING USER', googleUser.email);
 
-    // Submit ALL Google registrations to HubSpot (HubSpot handles duplicates)
-    const HUBSPOT_PORTAL_ID = '342933870';
-    const HUBSPOT_FORM_GUID = '2bc1e72b-901a-45dd-9ea6-ea442fd0a125';
-    
-    const hubspotData = {
-      fields: [
-        { name: 'email', value: googleUser.email },
-        { name: 'firstname', value: (googleUser.name || '').split(' ')[0] || '' },
-        { name: 'lastname', value: (googleUser.name || '').split(' ').slice(1).join(' ') || '' }
-      ],
-      context: {
-        pageUri: 'https://bizsimlive.com',
-        pageName: 'Google OAuth Registration'
-      }
-    };
-
-    console.log('Submitting to HubSpot:', googleUser.email);
-    
-    // Submit to HubSpot with error logging
-    fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_GUID}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(hubspotData)
-    })
-    .then(res => {
-      if (!res.ok) {
-        return res.text().then(text => console.log('HubSpot error:', res.status, text));
-      }
-      console.log('HubSpot SUCCESS for:', googleUser.email);
-    })
-    .catch(err => console.log('HubSpot tracking error:', err));
-
     // Generate JWT token
     const token = generateToken(user);
 
-    // Redirect to frontend with token
-    res.redirect(`/?token=${token}`);
+    // Redirect to frontend with token and newUser flag for HubSpot tracking
+    const params = new URLSearchParams({ token });
+    if (isNewUser) {
+      params.append('newUser', 'true');
+      params.append('email', googleUser.email);
+      params.append('name', googleUser.name || '');
+    }
+    res.redirect(`/?${params.toString()}`);
   } catch (error) {
     console.error('Google OAuth error:', error);
     res.redirect('/?error=auth_failed');
