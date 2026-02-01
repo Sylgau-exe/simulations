@@ -94,6 +94,88 @@ const TRANSLATIONS = {
     unknown: { en: 'Unknown', fr: 'Inconnu' },
     recent: { en: 'Recent', fr: 'Récent' },
   },
+  results: {
+    simulationComplete: { en: 'Simulation Complete!', fr: 'Simulation terminée!' },
+    overallGrade: { en: 'Overall Grade', fr: 'Note globale' },
+    // Mission Recap
+    missionRecap: { en: '🎯 Mission Recap', fr: '🎯 Récapitulatif de mission' },
+    missionIntro: { en: 'Here\'s how you performed against the original project brief:', fr: 'Voici votre performance par rapport au mandat initial:' },
+    target: { en: 'Target:', fr: 'Cible:' },
+    actual: { en: 'Actual:', fr: 'Réel:' },
+    deliverFeatures: { en: 'Deliver', fr: 'Livrer' },
+    features: { en: 'features', fr: 'fonctionnalités' },
+    completeInWeeks: { en: 'Complete in', fr: 'Compléter en' },
+    weeks: { en: 'weeks', fr: 'semaines' },
+    stayUnder: { en: 'Stay under', fr: 'Rester sous' },
+    maintainQuality: { en: 'Maintain 70%+ quality', fr: 'Maintenir 70%+ qualité' },
+    keepMorale: { en: 'Keep morale above 50%', fr: 'Garder le moral au-dessus de 50%' },
+    onTime: { en: 'On time', fr: 'À temps' },
+    weeksOver: { en: 'weeks over', fr: 'semaines de retard' },
+    underBudget: { en: 'under', fr: 'sous le budget' },
+    overBudget: { en: 'Over budget', fr: 'Dépassement de budget' },
+    spent: { en: 'spent', fr: 'dépensé' },
+    metStandard: { en: 'Met standard', fr: 'Standard atteint' },
+    belowStandard: { en: 'Below standard', fr: 'Sous le standard' },
+    teamHappy: { en: 'Team is happy', fr: 'Équipe satisfaite' },
+    teamBurnedOut: { en: 'Team burned out', fr: 'Équipe épuisée' },
+    // Score Breakdown
+    scoreBreakdown: { en: '📊 Score Breakdown', fr: '📊 Détail du pointage' },
+    scope: { en: 'SCOPE', fr: 'PÉRIMÈTRE' },
+    schedule: { en: 'SCHEDULE', fr: 'CALENDRIER' },
+    budget: { en: 'BUDGET', fr: 'BUDGET' },
+    quality: { en: 'QUALITY', fr: 'QUALITÉ' },
+    team: { en: 'TEAM', fr: 'ÉQUIPE' },
+    excellent: { en: 'Excellent', fr: 'Excellent' },
+    partial: { en: 'Partial', fr: 'Partiel' },
+    daysLate: { en: 'days late', fr: 'jours de retard' },
+    veryGood: { en: 'Very Good', fr: 'Très bien' },
+    good: { en: 'Good', fr: 'Bon' },
+    needsWork: { en: 'Needs work', fr: 'À améliorer' },
+    goodMorale: { en: 'Good morale', fr: 'Bon moral' },
+    lowMorale: { en: 'Low morale', fr: 'Moral bas' },
+    // Performance Analysis
+    performanceAnalysis: { en: '📝 Performance Analysis', fr: '📝 Analyse de performance' },
+    whatWentWell: { en: 'What Went Well', fr: 'Ce qui a bien fonctionné' },
+    areasForImprovement: { en: 'Areas for Improvement', fr: 'Points à améliorer' },
+    pmProTips: { en: 'PM Pro Tips', fr: 'Conseils de pro GP' },
+    // Analysis content
+    excellentBudget: { en: 'Excellent budget management - stayed within financial constraints', fr: 'Excellente gestion budgétaire - resté dans les limites financières' },
+    maintainedQuality: { en: 'Maintained high quality standards throughout the project', fr: 'Maintenu des standards de qualité élevés tout au long du projet' },
+    deliveredOnTime: { en: 'Delivered on schedule - strong time management skills', fr: 'Livré dans les délais - bonnes compétences en gestion du temps' },
+    completedScope: { en: 'Completed all required scope - nothing left behind', fr: 'Complété tout le périmètre requis - rien laissé de côté' },
+    keptMoraleHealthy: { en: 'Kept team morale healthy - good leadership', fr: 'Maintenu un bon moral d\'équipe - bon leadership' },
+    minimalScheduleChanges: { en: 'Minimal schedule changes - provided stability to the team', fr: 'Changements de calendrier minimaux - stabilité pour l\'équipe' },
+    usedPrototyping: { en: 'Used prototyping to reduce uncertainty - smart risk management', fr: 'Utilisé le prototypage pour réduire l\'incertitude - gestion intelligente des risques' },
+    completedSimulation: { en: 'You completed the simulation - every experience is a learning opportunity!', fr: 'Vous avez complété la simulation - chaque expérience est une opportunité d\'apprentissage!' },
+    budgetTip: { en: 'Budget: Consider more careful resource allocation. Track spending weekly and cut non-essential costs early.', fr: 'Budget: Considérez une allocation plus prudente des ressources. Suivez les dépenses hebdomadairement.' },
+    scheduleTip: { en: 'Schedule: Try adding buffer time for unknowns. Use the Extend Deadline feature strategically before it\'s too late.', fr: 'Calendrier: Ajoutez du temps tampon pour les imprévus. Utilisez l\'extension de délai stratégiquement.' },
+    scopeTip: { en: 'Scope: Prioritize critical features first. Consider crunch mode or hiring when behind, but watch morale.', fr: 'Périmètre: Priorisez les fonctionnalités critiques. Considérez le mode crunch ou l\'embauche si en retard.' },
+    qualityTip: { en: 'Quality: Schedule regular Quality Reviews. Avoid excessive crunch which degrades quality.', fr: 'Qualité: Planifiez des revues qualité régulières. Évitez le crunch excessif qui dégrade la qualité.' },
+    teamTip: { en: 'Team: Hold regular Team Building and 1-on-1 meetings. Avoid back-to-back crunch periods.', fr: 'Équipe: Tenez des réunions de team building et 1-on-1 régulières. Évitez les périodes de crunch consécutives.' },
+    planningTip: { en: 'Planning: Too many schedule changes hurt team confidence. Try to set realistic deadlines upfront.', fr: 'Planification: Trop de changements de calendrier nuisent à la confiance. Fixez des échéances réalistes dès le départ.' },
+    outstandingPerformance: { en: 'Outstanding performance! Try a harder scenario to challenge yourself further.', fr: 'Performance exceptionnelle! Essayez un scénario plus difficile pour vous dépasser.' },
+    ironTriangle: { en: 'Iron Triangle: When scope is fixed, you can only trade time for money. Consider which constraint matters most to stakeholders.', fr: 'Triangle de fer: Quand le périmètre est fixé, vous ne pouvez qu\'échanger temps contre argent. Considérez quelle contrainte compte le plus.' },
+    sustainablePace: { en: 'Sustainable Pace: Crunch mode provides short-term gains but long-term pain. A burned-out team delivers poor quality.', fr: 'Rythme soutenable: Le mode crunch donne des gains à court terme mais des problèmes à long terme. Une équipe épuisée livre de la mauvaise qualité.' },
+    riskReduction: { en: 'Risk Reduction: Prototyping helps surface problems early when they\'re cheap to fix. Consider it for uncertain projects.', fr: 'Réduction des risques: Le prototypage aide à révéler les problèmes tôt quand ils sont peu coûteux à corriger.' },
+    technicalDebt: { en: 'Technical Debt: Rushing to complete features without quality leads to rework. Sometimes less scope at higher quality is better.', fr: 'Dette technique: Se précipiter pour compléter les fonctionnalités sans qualité mène à du retravail.' },
+    keyInsightA: { en: 'You\'ve mastered the basics! Focus on optimizing team happiness while maintaining performance.', fr: 'Vous maîtrisez les bases! Concentrez-vous sur le bonheur de l\'équipe tout en maintenant la performance.' },
+    keyInsightB: { en: 'Good foundation! Work on balancing the triple constraint - time, cost, and scope.', fr: 'Bonne fondation! Travaillez sur l\'équilibre de la triple contrainte - temps, coût et périmètre.' },
+    keyInsightC: { en: 'You\'re learning! Try to identify problems earlier and take corrective action sooner.', fr: 'Vous apprenez! Essayez d\'identifier les problèmes plus tôt et d\'agir plus rapidement.' },
+    keyInsightD: { en: 'Every PM has tough projects. Review what went wrong and try a different approach next time.', fr: 'Tout GP a des projets difficiles. Analysez ce qui n\'a pas fonctionné et essayez une approche différente.' },
+    keyInsight: { en: 'Key Insight:', fr: 'Point clé:' },
+    // Achievements
+    achievements: { en: '🏅 Achievements', fr: '🏅 Réalisations' },
+    // Final Score
+    finalScore: { en: 'Final Score', fr: 'Score final' },
+    points: { en: 'points', fr: 'points' },
+    // Actions
+    playAgain: { en: '🔄 Play Again', fr: '🔄 Rejouer' },
+    tryNewIndustry: { en: '🎮 Try New Industry', fr: '🎮 Essayer une autre industrie' },
+    backToDashboard: { en: '📊 Back to Dashboard', fr: '📊 Retour au tableau de bord' },
+    printReport: { en: '🖨️ Print Report', fr: '🖨️ Imprimer le rapport' },
+    copySummary: { en: '📋 Copy Summary', fr: '📋 Copier le résumé' },
+    copiedToClipboard: { en: 'Results copied to clipboard!', fr: 'Résultats copiés dans le presse-papiers!' },
+  },
   footer: {
     product: { en: 'Product', fr: 'Produit' },
     company: { en: 'Company', fr: 'Entreprise' },
@@ -4197,7 +4279,7 @@ export default function BizSimHub() {
                   <div className="trophy-icon">🏆</div>
                 )}
               </div>
-              <h1>Simulation Complete!</h1>
+              <h1>{t('results.simulationComplete', lang)}</h1>
               <p className="results-subtitle">{selectedScenario.projectName} • {selectedScenario.company}</p>
               
               {/* Main Grade */}
@@ -4205,29 +4287,29 @@ export default function BizSimHub() {
                 <span className="main-grade" style={{
                   color: grade.startsWith('A') ? '#10b981' : grade.startsWith('B') ? '#6366f1' : grade === 'C' ? '#f59e0b' : '#ef4444'
                 }}>{grade}</span>
-                <span className="grade-label">Overall Grade</span>
+                <span className="grade-label">{t('results.overallGrade', lang)}</span>
               </div>
             </div>
             
             {/* Mission Recap - Original Objectives vs Results */}
             <div className="mission-recap">
-              <h3>🎯 Mission Recap</h3>
-              <p className="mission-intro">Here's how you performed against the original project brief:</p>
+              <h3>{t('results.missionRecap', lang)}</h3>
+              <p className="mission-intro">{t('results.missionIntro', lang)}</p>
               
               <div className="objectives-grid">
                 <div className="objective-card">
                   <div className="objective-header">
                     <span className="objective-icon">📦</span>
-                    <span className="objective-name">Scope</span>
+                    <span className="objective-name">{t('results.scope', lang)}</span>
                   </div>
                   <div className="objective-target">
-                    <span className="target-label">Target:</span>
-                    <span className="target-value">Deliver {gameState.scope.totalFeatures} features</span>
+                    <span className="target-label">{t('results.target', lang)}</span>
+                    <span className="target-value">{t('results.deliverFeatures', lang)} {gameState.scope.totalFeatures} {t('results.features', lang)}</span>
                   </div>
                   <div className="objective-result">
-                    <span className="result-label">Actual:</span>
+                    <span className="result-label">{t('results.actual', lang)}</span>
                     <span className={`result-value ${scopeComplete ? 'good' : 'bad'}`}>
-                      {gameState.scope.completed} features ({scopeScore}%)
+                      {Math.round(gameState.scope.completed)} {t('results.features', lang)} ({scopeScore}%)
                     </span>
                   </div>
                 </div>
@@ -4235,16 +4317,16 @@ export default function BizSimHub() {
                 <div className="objective-card">
                   <div className="objective-header">
                     <span className="objective-icon">📅</span>
-                    <span className="objective-name">Schedule</span>
+                    <span className="objective-name">{t('results.schedule', lang)}</span>
                   </div>
                   <div className="objective-target">
-                    <span className="target-label">Target:</span>
-                    <span className="target-value">Complete in {gameState.totalWeeks} weeks</span>
+                    <span className="target-label">{t('results.target', lang)}</span>
+                    <span className="target-value">{t('results.completeInWeeks', lang)} {gameState.totalWeeks} {t('results.weeks', lang)}</span>
                   </div>
                   <div className="objective-result">
-                    <span className="result-label">Actual:</span>
+                    <span className="result-label">{t('results.actual', lang)}</span>
                     <span className={`result-value ${scheduleOnTarget ? 'good' : 'bad'}`}>
-                      {scheduleOnTarget ? `On time (Week ${gameState.week})` : `${Math.abs(gameState.totalWeeks - gameState.week + (gameState.scheduleChanges || 0))} weeks over`}
+                      {scheduleOnTarget ? t('results.onTime', lang) : `${Math.abs(gameState.totalWeeks - gameState.week + (gameState.scheduleChanges || 0))} ${t('results.weeksOver', lang)}`}
                     </span>
                   </div>
                 </div>
@@ -4252,16 +4334,16 @@ export default function BizSimHub() {
                 <div className="objective-card">
                   <div className="objective-header">
                     <span className="objective-icon">💰</span>
-                    <span className="objective-name">Budget</span>
+                    <span className="objective-name">{t('results.budget', lang)}</span>
                   </div>
                   <div className="objective-target">
-                    <span className="target-label">Target:</span>
-                    <span className="target-value">Stay under ${(gameState.budget.total / 1000).toFixed(0)}K</span>
+                    <span className="target-label">{t('results.target', lang)}</span>
+                    <span className="target-value">{t('results.stayUnder', lang)} ${(gameState.budget.total / 1000).toFixed(0)}K</span>
                   </div>
                   <div className="objective-result">
-                    <span className="result-label">Actual:</span>
+                    <span className="result-label">{t('results.actual', lang)}</span>
                     <span className={`result-value ${budgetOnTarget ? 'good' : 'bad'}`}>
-                      ${(gameState.budget.spent / 1000).toFixed(0)}K spent ({budgetOnTarget ? `${Math.round(100 - (gameState.budget.spent / gameState.budget.total) * 100)}% under` : 'Over budget'})
+                      ${(gameState.budget.spent / 1000).toFixed(0)}K {t('results.spent', lang)} ({budgetOnTarget ? `${Math.round(100 - (gameState.budget.spent / gameState.budget.total) * 100)}% ${t('results.underBudget', lang)}` : t('results.overBudget', lang)})
                     </span>
                   </div>
                 </div>
@@ -4269,16 +4351,16 @@ export default function BizSimHub() {
                 <div className="objective-card">
                   <div className="objective-header">
                     <span className="objective-icon">⭐</span>
-                    <span className="objective-name">Quality</span>
+                    <span className="objective-name">{t('results.quality', lang)}</span>
                   </div>
                   <div className="objective-target">
-                    <span className="target-label">Target:</span>
-                    <span className="target-value">Maintain 70%+ quality</span>
+                    <span className="target-label">{t('results.target', lang)}</span>
+                    <span className="target-value">{t('results.maintainQuality', lang)}</span>
                   </div>
                   <div className="objective-result">
-                    <span className="result-label">Actual:</span>
+                    <span className="result-label">{t('results.actual', lang)}</span>
                     <span className={`result-value ${qualityGood ? 'good' : 'bad'}`}>
-                      {qualityScore}% quality ({qualityGood ? 'Met standard' : 'Below standard'})
+                      {qualityScore}% ({qualityGood ? t('results.metStandard', lang) : t('results.belowStandard', lang)})
                     </span>
                   </div>
                 </div>
@@ -4286,16 +4368,16 @@ export default function BizSimHub() {
                 <div className="objective-card">
                   <div className="objective-header">
                     <span className="objective-icon">👥</span>
-                    <span className="objective-name">Team</span>
+                    <span className="objective-name">{t('results.team', lang)}</span>
                   </div>
                   <div className="objective-target">
-                    <span className="target-label">Target:</span>
-                    <span className="target-value">Keep morale above 50%</span>
+                    <span className="target-label">{t('results.target', lang)}</span>
+                    <span className="target-value">{t('results.keepMorale', lang)}</span>
                   </div>
                   <div className="objective-result">
-                    <span className="result-label">Actual:</span>
+                    <span className="result-label">{t('results.actual', lang)}</span>
                     <span className={`result-value ${teamScore >= 50 ? 'good' : 'bad'}`}>
-                      {teamScore}% morale ({teamScore >= 50 ? 'Team is happy' : 'Team burned out'})
+                      {teamScore}% ({teamScore >= 50 ? t('results.teamHappy', lang) : t('results.teamBurnedOut', lang)})
                     </span>
                   </div>
                 </div>
@@ -4304,90 +4386,90 @@ export default function BizSimHub() {
             
             {/* Score Breakdown Cards */}
             <div className="score-breakdown">
-              <h3>📊 Score Breakdown</h3>
+              <h3>{t('results.scoreBreakdown', lang)}</h3>
               <div className="breakdown-grid">
                 <div className="breakdown-card">
                   <div className="breakdown-header">
                     <span className="breakdown-icon">📦</span>
-                    <span className="breakdown-title">Scope</span>
+                    <span className="breakdown-title">{t('results.scope', lang)}</span>
                   </div>
                   <div className="breakdown-value">{scopeScore}%</div>
                   <div className="breakdown-bar">
                     <div className="breakdown-fill" style={{ width: `${scopeScore}%`, background: scopeScore >= 80 ? '#10b981' : '#f59e0b' }}></div>
                   </div>
-                  <span className="breakdown-status">{scopeComplete ? 'Excellent' : 'Partial'}</span>
+                  <span className="breakdown-status">{scopeComplete ? t('results.excellent', lang) : t('results.partial', lang)}</span>
                 </div>
                 
                 <div className="breakdown-card">
                   <div className="breakdown-header">
                     <span className="breakdown-icon">📅</span>
-                    <span className="breakdown-title">Schedule</span>
+                    <span className="breakdown-title">{t('results.schedule', lang)}</span>
                   </div>
                   <div className="breakdown-value">{Math.min(100, Math.max(0, scheduleScore))}%</div>
                   <div className="breakdown-bar">
                     <div className="breakdown-fill" style={{ width: `${Math.min(100, Math.max(0, scheduleScore))}%`, background: scheduleOnTarget ? '#10b981' : '#ef4444' }}></div>
                   </div>
-                  <span className="breakdown-status">{scheduleOnTarget ? 'On Time' : `${gameState.week - gameState.schedule.deadline} days late`}</span>
+                  <span className="breakdown-status">{scheduleOnTarget ? t('results.onTime', lang) : `${gameState.week - gameState.schedule.deadline} ${t('results.daysLate', lang)}`}</span>
                 </div>
                 
                 <div className="breakdown-card">
                   <div className="breakdown-header">
                     <span className="breakdown-icon">💰</span>
-                    <span className="breakdown-title">Budget</span>
+                    <span className="breakdown-title">{t('results.budget', lang)}</span>
                   </div>
                   <div className="breakdown-value">{Math.min(100, Math.max(0, budgetScore))}%</div>
                   <div className="breakdown-bar">
                     <div className="breakdown-fill" style={{ width: `${Math.min(100, Math.max(0, budgetScore))}%`, background: budgetOnTarget ? '#10b981' : '#ef4444' }}></div>
                   </div>
-                  <span className="breakdown-status">{budgetOnTarget ? `${Math.round((1 - gameState.budget.spent / gameState.budget.total) * 100)}% under` : 'Over budget'}</span>
+                  <span className="breakdown-status">{budgetOnTarget ? `${Math.round((1 - gameState.budget.spent / gameState.budget.total) * 100)}% ${t('results.underBudget', lang)}` : t('results.overBudget', lang)}</span>
                 </div>
                 
                 <div className="breakdown-card">
                   <div className="breakdown-header">
                     <span className="breakdown-icon">⭐</span>
-                    <span className="breakdown-title">Quality</span>
+                    <span className="breakdown-title">{t('results.quality', lang)}</span>
                   </div>
                   <div className="breakdown-value">{qualityScore}%</div>
                   <div className="breakdown-bar">
                     <div className="breakdown-fill" style={{ width: `${qualityScore}%`, background: qualityGood ? '#10b981' : '#f59e0b' }}></div>
                   </div>
-                  <span className="breakdown-status">{qualityGood ? 'Very Good' : 'Needs Work'}</span>
+                  <span className="breakdown-status">{qualityGood ? t('results.veryGood', lang) : t('results.needsWork', lang)}</span>
                 </div>
                 
                 <div className="breakdown-card">
                   <div className="breakdown-header">
                     <span className="breakdown-icon">👥</span>
-                    <span className="breakdown-title">Team</span>
+                    <span className="breakdown-title">{t('results.team', lang)}</span>
                   </div>
                   <div className="breakdown-value">{teamScore}%</div>
                   <div className="breakdown-bar">
                     <div className="breakdown-fill" style={{ width: `${teamScore}%`, background: teamScore >= 60 ? '#10b981' : '#f59e0b' }}></div>
                   </div>
-                  <span className="breakdown-status">{teamScore >= 60 ? 'Good morale' : 'Low morale'}</span>
+                  <span className="breakdown-status">{teamScore >= 60 ? t('results.goodMorale', lang) : t('results.lowMorale', lang)}</span>
                 </div>
               </div>
             </div>
             
             {/* Performance Analysis */}
             <div className="analysis-section">
-              <h3>📝 Performance Analysis</h3>
+              <h3>{t('results.performanceAnalysis', lang)}</h3>
               
               {/* What Went Well */}
               <div className="analysis-card good">
                 <div className="analysis-header">
                   <span className="analysis-icon">✅</span>
-                  <span className="analysis-title">What Went Well</span>
+                  <span className="analysis-title">{t('results.whatWentWell', lang)}</span>
                 </div>
                 <ul className="analysis-list">
-                  {budgetOnTarget && <li>Excellent budget management - stayed within financial constraints</li>}
-                  {qualityGood && <li>Maintained high quality standards throughout the project</li>}
-                  {scheduleOnTarget && <li>Delivered on schedule - strong time management skills</li>}
-                  {scopeComplete && <li>Completed all required scope - nothing left behind</li>}
-                  {teamScore >= 60 && <li>Kept team morale healthy - good leadership</li>}
-                  {gameState.scheduleChanges <= 1 && <li>Minimal schedule changes - provided stability to the team</li>}
-                  {gameState.prototypesBuilt > 0 && <li>Used prototyping to reduce uncertainty - smart risk management</li>}
+                  {budgetOnTarget && <li>{t('results.excellentBudget', lang)}</li>}
+                  {qualityGood && <li>{t('results.maintainedQuality', lang)}</li>}
+                  {scheduleOnTarget && <li>{t('results.deliveredOnTime', lang)}</li>}
+                  {scopeComplete && <li>{t('results.completedScope', lang)}</li>}
+                  {teamScore >= 60 && <li>{t('results.keptMoraleHealthy', lang)}</li>}
+                  {gameState.scheduleChanges <= 1 && <li>{t('results.minimalScheduleChanges', lang)}</li>}
+                  {gameState.prototypesBuilt > 0 && <li>{t('results.usedPrototyping', lang)}</li>}
                   {!budgetOnTarget && !qualityGood && !scheduleOnTarget && !scopeComplete && teamScore < 60 && (
-                    <li>You completed the simulation - every experience is a learning opportunity!</li>
+                    <li>{t('results.completedSimulation', lang)}</li>
                   )}
                 </ul>
               </div>
@@ -4396,17 +4478,17 @@ export default function BizSimHub() {
               <div className="analysis-card improve">
                 <div className="analysis-header">
                   <span className="analysis-icon">💡</span>
-                  <span className="analysis-title">Areas for Improvement</span>
+                  <span className="analysis-title">{t('results.areasForImprovement', lang)}</span>
                 </div>
                 <ul className="analysis-list">
-                  {!budgetOnTarget && <li><strong>Budget:</strong> Consider more careful resource allocation. Track spending weekly and cut non-essential costs early.</li>}
-                  {!scheduleOnTarget && <li><strong>Schedule:</strong> Try adding buffer time for unknowns. Use the Extend Deadline feature strategically before it's too late.</li>}
-                  {!scopeComplete && <li><strong>Scope:</strong> Prioritize critical features first. Consider crunch mode or hiring when behind, but watch morale.</li>}
-                  {!qualityGood && <li><strong>Quality:</strong> Schedule regular Quality Reviews. Avoid excessive crunch which degrades quality.</li>}
-                  {teamScore < 60 && <li><strong>Team:</strong> Hold regular Team Building and 1-on-1 meetings. Avoid back-to-back crunch periods.</li>}
-                  {gameState.scheduleChanges > 2 && <li><strong>Planning:</strong> Too many schedule changes hurt team confidence. Try to set realistic deadlines upfront.</li>}
+                  {!budgetOnTarget && <li>{t('results.budgetTip', lang)}</li>}
+                  {!scheduleOnTarget && <li>{t('results.scheduleTip', lang)}</li>}
+                  {!scopeComplete && <li>{t('results.scopeTip', lang)}</li>}
+                  {!qualityGood && <li>{t('results.qualityTip', lang)}</li>}
+                  {teamScore < 60 && <li>{t('results.teamTip', lang)}</li>}
+                  {gameState.scheduleChanges > 2 && <li>{t('results.planningTip', lang)}</li>}
                   {budgetOnTarget && qualityGood && scheduleOnTarget && scopeComplete && teamScore >= 60 && (
-                    <li>Outstanding performance! Try a harder scenario to challenge yourself further.</li>
+                    <li>{t('results.outstandingPerformance', lang)}</li>
                   )}
                 </ul>
               </div>
@@ -4415,26 +4497,26 @@ export default function BizSimHub() {
               <div className="analysis-card tips">
                 <div className="analysis-header">
                   <span className="analysis-icon">🎓</span>
-                  <span className="analysis-title">PM Pro Tips</span>
+                  <span className="analysis-title">{t('results.pmProTips', lang)}</span>
                 </div>
                 <ul className="analysis-list">
                   {!scheduleOnTarget && !budgetOnTarget && (
-                    <li><strong>Iron Triangle:</strong> When scope is fixed, you can only trade time for money. Consider which constraint matters most to stakeholders.</li>
+                    <li>{t('results.ironTriangle', lang)}</li>
                   )}
                   {teamScore < 50 && (
-                    <li><strong>Sustainable Pace:</strong> Crunch mode provides short-term gains but long-term pain. A burned-out team delivers poor quality.</li>
+                    <li>{t('results.sustainablePace', lang)}</li>
                   )}
                   {gameState.prototypesBuilt === 0 && selectedScenario?.hasPrototyping && (
-                    <li><strong>Risk Reduction:</strong> Prototyping helps surface problems early when they're cheap to fix. Consider it for uncertain projects.</li>
+                    <li>{t('results.riskReduction', lang)}</li>
                   )}
                   {!qualityGood && scopeComplete && (
-                    <li><strong>Technical Debt:</strong> Rushing to complete features without quality leads to rework. Sometimes less scope at higher quality is better.</li>
+                    <li>{t('results.technicalDebt', lang)}</li>
                   )}
-                  <li><strong>Key Insight:</strong> {
-                    grade.startsWith('A') ? "You've mastered the basics! Focus on optimizing team happiness while maintaining performance." :
-                    grade.startsWith('B') ? "Good foundation! Work on balancing the triple constraint - time, cost, and scope." :
-                    grade === 'C' ? "You're learning! Try to identify problems earlier and take corrective action sooner." :
-                    "Every PM has tough projects. Review what went wrong and try a different approach next time."
+                  <li><strong>{t('results.keyInsight', lang)}</strong> {
+                    grade.startsWith('A') ? t('results.keyInsightA', lang) :
+                    grade.startsWith('B') ? t('results.keyInsightB', lang) :
+                    grade === 'C' ? t('results.keyInsightC', lang) :
+                    t('results.keyInsightD', lang)
                   }</li>
                 </ul>
               </div>
@@ -4442,7 +4524,7 @@ export default function BizSimHub() {
             
             {/* Achievements */}
             <div className="achievements-section">
-              <h3>🏅 Achievements</h3>
+              <h3>{t('results.achievements', lang)}</h3>
               <div className="achievements-grid">
                 {achievements.map(achievement => (
                   <div key={achievement.id} className={`achievement-badge ${achievement.unlocked ? 'unlocked' : 'locked'}`}>
@@ -4456,38 +4538,43 @@ export default function BizSimHub() {
             
             {/* Final Score */}
             <div className="final-score-card">
-              <span className="final-label">Final Score</span>
+              <span className="final-label">{t('results.finalScore', lang)}</span>
               <span className="final-value">{finalScore}</span>
-              <span className="final-max">/ 1000 points</span>
+              <span className="final-max">/ 1000 {t('results.points', lang)}</span>
             </div>
             
             {/* Actions */}
             <div className="results-actions">
               <button className="btn-primary-lg" onClick={beginSimulation}>
-                🔄 Play Again
+                {t('results.playAgain', lang)}
               </button>
               <button className="btn-secondary-lg" onClick={() => { setSimPhase('select'); setGameState(null); }}>
-                🎮 Try New Industry
+                {t('results.tryNewIndustry', lang)}
               </button>
               <button className="btn-secondary-lg" onClick={() => setCurrentPage('dashboard')}>
-                📊 Back to Dashboard
+                {t('results.backToDashboard', lang)}
               </button>
             </div>
             
             {/* Print/Save Actions */}
             <div className="results-secondary-actions">
               <button className="btn-print" onClick={() => window.print()}>
-                🖨️ Print Report
+                {t('results.printReport', lang)}
               </button>
               <button className="btn-print" onClick={() => {
-                const text = `BizSimHub Results - ${selectedScenario.projectName}
+                const text = lang === 'fr' 
+                  ? `Résultats BizSimHub - ${selectedScenario.projectName}
+Note: ${grade} | Score: ${finalScore}/1000
+Périmètre: ${scopeScore}% | Calendrier: ${scheduleOnTarget ? 'À temps' : 'En retard'} | Budget: ${budgetOnTarget ? 'Respecté' : 'Dépassé'}
+Qualité: ${qualityScore}% | Moral équipe: ${teamScore}%`
+                  : `BizSimHub Results - ${selectedScenario.projectName}
 Grade: ${grade} | Score: ${finalScore}/1000
 Scope: ${scopeScore}% | Schedule: ${scheduleOnTarget ? 'On Time' : 'Late'} | Budget: ${budgetOnTarget ? 'On Target' : 'Over'}
 Quality: ${qualityScore}% | Team Morale: ${teamScore}%`;
                 navigator.clipboard.writeText(text);
-                alert('Results copied to clipboard!');
+                alert(t('results.copiedToClipboard', lang));
               }}>
-                📋 Copy Summary
+                {t('results.copySummary', lang)}
               </button>
             </div>
           </div>
