@@ -1740,7 +1740,7 @@ export default function BizSimHub() {
               marginRight: '8px',
             }}
           >
-            {lang === 'en' ? '🇫🇷 FR' : '🇬🇧 EN'}
+            {lang === 'en' ? '🇬🇧 EN' : '🇫🇷 FR'}
           </button>
           {!currentUser ? (
             <>
