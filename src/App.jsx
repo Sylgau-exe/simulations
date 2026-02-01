@@ -4542,16 +4542,17 @@ export default function BizSimHub() {
         /* Game Playing - LIGHT THEME */
         .sim-playing { 
           padding: 1.5rem; 
-          background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 50%, #fdf2f8 100%); 
+          background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #0f0f1a 100%); 
           min-height: 100vh; 
-          color: #1e293b;
+          color: #ffffff;
           position: relative;
           overflow-x: hidden;
         }
-        .sim-playing .navbar { background: rgba(255, 255, 255, 0.9); border-bottom: 1px solid #e2e8f0; backdrop-filter: blur(10px); }
-        .sim-playing .nav-link { color: #475569; }
-        .sim-playing .nav-link:hover { color: #1e293b; }
-        .sim-playing .user-name { color: #475569; }
+        .sim-playing .navbar { background: rgba(20, 20, 40, 0.95); border-bottom: 1px solid rgba(99, 102, 241, 0.2); backdrop-filter: blur(10px); }
+        .sim-playing .nav-link { color: #9ca3af; }
+        .sim-playing .nav-link:hover { color: #ffffff; }
+        .sim-playing .user-name { color: #9ca3af; }
+        .sim-playing .logo-text { color: #ffffff; }
         
         /* Floating Background Shapes */
         .floating-shapes {
@@ -4567,32 +4568,32 @@ export default function BizSimHub() {
         .shape {
           position: absolute;
           border-radius: 50%;
-          filter: blur(80px);
-          opacity: 0.4;
+          filter: blur(100px);
+          opacity: 0.15;
           animation: float 25s ease-in-out infinite;
         }
         .shape-1 {
-          width: 500px;
-          height: 500px;
+          width: 600px;
+          height: 600px;
           background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-          top: -150px;
-          right: -150px;
+          top: -200px;
+          right: -200px;
           animation-delay: 0s;
         }
         .shape-2 {
-          width: 400px;
-          height: 400px;
+          width: 500px;
+          height: 500px;
           background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
-          bottom: 5%;
-          left: -100px;
+          bottom: 0%;
+          left: -150px;
           animation-delay: -8s;
         }
         .shape-3 {
-          width: 300px;
-          height: 300px;
+          width: 400px;
+          height: 400px;
           background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-          top: 40%;
-          right: 5%;
+          top: 50%;
+          right: 10%;
           animation-delay: -16s;
         }
         @keyframes float {
@@ -4605,13 +4606,14 @@ export default function BizSimHub() {
         .game-title { display: flex; align-items: center; gap: 1rem; }
         .game-icon { 
           font-size: 2rem; 
-          background: rgba(255,255,255,0.95); 
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%); 
           padding: 0.75rem; 
           border-radius: 16px; 
-          box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+          border: 1px solid rgba(99, 102, 241, 0.2);
         }
-        .game-title h2 { font-size: 1.4rem; margin-bottom: 0.15rem; color: #1e293b; }
-        .game-title span { color: #64748b; font-size: 0.9rem; }
+        .game-title h2 { font-size: 1.4rem; margin-bottom: 0.15rem; color: #ffffff; }
+        .game-title span { color: #9ca3af; font-size: 0.9rem; }
         .week-badge { 
           background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); 
           color: white; 
@@ -4637,9 +4639,9 @@ export default function BizSimHub() {
         }
         
         .metric-card {
-          background: rgba(255, 255, 255, 0.85);
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
           backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.6);
+          border: 1px solid rgba(99, 102, 241, 0.15);
           border-radius: 20px;
           padding: 0.75rem;
           display: flex;
@@ -4648,12 +4650,12 @@ export default function BizSimHub() {
           gap: 0.35rem;
           position: relative;
           transition: all 0.3s ease;
-          box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
         }
         .metric-card:hover {
           transform: translateY(-4px);
-          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-          border-color: rgba(99, 102, 241, 0.3);
+          box-shadow: 0 12px 40px rgba(99, 102, 241, 0.2);
+          border-color: rgba(99, 102, 241, 0.4);
         }
         
         .gauge-container {
@@ -4674,7 +4676,7 @@ export default function BizSimHub() {
         
         .gauge-bg {
           fill: none;
-          stroke: #e2e8f0;
+          stroke: #2a2a40;
           stroke-width: 7;
         }
         
@@ -4683,7 +4685,7 @@ export default function BizSimHub() {
           stroke-width: 7;
           stroke-linecap: round;
           transition: stroke-dasharray 0.6s ease, stroke 0.3s ease;
-          filter: drop-shadow(0 0 4px currentColor);
+          filter: drop-shadow(0 0 6px currentColor);
         }
         
         .gauge-content {
@@ -4710,7 +4712,7 @@ export default function BizSimHub() {
           font-family: 'JetBrains Mono', monospace;
           font-size: 0.75rem;
           font-weight: 700;
-          color: #1e293b;
+          color: #ffffff;
         }
         .gauge-value.large {
           font-size: 1.1rem;
@@ -4718,6 +4720,11 @@ export default function BizSimHub() {
         
         .metric-label {
           font-size: 0.65rem;
+          color: #9ca3af;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          font-weight: 600;
+        }
           font-weight: 600;
           color: #64748b;
           text-transform: uppercase;
@@ -4900,45 +4907,45 @@ export default function BizSimHub() {
         }
         
         .proto-card {
-          background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(99, 102, 241, 0.1) 100%);
-          border-color: rgba(139, 92, 246, 0.3);
+          background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(99, 102, 241, 0.15) 100%);
+          border-color: rgba(139, 92, 246, 0.4);
         }
         
-        /* Game Actions - Enhanced */
+        /* Game Actions - Enhanced DARK THEME */
         .sim-playing .game-actions { 
-          background: rgba(255, 255, 255, 0.9);
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
           backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.6);
+          border: 1px solid rgba(99, 102, 241, 0.2);
           border-radius: 24px; 
           padding: 1.5rem; 
-          box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+          box-shadow: 0 8px 40px rgba(0,0,0,0.4);
           position: relative;
           z-index: 1;
         }
-        .sim-playing .game-actions > h3 { font-size: 1.1rem; margin-bottom: 1.25rem; color: #4f46e5; }
-        .sim-playing .action-section { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; }
-        .sim-playing .action-section h4 { font-size: 0.9rem; color: #475569; margin-bottom: 0.75rem; font-weight: 600; }
+        .sim-playing .game-actions > h3 { font-size: 1.1rem; margin-bottom: 1.25rem; color: #8b5cf6; }
+        .sim-playing .action-section { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(99, 102, 241, 0.15); }
+        .sim-playing .action-section h4 { font-size: 0.9rem; color: #9ca3af; margin-bottom: 0.75rem; font-weight: 600; }
         .action-row { display: flex; align-items: center; gap: 1rem; }
         .sim-playing .action-btn { 
           padding: 0.6rem 1.25rem; 
-          background: #f1f5f9; 
-          border: 1px solid #e2e8f0; 
+          background: linear-gradient(135deg, #252540 0%, #1e1e32 100%); 
+          border: 1px solid #3a3a50; 
           border-radius: 10px; 
-          color: #1e293b; 
+          color: #ffffff; 
           font-family: inherit; 
           font-weight: 500;
           cursor: pointer; 
           transition: all 0.2s; 
         }
-        .sim-playing .action-btn:hover:not(:disabled) { background: #e2e8f0; border-color: var(--accent-primary); }
+        .sim-playing .action-btn:hover:not(:disabled) { background: linear-gradient(135deg, #2a2a50 0%, #252545 100%); border-color: var(--accent-primary); box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2); }
         .sim-playing .action-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-        .sim-playing .action-label { font-family: 'JetBrains Mono', monospace; font-weight: 700; min-width: 120px; text-align: center; color: #1e293b; }
+        .sim-playing .action-label { font-family: 'JetBrains Mono', monospace; font-weight: 700; min-width: 120px; text-align: center; color: #ffffff; }
         
-        /* Meeting Options - Enhanced LIGHT THEME */
+        /* Meeting Options - Enhanced DARK THEME */
         .meeting-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
         .sim-playing .meeting-btn { 
-          background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-          border: 2px solid #e2e8f0; 
+          background: linear-gradient(135deg, #252540 0%, #1e1e32 100%);
+          border: 2px solid #3a3a50; 
           border-radius: 16px; 
           padding: 1rem; 
           text-align: left; 
@@ -4963,15 +4970,15 @@ export default function BizSimHub() {
         }
         .sim-playing .meeting-btn:hover:not(:disabled) { 
           border-color: #6366f1; 
-          background: linear-gradient(135deg, #fafaff 0%, #f0f0ff 100%);
+          background: linear-gradient(135deg, #2a2a50 0%, #252545 100%);
           transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
+          box-shadow: 0 8px 25px rgba(99, 102, 241, 0.25);
         }
         .sim-playing .meeting-btn:hover:not(:disabled)::before { opacity: 1; }
         .sim-playing .meeting-btn.active { 
           border-color: #10b981; 
-          background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-          box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
+          background: linear-gradient(135deg, #1a3a2e 0%, #1e3a32 100%);
+          box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
         }
         .sim-playing .meeting-btn.active::before { 
           opacity: 1;
@@ -4979,18 +4986,18 @@ export default function BizSimHub() {
         }
         .sim-playing .meeting-btn:disabled { opacity: 0.7; cursor: default; }
         .meeting-icon { font-size: 1.5rem; }
-        .sim-playing .meeting-name { font-weight: 700; font-size: 0.9rem; color: #1e293b; }
-        .sim-playing .meeting-desc { font-size: 0.8rem; color: #64748b; line-height: 1.4; }
-        .sim-playing .meeting-done { color: #059669; font-size: 0.8rem; font-weight: 700; margin-top: 0.25rem; }
+        .sim-playing .meeting-name { font-weight: 700; font-size: 0.9rem; color: #ffffff; }
+        .sim-playing .meeting-desc { font-size: 0.8rem; color: #9ca3af; line-height: 1.4; }
+        .sim-playing .meeting-done { color: #10b981; font-size: 0.8rem; font-weight: 700; margin-top: 0.25rem; }
         
-        /* Quick Actions - Enhanced LIGHT THEME */
+        /* Quick Actions - Enhanced DARK THEME */
         .quick-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
         .sim-playing .quick-btn { 
           padding: 0.75rem 1.25rem; 
-          background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-          border: 2px solid #a7f3d0; 
+          background: linear-gradient(135deg, #1a3a2e 0%, #1e3a32 100%);
+          border: 2px solid rgba(16, 185, 129, 0.3); 
           border-radius: 12px; 
-          color: #047857; 
+          color: #10b981; 
           font-family: inherit; 
           font-weight: 600;
           cursor: pointer; 
@@ -5006,7 +5013,7 @@ export default function BizSimHub() {
           left: 50%;
           width: 0;
           height: 0;
-          background: rgba(255,255,255,0.3);
+          background: rgba(16, 185, 129, 0.2);
           border-radius: 50%;
           transform: translate(-50%, -50%);
           transition: width 0.4s ease, height 0.4s ease;
@@ -5016,49 +5023,49 @@ export default function BizSimHub() {
           height: 200px;
         }
         .sim-playing .quick-btn:hover:not(:disabled) { 
-          background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-          border-color: #059669;
+          background: linear-gradient(135deg, #1e4035 0%, #224038 100%);
+          border-color: #10b981;
           transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+          box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
         }
         .sim-playing .quick-btn:disabled { opacity: 0.4; cursor: not-allowed; }
         .sim-playing .quick-btn.crunch { 
-          background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-          border-color: #fecaca; 
-          color: #dc2626; 
+          background: linear-gradient(135deg, #3a1a1a 0%, #3a1e1e 100%);
+          border-color: rgba(239, 68, 68, 0.3); 
+          color: #ef4444; 
         }
         .sim-playing .quick-btn.crunch:hover:not(:disabled) { 
-          background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-          border-color: #f87171;
-          box-shadow: 0 6px 20px rgba(239, 68, 68, 0.25);
+          background: linear-gradient(135deg, #4a2020 0%, #4a2424 100%);
+          border-color: #ef4444;
+          box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
         }
         .sim-playing .quick-btn.proto { 
-          background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
-          border-color: #c4b5fd; 
-          color: #7c3aed; 
+          background: linear-gradient(135deg, #2a1a3a 0%, #2e1e3a 100%);
+          border-color: rgba(139, 92, 246, 0.3); 
+          color: #a78bfa; 
         }
         .sim-playing .quick-btn.proto:hover:not(:disabled) { 
-          background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+          background: linear-gradient(135deg, #3a2050 0%, #3e2454 100%);
           border-color: #8b5cf6;
-          box-shadow: 0 6px 20px rgba(139, 92, 246, 0.25);
+          box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3);
         }
         .sim-playing .quick-btn.schedule { 
-          background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-          border-color: #fcd34d; 
-          color: #b45309; 
+          background: linear-gradient(135deg, #3a2a1a 0%, #3a2e1e 100%);
+          border-color: rgba(245, 158, 11, 0.3); 
+          color: #fbbf24; 
         }
         .sim-playing .quick-btn.schedule:hover:not(:disabled) { 
-          background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+          background: linear-gradient(135deg, #4a3520 0%, #4a3924 100%);
           border-color: #f59e0b;
-          box-shadow: 0 6px 20px rgba(245, 158, 11, 0.25);
+          box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
         }
         
         .sim-playing .warning-banner { 
-          background: #fffbeb; 
-          border: 2px solid #fcd34d; 
+          background: linear-gradient(135deg, #3a2a1a 0%, #3a2e1e 100%); 
+          border: 2px solid rgba(245, 158, 11, 0.4); 
           border-radius: 10px; 
           padding: 0.75rem 1rem; 
-          color: #92400e; 
+          color: #fbbf24; 
           font-size: 0.9rem; 
           font-weight: 500;
           margin-bottom: 1rem; 
@@ -5069,46 +5076,47 @@ export default function BizSimHub() {
           margin-top: 1rem; 
           padding: 1rem; 
           font-size: 1rem; 
-          background: #4f46e5;
+          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
           border: none;
           color: white;
           border-radius: 12px;
           font-weight: 600;
           cursor: pointer;
-          transition: all 0.2s;
+          transition: all 0.3s;
+          box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
         }
-        .sim-playing .btn-advance:hover { background: #4338ca; }
+        .sim-playing .btn-advance:hover { background: linear-gradient(135deg, #5558e8 0%, #7c4fe3 100%); transform: translateY(-2px); box-shadow: 0 6px 25px rgba(99, 102, 241, 0.5); }
         
         /* Event Modal - LIGHT THEME */
-        .sim-playing .event-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 200; padding: 1rem; backdrop-filter: blur(4px); }
+        .sim-playing .event-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 200; padding: 1rem; backdrop-filter: blur(8px); }
         .sim-playing .event-modal { 
-          background: #ffffff; 
-          border: 1px solid #e2e8f0; 
+          background: linear-gradient(135deg, #1a1a2e 0%, #252540 100%); 
+          border: 1px solid rgba(99, 102, 241, 0.3); 
           border-radius: 24px; 
           padding: 2.5rem; 
-          max-width: 480px; 
+          max-width: 520px; 
           width: 100%; 
           text-align: center; 
-          box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+          box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 60px rgba(99, 102, 241, 0.15);
         }
         .sim-playing .event-icon { font-size: 3.5rem; margin-bottom: 1rem; display: block; }
-        .sim-playing .event-modal h2 { font-size: 1.5rem; margin-bottom: 0.75rem; color: #1e293b; }
-        .sim-playing .event-modal p { color: #475569; line-height: 1.7; margin-bottom: 2rem; }
+        .sim-playing .event-modal h2 { font-size: 1.5rem; margin-bottom: 0.75rem; color: #ffffff; }
+        .sim-playing .event-modal p { color: #d1d5db; line-height: 1.7; margin-bottom: 2rem; }
         .sim-playing .event-options { display: flex; flex-direction: column; gap: 0.6rem; }
         .sim-playing .event-option { 
           padding: 1rem 1.25rem; 
-          background: #f8fafc; 
-          border: 2px solid #e2e8f0; 
+          background: linear-gradient(135deg, #252540 0%, #1e1e32 100%); 
+          border: 2px solid #3a3a50; 
           border-radius: 12px; 
-          color: #1e293b; 
+          color: #ffffff; 
           font-family: inherit; 
           font-size: 0.95rem; 
           font-weight: 500;
           cursor: pointer; 
           text-align: left; 
-          transition: all 0.2s; 
+          transition: all 0.3s ease; 
         }
-        .sim-playing .event-option:hover { background: #f0f0ff; border-color: #6366f1; transform: translateX(6px); }
+        .sim-playing .event-option:hover { background: linear-gradient(135deg, #2a2a45 0%, #1e1e38 100%); border-color: #6366f1; transform: translateX(6px); box-shadow: 0 4px 20px rgba(99, 102, 241, 0.2); }
         
         /* CSS Alert Bell Animation */
         .alert-bell {
@@ -5118,15 +5126,16 @@ export default function BizSimHub() {
           transform: translateX(-50%);
           width: 80px;
           height: 80px;
-          background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
+          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 2rem;
-          box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+          box-shadow: 0 4px 30px rgba(239, 68, 68, 0.5);
           animation: bellRing 0.5s ease-in-out infinite alternate;
           z-index: 10;
+          border: 3px solid rgba(255,255,255,0.2);
         }
         @keyframes bellRing {
           0% { transform: translateX(-50%) rotate(-10deg); }
@@ -5222,7 +5231,7 @@ export default function BizSimHub() {
           justify-content: center; 
           min-height: 100vh; 
           padding: 2rem; 
-          background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 50%, #fdf2f8 100%);
+          background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #0f0f1a 100%);
           position: relative;
           overflow: hidden;
         }
@@ -5354,15 +5363,15 @@ export default function BizSimHub() {
         }
         
         .end-card { 
-          background: rgba(255, 255, 255, 0.95);
+          background: linear-gradient(135deg, #1e1e32 0%, #252540 100%);
           backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.6);
+          border: 1px solid rgba(99, 102, 241, 0.3);
           border-radius: 28px; 
           padding: 2.5rem; 
           max-width: 550px; 
           width: 100%; 
           text-align: center; 
-          box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+          box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 80px rgba(99, 102, 241, 0.1);
           position: relative;
           z-index: 10;
           animation: slideUp 0.5s ease-out;
@@ -5374,31 +5383,31 @@ export default function BizSimHub() {
         }
         
         .end-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
-        .end-card h1 { font-size: 1.75rem; margin-bottom: 0.25rem; color: #1e293b; }
-        .end-card > p { color: #64748b; margin-bottom: 2rem; }
+        .end-card h1 { font-size: 1.75rem; margin-bottom: 0.25rem; color: #ffffff; }
+        .end-card > p { color: #9ca3af; margin-bottom: 2rem; }
         .score-display { margin-bottom: 2rem; }
         .grade { font-size: 6rem; font-weight: 800; line-height: 1; }
-        .score { font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; color: #64748b; display: block; }
+        .score { font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; color: #9ca3af; display: block; }
         .results { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 2rem; text-align: left; }
         .result { 
           padding: 0.85rem 1rem; 
-          background: #f8fafc; 
+          background: linear-gradient(135deg, #252540 0%, #1e1e32 100%); 
           border-radius: 10px; 
           display: flex; 
           align-items: center; 
           gap: 0.75rem; 
           font-size: 0.95rem; 
-          color: #1e293b;
+          color: #ffffff;
         }
         .result.pass { border-left: 4px solid #10b981; }
         .result.fail { border-left: 4px solid #ef4444; }
-        .result.pass span { color: #059669; font-weight: 700; }
-        .result.fail span { color: #dc2626; font-weight: 700; }
+        .result.pass span { color: #10b981; font-weight: 700; }
+        .result.fail span { color: #ef4444; font-weight: 700; }
         .end-actions { display: flex; flex-direction: column; gap: 0.75rem; }
-        .end-actions .btn-primary { background: #4f46e5; border: none; color: white; }
-        .end-actions .btn-primary:hover { background: #4338ca; }
-        .end-actions .btn-secondary { background: #f1f5f9; border: 1px solid #e2e8f0; color: #475569; }
-        .end-actions .btn-secondary:hover { background: #e2e8f0; }
+        .end-actions .btn-primary { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border: none; color: white; box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4); }
+        .end-actions .btn-primary:hover { background: linear-gradient(135deg, #5558e8 0%, #7c4fe3 100%); }
+        .end-actions .btn-secondary { background: linear-gradient(135deg, #252540 0%, #1e1e32 100%); border: 1px solid #3a3a50; color: #d1d5db; }
+        .end-actions .btn-secondary:hover { background: linear-gradient(135deg, #2a2a50 0%, #252545 100%); border-color: #6366f1; }
         .quick-btn.proto { background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.25); color: #c4b5fd; }
         .quick-btn.proto:hover { background: rgba(139, 92, 246, 0.2); }
         .quick-btn.schedule { background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.25); color: #fcd34d; }
