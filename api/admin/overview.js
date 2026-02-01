@@ -135,10 +135,12 @@ export default async function handler(req, res) {
       : 0;
 
     // Build subscription object
-    const subscriptions = { free: 0, pro: 0, enterprise: 0 };
+    const subscriptions = { free: 0, pro: 0, enterprise: 0, lifetime: 0 };
     subscriptionBreakdownResult.rows.forEach(row => {
       const tier = (row.subscription_tier || 'free').toLowerCase();
-      if (tier === 'professional' || tier === 'pro') {
+      if (tier === 'pro_lifetime' || tier === 'lifetime') {
+        subscriptions.lifetime = parseInt(row.count);
+      } else if (tier === 'professional' || tier === 'pro' || tier === 'pro_monthly') {
         subscriptions.pro = parseInt(row.count);
       } else if (tier === 'enterprise') {
         subscriptions.enterprise = parseInt(row.count);

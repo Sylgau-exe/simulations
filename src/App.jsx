@@ -2646,6 +2646,10 @@ export default function BizSimHub() {
                     <span className="user-stat-label">Professional</span>
                   </div>
                   <div className="user-stat">
+                    <span className="user-stat-value">{adminData.users.filter(u => u.plan === 'Lifetime').length}</span>
+                    <span className="user-stat-label">Lifetime</span>
+                  </div>
+                  <div className="user-stat">
                     <span className="user-stat-value">{adminData.users.filter(u => u.plan === 'Enterprise').length}</span>
                     <span className="user-stat-label">Enterprise</span>
                   </div>
@@ -2671,6 +2675,7 @@ export default function BizSimHub() {
                       <option>All Plans</option>
                       <option>Free</option>
                       <option>Professional</option>
+                      <option>Lifetime</option>
                       <option>Enterprise</option>
                     </select>
                     <select className="admin-select">
