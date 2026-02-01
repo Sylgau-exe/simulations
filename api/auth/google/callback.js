@@ -55,6 +55,7 @@ export default async function handler(req, res) {
 
     // Find or create user
     let user = await UserDB.findByEmail(googleUser.email);
+    let isNewUser = false;
 
     if (!user) {
       // Create new user (no password for Google users)
@@ -63,9 +64,36 @@ export default async function handler(req, res) {
         googleUser.name || googleUser.email.split('@')[0],
         googleUser.id
       );
+      isNewUser = true;
     } else if (!user.google_id) {
       // Link existing account to Google
       await UserDB.linkGoogleAccount(user.id, googleUser.id);
+    }
+
+    // Submit new Google registrations to HubSpot
+    if (isNewUser) {
+      const HUBSPOT_PORTAL_ID = '342933870';
+      const HUBSPOT_FORM_GUID = '2bc1e72b-901a-45dd-9ea6-ea442fd0a125';
+      
+      const hubspotData = {
+        fields: [
+          { name: 'email', value: googleUser.email },
+          { name: 'firstname', value: (googleUser.name || '').split(' ')[0] || '' },
+          { name: 'lastname', value: (googleUser.name || '').split(' ').slice(1).join(' ') || '' },
+          { name: 'registration_source', value: 'google_oauth' }
+        ],
+        context: {
+          pageUri: 'https://bizsimlive.com',
+          pageName: 'Google OAuth Registration'
+        }
+      };
+
+      // Fire and forget - don't block the OAuth flow
+      fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_GUID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(hubspotData)
+      }).catch(err => console.log('HubSpot tracking error:', err));
     }
 
     // Generate JWT token
