@@ -8537,6 +8537,7 @@ Quality: ${qualityScore}% | Team Morale: ${teamScore}%`;
         .plan-badge.free { background: #f1f5f9; color: #64748b; }
         .plan-badge.tester { background: #d1fae5; color: #059669; }
         .plan-badge.professional { background: #dbeafe; color: #2563eb; }
+        .plan-badge.lifetime { background: #fef3c7; color: #b45309; }
         .plan-badge.enterprise { background: #f3e8ff; color: #7c3aed; }
 
         .status-badge {
@@ -8548,6 +8549,7 @@ Quality: ${qualityScore}% | Team Morale: ${teamScore}%`;
         }
         .status-badge.active { background: #dcfce7; color: #16a34a; }
         .status-badge.inactive { background: #fef3c7; color: #d97706; }
+        .status-badge.lifetime { background: #fef3c7; color: #b45309; }
         .status-badge.churned { background: #fee2e2; color: #dc2626; }
 
         .sim-count {
