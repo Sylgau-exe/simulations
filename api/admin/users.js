@@ -126,8 +126,11 @@ function formatPlan(plan) {
   const planMap = {
     'free': 'Free',
     'pro': 'Professional',
+    'pro_monthly': 'Professional',
+    'pro_lifetime': 'Lifetime',
     'professional': 'Professional',
-    'enterprise': 'Enterprise'
+    'enterprise': 'Enterprise',
+    'lifetime': 'Lifetime'
   };
   return planMap[plan.toLowerCase()] || plan;
 }
