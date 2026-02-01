@@ -54,10 +54,28 @@ export default async function handler(req, res) {
         const session = event.data.object;
         const userId = parseInt(session.metadata.userId);
         const planId = session.metadata.planId;
+        const isLifetime = session.metadata.isLifetime === 'true';
 
         if (userId && planId) {
-          await UserDB.updateSubscription(userId, planId, 'active', session.subscription);
-          console.log(`✅ Subscription activated for user ${userId}: ${planId}`);
+          if (isLifetime) {
+            // One-time lifetime purchase - no subscription ID, permanent access
+            await UserDB.updateSubscription(userId, 'pro_lifetime', 'lifetime', null);
+            console.log(`✅ Lifetime access activated for user ${userId}`);
+            
+            // Record the one-time payment
+            await PaymentDB.create(userId, {
+              invoiceId: session.id,
+              paymentIntentId: session.payment_intent,
+              amount: session.amount_total,
+              currency: session.currency,
+              status: 'paid',
+              description: 'Pro Lifetime - One-time purchase'
+            });
+          } else {
+            // Regular subscription
+            await UserDB.updateSubscription(userId, planId, 'active', session.subscription);
+            console.log(`✅ Subscription activated for user ${userId}: ${planId}`);
+          }
         }
         break;
       }
@@ -67,6 +85,12 @@ export default async function handler(req, res) {
         const user = await UserDB.findByStripeCustomerId(subscription.customer);
 
         if (user) {
+          // Don't downgrade lifetime users
+          if (user.subscription_status === 'lifetime') {
+            console.log(`⚠️ Skipping subscription update for lifetime user ${user.id}`);
+            break;
+          }
+          
           const status = subscription.status === 'active' ? 'active' :
                         subscription.status === 'past_due' ? 'past_due' : 'inactive';
           await UserDB.update(user.id, {
@@ -85,6 +109,12 @@ export default async function handler(req, res) {
         const user = await UserDB.findByStripeCustomerId(subscription.customer);
 
         if (user) {
+          // Don't downgrade lifetime users
+          if (user.subscription_status === 'lifetime') {
+            console.log(`⚠️ Skipping subscription delete for lifetime user ${user.id}`);
+            break;
+          }
+          
           await UserDB.updateSubscription(user.id, 'free', 'inactive', null);
           console.log(`✅ Subscription cancelled for user ${user.id}`);
         }
@@ -114,7 +144,10 @@ export default async function handler(req, res) {
         const user = await UserDB.findByStripeCustomerId(invoice.customer);
 
         if (user) {
-          await UserDB.update(user.id, { subscription_status: 'past_due' });
+          // Don't mark lifetime users as past_due
+          if (user.subscription_status !== 'lifetime') {
+            await UserDB.update(user.id, { subscription_status: 'past_due' });
+          }
           await PaymentDB.create(user.id, {
             invoiceId: invoice.id,
             amount: invoice.amount_due,

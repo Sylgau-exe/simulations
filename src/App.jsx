@@ -586,18 +586,32 @@ const PRICING_PLANS = [
     description: 'Perfect for trying out',
     features: ['1 simulation (Project Apex)', 'Basic scenarios', 'Score tracking', 'Community support'],
     cta: 'Current Plan',
-    popular: false
+    popular: false,
+    isOneTime: false
   },
   {
     id: 'pro',
-    name: 'Professional',
+    name: 'Pro Monthly',
     price: 19,
     priceAnnual: 190,
     period: 'month',
-    description: 'For serious learners',
-    features: ['All simulations', 'All scenarios', 'Detailed analytics', 'Certificates', 'Priority support'],
-    cta: 'Upgrade Now',
-    popular: true
+    description: 'For active learners',
+    features: ['All simulations', 'All 4 industry scenarios', 'Detailed analytics', 'Certificates', 'Priority support', 'Cancel anytime'],
+    cta: 'Subscribe Now',
+    popular: false,
+    isOneTime: false
+  },
+  {
+    id: 'pro_lifetime',
+    name: 'Pro Lifetime',
+    price: 149,
+    priceAnnual: 149,
+    period: 'one-time',
+    description: 'Best value - pay once, own forever',
+    features: ['All simulations', 'All 4 industry scenarios', 'Detailed analytics', 'Certificates', 'Priority support', 'Lifetime updates', 'No recurring fees'],
+    cta: 'Get Lifetime Access',
+    popular: true,
+    isOneTime: true
   },
   {
     id: 'enterprise',
@@ -609,7 +623,8 @@ const PRICING_PLANS = [
     features: ['Everything in Professional', 'Unlimited team members', 'Admin dashboard', 'Custom branding', 'LMS integration', 'Dedicated account manager', 'Custom simulation development'],
     cta: 'Contact Sales',
     popular: false,
-    hidden: true
+    hidden: true,
+    isOneTime: false
   }
 ];
 
@@ -1210,7 +1225,9 @@ export default function BizSimHub() {
   const [currentUser, setCurrentUser] = useState(null);
   const [authMode, setAuthMode] = useState('login');
   const [authError, setAuthError] = useState('');
+  const [authSuccess, setAuthSuccess] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
+  const [resetToken, setResetToken] = useState(null);
   const [billingCycle, setBillingCycle] = useState('monthly');
   const [checkoutLoading, setCheckoutLoading] = useState(null);
   const [userScores, setUserScores] = useState({ scores: [], bestScores: [] });
@@ -1243,6 +1260,17 @@ export default function BizSimHub() {
   useEffect(() => {
     localStorage.setItem('bizsimhub-lang', lang);
   }, [lang]);
+
+  // Check for password reset token in URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('reset_token');
+    if (token) {
+      setResetToken(token);
+      setAuthMode('reset');
+      setCurrentPage('auth');
+    }
+  }, []);
 
   // Check for existing session on load
   useEffect(() => {
@@ -2074,52 +2102,172 @@ export default function BizSimHub() {
       {renderNavbar()}
       <div className="auth-container">
         <div className="auth-card">
-          <h2>{authMode === 'login' ? (lang === 'en' ? 'Welcome' : 'Bienvenue') : (lang === 'en' ? 'Create Account' : 'Créer un compte')}</h2>
-          <p className="auth-subtitle">{authMode === 'login' ? 'Sign in to continue learning' : 'Start your learning journey'}</p>
-          
-          {authError && <div className="auth-error">{authError}</div>}
-          
-          <form onSubmit={(e) => {
-            e.preventDefault();
-            const form = e.target;
-            if (authMode === 'login') {
-              handleLogin(form.email.value, form.password.value);
-            } else {
-              handleSignup(form.name.value, form.email.value, form.password.value);
-            }
-          }}>
-            {authMode === 'signup' && (
-              <div className="form-group">
-                <label>Full Name</label>
-                <input type="text" name="name" placeholder="John Doe" required />
-              </div>
-            )}
-            <div className="form-group">
-              <label>Email</label>
-              <input type="email" name="email" placeholder="you@example.com" required />
-            </div>
-            <div className="form-group">
-              <label>Password</label>
-              <input type="password" name="password" placeholder="••••••••" required minLength={6} />
-            </div>
-            <button type="submit" className="btn-primary btn-full" disabled={authLoading}>
-              {authLoading ? 'Please wait...' : authMode === 'login' ? 'Sign In' : 'Create Account'}
-            </button>
-          </form>
-          
-          <div className="auth-divider"><span>or</span></div>
-          
-          <button className="btn-google" onClick={() => window.location.href = `${API_BASE}/auth/google`}>
-            <span className="google-icon">G</span>
-            Continue with Google
-          </button>
-          
-          <p className="auth-toggle">
-            {authMode === 'login' ? "Don't have an account? " : 'Already have an account? '}
-            <button onClick={() => { setAuthMode(authMode === 'login' ? 'signup' : 'login'); setAuthError(''); }}>
-              {authMode === 'login' ? 'Sign Up' : 'Sign In'}
-            </button>
-          </p>
+          {/* Forgot Password Mode */}
+          {authMode === 'forgot' ? (
+            <>
+              <h2>{lang === 'en' ? 'Reset Password' : 'Réinitialiser le mot de passe'}</h2>
+              <p className="auth-subtitle">{lang === 'en' ? 'Enter your email to receive a reset link' : 'Entrez votre courriel pour recevoir un lien'}</p>
+              
+              {authError && <div className="auth-error">{authError}</div>}
+              {authSuccess && <div className="auth-success">{authSuccess}</div>}
+              
+              <form onSubmit={async (e) => {
+                e.preventDefault();
+                setAuthLoading(true);
+                setAuthError('');
+                setAuthSuccess('');
+                try {
+                  const res = await fetch(`${API_BASE}/auth/forgot-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: e.target.email.value })
+                  });
+                  const data = await res.json();
+                  if (res.ok) {
+                    setAuthSuccess(lang === 'en' ? 'If an account exists, you will receive a reset link shortly.' : 'Si un compte existe, vous recevrez un lien sous peu.');
+                  } else {
+                    setAuthError(data.error || 'Failed to send reset email');
+                  }
+                } catch (err) {
+                  setAuthError('Failed to send reset email');
+                } finally {
+                  setAuthLoading(false);
+                }
+              }}>
+                <div className="form-group">
+                  <label>Email</label>
+                  <input type="email" name="email" placeholder="you@example.com" required />
+                </div>
+                <button type="submit" className="btn-primary btn-full" disabled={authLoading}>
+                  {authLoading ? (lang === 'en' ? 'Sending...' : 'Envoi...') : (lang === 'en' ? 'Send Reset Link' : 'Envoyer le lien')}
+                </button>
+              </form>
+              
+              <p className="auth-toggle">
+                <button onClick={() => { setAuthMode('login'); setAuthError(''); setAuthSuccess(''); }}>
+                  ← {lang === 'en' ? 'Back to Sign In' : 'Retour à la connexion'}
+                </button>
+              </p>
+            </>
+          ) : authMode === 'reset' ? (
+            /* Reset Password Mode (from email link) */
+            <>
+              <h2>{lang === 'en' ? 'Create New Password' : 'Créer un nouveau mot de passe'}</h2>
+              <p className="auth-subtitle">{lang === 'en' ? 'Enter your new password below' : 'Entrez votre nouveau mot de passe'}</p>
+              
+              {authError && <div className="auth-error">{authError}</div>}
+              {authSuccess && <div className="auth-success">{authSuccess}</div>}
+              
+              <form onSubmit={async (e) => {
+                e.preventDefault();
+                const password = e.target.password.value;
+                const confirmPassword = e.target.confirmPassword.value;
+                
+                if (password !== confirmPassword) {
+                  setAuthError(lang === 'en' ? 'Passwords do not match' : 'Les mots de passe ne correspondent pas');
+                  return;
+                }
+                
+                setAuthLoading(true);
+                setAuthError('');
+                try {
+                  const res = await fetch(`${API_BASE}/auth/reset-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token: resetToken, password })
+                  });
+                  const data = await res.json();
+                  if (res.ok) {
+                    setAuthSuccess(lang === 'en' ? 'Password reset successful! You can now sign in.' : 'Mot de passe réinitialisé! Vous pouvez maintenant vous connecter.');
+                    setResetToken(null);
+                    // Clear URL params
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    setTimeout(() => {
+                      setAuthMode('login');
+                      setAuthSuccess('');
+                    }, 2000);
+                  } else {
+                    setAuthError(data.error || 'Failed to reset password');
+                  }
+                } catch (err) {
+                  setAuthError('Failed to reset password');
+                } finally {
+                  setAuthLoading(false);
+                }
+              }}>
+                <div className="form-group">
+                  <label>{lang === 'en' ? 'New Password' : 'Nouveau mot de passe'}</label>
+                  <input type="password" name="password" placeholder="••••••••" required minLength={6} />
+                </div>
+                <div className="form-group">
+                  <label>{lang === 'en' ? 'Confirm Password' : 'Confirmer le mot de passe'}</label>
+                  <input type="password" name="confirmPassword" placeholder="••••••••" required minLength={6} />
+                </div>
+                <button type="submit" className="btn-primary btn-full" disabled={authLoading}>
+                  {authLoading ? (lang === 'en' ? 'Resetting...' : 'Réinitialisation...') : (lang === 'en' ? 'Reset Password' : 'Réinitialiser')}
+                </button>
+              </form>
+            </>
+          ) : (
+            /* Normal Login/Signup Mode */
+            <>
+              <h2>{authMode === 'login' ? (lang === 'en' ? 'Welcome' : 'Bienvenue') : (lang === 'en' ? 'Create Account' : 'Créer un compte')}</h2>
+              <p className="auth-subtitle">{authMode === 'login' ? (lang === 'en' ? 'Sign in to continue learning' : 'Connectez-vous pour continuer') : (lang === 'en' ? 'Start your learning journey' : 'Commencez votre parcours')}</p>
+              
+              {authError && <div className="auth-error">{authError}</div>}
+              
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                const form = e.target;
+                if (authMode === 'login') {
+                  handleLogin(form.email.value, form.password.value);
+                } else {
+                  handleSignup(form.name.value, form.email.value, form.password.value);
+                }
+              }}>
+                {authMode === 'signup' && (
+                  <div className="form-group">
+                    <label>{lang === 'en' ? 'Full Name' : 'Nom complet'}</label>
+                    <input type="text" name="name" placeholder="John Doe" required />
+                  </div>
+                )}
+                <div className="form-group">
+                  <label>Email</label>
+                  <input type="email" name="email" placeholder="you@example.com" required />
+                </div>
+                <div className="form-group">
+                  <label>{lang === 'en' ? 'Password' : 'Mot de passe'}</label>
+                  <input type="password" name="password" placeholder="••••••••" required minLength={6} />
+                  {authMode === 'login' && (
+                    <button 
+                      type="button" 
+                      className="forgot-password-link"
+                      onClick={() => { setAuthMode('forgot'); setAuthError(''); }}
+                    >
+                      {lang === 'en' ? 'Forgot password?' : 'Mot de passe oublié?'}
+                    </button>
+                  )}
+                </div>
+                <button type="submit" className="btn-primary btn-full" disabled={authLoading}>
+                  {authLoading ? (lang === 'en' ? 'Please wait...' : 'Patientez...') : authMode === 'login' ? (lang === 'en' ? 'Sign In' : 'Connexion') : (lang === 'en' ? 'Create Account' : 'Créer le compte')}
+                </button>
+              </form>
+              
+              <div className="auth-divider"><span>{lang === 'en' ? 'or' : 'ou'}</span></div>
+              
+              <button className="btn-google" onClick={() => window.location.href = `${API_BASE}/auth/google`}>
+                <span className="google-icon">G</span>
+                {lang === 'en' ? 'Continue with Google' : 'Continuer avec Google'}
+              </button>
+              
+              <p className="auth-toggle">
+                {authMode === 'login' ? (lang === 'en' ? "Don't have an account? " : "Pas de compte? ") : (lang === 'en' ? 'Already have an account? ' : 'Déjà un compte? ')}
+                <button onClick={() => { setAuthMode(authMode === 'login' ? 'signup' : 'login'); setAuthError(''); }}>
+                  {authMode === 'login' ? (lang === 'en' ? 'Sign Up' : "S'inscrire") : (lang === 'en' ? 'Sign In' : 'Connexion')}
+                </button>
+              </p>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -3179,23 +3327,28 @@ export default function BizSimHub() {
       {renderNavbar()}
       <div className="pricing-container">
         <div className="pricing-header">
-          <h1>Simple, Transparent Pricing</h1>
-          <p>Choose the plan that fits your learning goals</p>
-          <div className="billing-toggle">
-            <button className={billingCycle === 'monthly' ? 'active' : ''} onClick={() => setBillingCycle('monthly')}>Monthly</button>
-            <button className={billingCycle === 'annual' ? 'active' : ''} onClick={() => setBillingCycle('annual')}>Annual (Save 17%)</button>
-          </div>
+          <h1>{lang === 'en' ? 'Simple, Transparent Pricing' : 'Tarification simple et transparente'}</h1>
+          <p>{lang === 'en' ? 'Choose the plan that fits your learning goals' : 'Choisissez le plan qui correspond à vos objectifs'}</p>
         </div>
         <div className="pricing-grid">
           {PRICING_PLANS.filter(plan => !plan.hidden).map(plan => (
             <div key={plan.id} className={`pricing-card ${plan.popular ? 'popular' : ''}`}>
-              {plan.popular && <div className="popular-badge">Most Popular</div>}
+              {plan.popular && <div className="popular-badge">{lang === 'en' ? 'Best Value' : 'Meilleur rapport'}</div>}
               <h3>{plan.name}</h3>
               <p className="plan-desc">{plan.description}</p>
               <div className="plan-price">
-                <span className="price">${billingCycle === 'annual' ? Math.round(plan.priceAnnual / 12) : plan.price}</span>
-                <span className="period">/{plan.price === 0 ? 'forever' : 'month'}</span>
+                <span className="price">${plan.price}</span>
+                <span className="period">
+                  {plan.period === 'forever' ? (lang === 'en' ? '/forever' : '/pour toujours') : 
+                   plan.period === 'one-time' ? (lang === 'en' ? ' one-time' : ' unique') : 
+                   (lang === 'en' ? '/month' : '/mois')}
+                </span>
               </div>
+              {plan.isOneTime && (
+                <div className="savings-badge">
+                  {lang === 'en' ? '💰 Save $79+ vs 8 months subscription' : '💰 Économisez 79$+ vs 8 mois d\'abonnement'}
+                </div>
+              )}
               <ul className="plan-features">
                 {plan.features.map(f => <li key={f}>✓ {f}</li>)}
               </ul>
@@ -3204,10 +3357,18 @@ export default function BizSimHub() {
                 onClick={() => plan.id !== 'free' && handleCheckout(plan.id)}
                 disabled={checkoutLoading === plan.id || plan.id === 'free'}
               >
-                {checkoutLoading === plan.id ? 'Loading...' : plan.cta}
+                {checkoutLoading === plan.id ? (lang === 'en' ? 'Loading...' : 'Chargement...') : 
+                 (lang === 'en' ? plan.cta : 
+                   plan.id === 'free' ? 'Plan actuel' :
+                   plan.id === 'pro' ? 'S\'abonner' :
+                   plan.id === 'pro_lifetime' ? 'Obtenir l\'accès à vie' : plan.cta)}
               </button>
             </div>
           ))}
+        </div>
+        <div className="pricing-footer">
+          <p>{lang === 'en' ? '🔒 Secure payment powered by Stripe' : '🔒 Paiement sécurisé par Stripe'}</p>
+          <p>{lang === 'en' ? '✉️ Questions? Contact us at support@bizsimhub.com' : '✉️ Questions? Contactez-nous à support@bizsimhub.com'}</p>
         </div>
       </div>
     </div>
@@ -4802,6 +4963,9 @@ Quality: ${qualityScore}% | Team Morale: ${teamScore}%`;
         .auth-card h2 { font-size: 1.75rem; margin-bottom: 0.5rem; }
         .auth-subtitle { color: var(--text-muted); margin-bottom: 2rem; }
         .auth-error { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem; }
+        .auth-success { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #6ee7b7; padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem; }
+        .forgot-password-link { background: none; border: none; color: var(--accent-primary); font-size: 0.85rem; padding: 0; margin-top: 0.5rem; cursor: pointer; display: block; text-align: right; }
+        .forgot-password-link:hover { text-decoration: underline; }
         .form-group { margin-bottom: 1.25rem; }
         .form-group label { display: block; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
         .form-group input { width: 100%; padding: 0.85rem 1rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); font-size: 1rem; }
@@ -5013,6 +5177,27 @@ Quality: ${qualityScore}% | Team Morale: ${teamScore}%`;
         .plan-price .period { color: var(--text-muted); }
         .plan-features { list-style: none; margin-bottom: 2rem; }
         .plan-features li { padding: 0.5rem 0; color: var(--text-secondary); font-size: 0.95rem; }
+        .savings-badge { 
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
+          color: white; 
+          padding: 0.5rem 1rem; 
+          border-radius: 8px; 
+          font-size: 0.85rem; 
+          font-weight: 600; 
+          margin-bottom: 1rem;
+          text-align: center;
+        }
+        .pricing-footer {
+          text-align: center;
+          margin-top: 3rem;
+          padding-top: 2rem;
+          border-top: 1px solid var(--border);
+        }
+        .pricing-footer p {
+          color: var(--text-muted);
+          font-size: 0.9rem;
+          margin-bottom: 0.5rem;
+        }
         
         /* Simulation Pages - LIGHT THEME */
         .sim-page { 
